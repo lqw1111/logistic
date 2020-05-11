@@ -1,3 +1,6 @@
+DROP DATABASE if exists logistic;
+create DATABASE logistic;
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (

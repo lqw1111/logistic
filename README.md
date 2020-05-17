@@ -18,7 +18,7 @@ password: 3773032<br>
 3、mvn spring-boot:run 启动项目
 
 #### 
-登陆 POST - /doLogin 
+登陆 POST - /api/doLogin 
 body{
 username: (自己插入),
 password: (自己插入),
@@ -27,3 +27,61 @@ password: (自己插入),
 一开始使用 GET - /hello 会返回error，没有登陆，这时候向/doLogin，发送post请求，带着用户名密码去请求。<br>
 请求成功会，会收到用户的个人信息，这时候，你就可以根据用户的权限，作出调整，显示不同的页面，目前只有两个角色<br>
 admin和customer。
+
+
+User api
+POST /api/register
+body
+{
+    (uid):xxx,
+    username:xxx,
+    password:xxx,
+    phone:xxx,
+    email:xxx,
+    address:xxx,
+}
+
+return:
+{
+    uid:xxx,
+    username:xxx,
+    password:xxx,
+    phone:xxx,
+    email:xxx,
+    address:xxx,
+}
+
+PUT /api/user/update
+{
+    (uid):xxx,
+    username:xxx,
+    password:xxx,
+    phone:xxx,
+    email:xxx,
+    address:xxx,
+}
+
+return : 
+{
+    uid:xxx,
+    username:xxx,
+    password:xxx,
+    phone:xxx,
+    email:xxx,
+    address:xxx,
+}
+
+GET /api/user/findAll
+return : 
+[
+{
+    uid:xxx,
+    username:xxx,
+    password:xxx,
+    phone:xxx,
+    email:xxx,
+    address:xxx,
+}
+]
+
+备注：（）中的内容代表可以有也可以没有

@@ -29,59 +29,78 @@ password: (自己插入),
 admin和customer。
 
 
-User api
+#### User api:
 POST /api/register
 body
+```json
 {
-    (uid):xxx,
-    username:xxx,
-    password:xxx,
-    phone:xxx,
-    email:xxx,
-    address:xxx,
+    ("uid":"xxx"),
+    "username":"xxx",
+    "password":"xxx",
+    "phone":"xxx",
+    "email":"xxx",
+    "address":"xxx"
 }
+```
 
 return:
+```json
 {
-    uid:xxx,
-    username:xxx,
-    password:xxx,
-    phone:xxx,
-    email:xxx,
-    address:xxx,
+    "uid":"xxx",
+    "username":"xxx",
+    "password":"xxx",
+    "phone":"xxx",
+    "email":"xxx",
+    "address":"xxx"
 }
+```
 
 PUT /api/user/update
+```json
 {
-    (uid):xxx,
-    username:xxx,
-    password:xxx,
-    phone:xxx,
-    email:xxx,
-    address:xxx,
+    ("uid":"xxx"),
+    "username":"xxx",
+    "password":"xxx",
+    "phone":"xxx",
+    "email":"xxx",
+    "address":"xxx"
 }
+```
 
 return : 
+```json
 {
-    uid:xxx,
-    username:xxx,
-    password:xxx,
-    phone:xxx,
-    email:xxx,
-    address:xxx,
-}
+      "uid":"xxx",
+      "username":"xxx",
+      "password":"xxx",
+      "phone":"xxx",
+      "email":"xxx",
+      "address":"xxx"
+ }
+```
+
 
 GET /api/user/findAll
 return : 
+```json
 [
-{
-    uid:xxx,
-    username:xxx,
-    password:xxx,
-    phone:xxx,
-    email:xxx,
-    address:xxx,
-}
+  {
+      "uid":"xxx",
+      "username":"xxx",
+      "password":"xxx",
+      "phone":"xxx",
+      "email":"xxx",
+      "address":"xxx"
+  }
 ]
+```
 
 备注：（）中的内容代表可以有也可以没有
+
+#### UserOrder Api
+POST /api/order/create
+```json
+{
+  ""
+}
+```

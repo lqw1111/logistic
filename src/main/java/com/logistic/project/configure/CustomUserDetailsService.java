@@ -1,7 +1,9 @@
 package com.logistic.project.configure;
 
 import com.logistic.project.entity.UserInfo;
+import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

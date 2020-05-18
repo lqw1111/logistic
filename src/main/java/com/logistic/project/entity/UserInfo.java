@@ -3,7 +3,6 @@ package com.logistic.project.entity;
 import org.springframework.stereotype.Repository;
 import javax.persistence.*;
 
-@Repository
 @Entity
 @Table(name="user")
 public class UserInfo {

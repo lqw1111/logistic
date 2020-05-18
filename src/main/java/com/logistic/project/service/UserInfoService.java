@@ -6,7 +6,7 @@ import com.logistic.project.exception.LogisticException;
 import java.util.List;
 
 public interface UserInfoService {
-    UserInfo findByUsername(String username) throws LogisticException ;
+    UserInfo findByUsername(String username);
 
     UserInfo insertUser(UserInfo userInfo) throws LogisticException;
 

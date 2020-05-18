@@ -7,4 +7,3 @@ CREATE TABLE user
   role varchar(50)
 );
 CREATE UNIQUE INDEX user_username_uindex ON user (username);
-CREATE UNIQUE INDEX user_password_uindex ON user (password);

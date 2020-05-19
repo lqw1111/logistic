@@ -20,13 +20,13 @@ public class UserOrder {
     @Column(name = "to_address")
     private String toAddress;
 
-    @Column(name = "status")
+    @Column(name = "status_id")
     private Integer statusId;
 
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "decription")
+    @Column(name = "description")
     private String description;
 
     public Integer getId() {

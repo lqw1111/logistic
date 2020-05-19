@@ -1,5 +1,6 @@
 package com.logistic.project.controller;
 
+import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
@@ -18,17 +19,17 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserInfo register(@RequestBody UserInfo userInfo) throws LogisticException {
+    public UserInfo register(@RequestBody UserInfoDTO userInfo) throws LogisticException {
         return userInfoService.insertUser(userInfo);
     }
 
     @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
-    public UserInfo updateUserByName(@RequestBody UserInfo userInfo) throws LogisticException {
-        return userInfoService.updateUserByName(userInfo);
+    public UserInfo updateUserByName(@RequestBody UserInfoDTO userInfoDTO) throws LogisticException {
+        return userInfoService.updateUserByName(userInfoDTO);
     }
 
     @RequestMapping(value = "/user/findAll", method = RequestMethod.GET)
-    public List<UserInfo> findAllUser() throws LogisticException{
+    public List<UserInfoDTO> findAllUser() throws LogisticException{
         return userInfoService.findAllUser();
     }
 

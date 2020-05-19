@@ -101,6 +101,40 @@ return :
 POST /api/order/create
 ```json
 {
-  ""
+	"userId":2,
+	"fromAddress":"china",
+	"toAddress":"canada",
+	"description":"some book and colth"
+}
+```
+
+GET /api/order/findAll/2
+
+return:
+```json
+[
+    {
+        "id": 1,
+        "userId": 2,
+        "fromAddress": "china",
+        "toAddress": "canada",
+        "statusId": 1,
+        "price": null,
+        "description": "some book and colth"
+    }
+]
+```
+
+PUT /api/order/update/{userId}/{userOrderId}
+
+```json
+{
+    "id": 1,
+    "userId": 2,
+    "fromAddress": "china",
+    "toAddress": "canada",
+    "statusId": 2,
+    "price": null,
+    "description": "some book and colth"
 }
 ```

@@ -1,37 +1,23 @@
-package com.logistic.project.entity;
+package com.logistic.project.dto;
 
-import org.springframework.stereotype.Repository;
-import javax.persistence.*;
+public class UserInfoDTO {
 
-@Entity
-@Table(name="user")
-public class UserInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
     private Role role;
 
     public enum Role {
         admin,user
     }
 
-    @Column(name = "phone")
     public String phone;
 
-    @Column(name = "email")
     public String email;
 
-    @Column(name = "address")
     public String address;
 
     public long getUid() {

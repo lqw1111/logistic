@@ -1,5 +1,6 @@
 package com.logistic.project.service;
 
+import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 
@@ -8,9 +9,9 @@ import java.util.List;
 public interface UserInfoService {
     UserInfo findByUsername(String username);
 
-    UserInfo insertUser(UserInfo userInfo) throws LogisticException;
+    UserInfo insertUser(UserInfoDTO userInfoDTO) throws LogisticException;
 
-    UserInfo updateUserByName(UserInfo userInfo) throws LogisticException ;
+    UserInfo updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException ;
 
-    List<UserInfo> findAllUser() throws LogisticException;
+    List<UserInfoDTO> findAllUser() throws LogisticException;
 }

@@ -17,8 +17,8 @@ password: 3773032<br>
 2、进入之后,输入 mvn flyway:migrate<br>
 3、mvn spring-boot:run 启动项目
 
-#### 
-登陆 POST - /api/doLogin 
+#### 登陆
+POST - /api/doLogin 
 body{
 username: (自己插入),
 password: (自己插入),
@@ -27,6 +27,12 @@ password: (自己插入),
 一开始使用 GET - /hello 会返回error，没有登陆，这时候向/doLogin，发送post请求，带着用户名密码去请求。<br>
 请求成功会，会收到用户的个人信息，这时候，你就可以根据用户的权限，作出调整，显示不同的页面，目前只有两个角色<br>
 admin和customer。
+
+自动登出
+
+POST /api/logout
+
+
 
 
 #### User api:
@@ -125,7 +131,7 @@ return:
 ]
 ```
 
-PUT /api/order/update/{userId}/{userOrderId}
+PUT /api/order/approve/{userId}/{userOrderId}
 
 ```json
 {

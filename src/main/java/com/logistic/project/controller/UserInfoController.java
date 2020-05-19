@@ -19,12 +19,12 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserInfo register(@RequestBody UserInfoDTO userInfo) throws LogisticException {
+    public UserInfoDTO register(@RequestBody UserInfoDTO userInfo) throws LogisticException {
         return userInfoService.insertUser(userInfo);
     }
 
     @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
-    public UserInfo updateUserByName(@RequestBody UserInfoDTO userInfoDTO) throws LogisticException {
+    public UserInfoDTO updateUserByName(@RequestBody UserInfoDTO userInfoDTO) throws LogisticException {
         return userInfoService.updateUserByName(userInfoDTO);
     }
 

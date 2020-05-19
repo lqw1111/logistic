@@ -9,9 +9,9 @@ import java.util.List;
 public interface UserInfoService {
     UserInfo findByUsername(String username);
 
-    UserInfo insertUser(UserInfoDTO userInfoDTO) throws LogisticException;
+    UserInfoDTO insertUser(UserInfoDTO userInfoDTO) throws LogisticException;
 
-    UserInfo updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException ;
+    UserInfoDTO updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException ;
 
     List<UserInfoDTO> findAllUser() throws LogisticException;
 }

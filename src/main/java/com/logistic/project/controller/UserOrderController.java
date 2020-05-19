@@ -26,7 +26,7 @@ public class UserOrderController {
         return userOrderService.findAllByUserId(userId);
     }
 
-    @RequestMapping(value = "/update/{userId}/{userOrderId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/approve/{userId}/{userOrderId}", method = RequestMethod.PUT)
     public UserOrder approveOrder(@PathVariable("userId") Integer userId,
                                   @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.approve(userId, userOrderId);

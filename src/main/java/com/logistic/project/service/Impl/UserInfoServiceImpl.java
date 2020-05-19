@@ -7,10 +7,9 @@ import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,25 +24,33 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfo insertUser(UserInfoDTO userInfoDTO) throws LogisticException {
+    public UserInfoDTO insertUser(UserInfoDTO userInfoDTO) throws LogisticException {
         UserInfo user = userInfoRepository.findByUsername(userInfoDTO.getUsername());
         if (user != null) {
             throw new LogisticException("User Already Exist");
         }
         UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
         entity.setRole(UserInfo.Role.user);
+        entity.setPassword(encryptPassword(entity.getPassword()));
         UserInfo info = userInfoRepository.save(entity);
-        return info;
+        UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
+        res.setPassword(null);
+        return res;
+    }
+
+    private String encryptPassword(String password){
+        return new BCryptPasswordEncoder().encode(password);
     }
 
     @Override
-    public UserInfo updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException {
+    public UserInfoDTO updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException {
         UserInfo user = userInfoRepository.findByUsername(userInfoDTO.getUsername());
         if (user == null)
             throw new LogisticException("User Doesn't Exist");
         UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
         UserInfo info = userInfoRepository.save(entity);
-        return info;
+        UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
+        return res;
     }
 
     @Override

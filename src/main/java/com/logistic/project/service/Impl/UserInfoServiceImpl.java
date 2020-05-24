@@ -5,6 +5,7 @@ import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
+import com.logistic.project.service.MailService;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public UserInfo findByUsername(String username) {
@@ -35,6 +39,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
         res.setPassword(null);
+
+        //TODO: add user email confirmation
+        mailService.sendTextMail(res.getEmail(),"测试文本邮箱发送","你好你好！");
         return res;
     }
 

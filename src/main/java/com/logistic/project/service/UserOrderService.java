@@ -10,7 +10,7 @@ public interface UserOrderService {
 
     UserOrder createOrder(UserOrderDTO userOrderDTO) throws LogisticException;
 
-    UserOrder updateOrder(UserOrder order) throws LogisticException;
+    UserOrder updateOrder(UserOrderDTO orderDTO) throws LogisticException;
 
     List<UserOrder> findAllByUserId(Integer id) throws LogisticException;
 

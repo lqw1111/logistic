@@ -14,12 +14,6 @@ public class UserOrder {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "from_address")
-    private String fromAddress;
-
-    @Column(name = "to_address")
-    private String toAddress;
-
     @Column(name = "status_id")
     private Integer statusId;
 
@@ -28,6 +22,36 @@ public class UserOrder {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "receiver_name")
+    private String receiverName;
+
+    @Column(name = "receiver_phone")
+    private String receiverPhone;
+
+    @Column(name = "receiver_address")
+    private String receiverAddress;
+
+    @Column(name = "receiver_postcode")
+    private String receiverPostCode;
+
+    @Column(name = "order_id")
+    private String orderId;
+
+    @Column(name = "track_number")
+    private String trackNumber;
+
+    @Column(name = "sender_name")
+    private String senderName;
+
+    @Column(name = "sender_address")
+    private String senderAddress;
+
+    @Column(name = "sender_phone")
+    private String senderPhone;
+
+    @Column(name = "sender_postcode")
+    private String senderPostCode;
 
     public Integer getId() {
         return id;
@@ -43,22 +67,6 @@ public class UserOrder {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public String getFromAddress() {
-        return fromAddress;
-    }
-
-    public void setFromAddress(String fromAddress) {
-        this.fromAddress = fromAddress;
-    }
-
-    public String getToAddress() {
-        return toAddress;
-    }
-
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
     }
 
     public Integer getStatusId() {
@@ -83,5 +91,85 @@ public class UserOrder {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
+
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+
+    public String getReceiverPostCode() {
+        return receiverPostCode;
+    }
+
+    public void setReceiverPostCode(String receiverPostCode) {
+        this.receiverPostCode = receiverPostCode;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(String trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderAddress() {
+        return senderAddress;
+    }
+
+    public void setSenderAddress(String senderAddress) {
+        this.senderAddress = senderAddress;
+    }
+
+    public String getSenderPhone() {
+        return senderPhone;
+    }
+
+    public void setSenderPhone(String senderPhone) {
+        this.senderPhone = senderPhone;
+    }
+
+    public String getSenderPostCode() {
+        return senderPostCode;
+    }
+
+    public void setSenderPostCode(String senderPostCode) {
+        this.senderPostCode = senderPostCode;
     }
 }

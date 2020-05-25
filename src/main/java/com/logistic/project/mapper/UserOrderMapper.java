@@ -4,6 +4,7 @@ import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.entity.UserOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 @Mapper
 public interface UserOrderMapper {

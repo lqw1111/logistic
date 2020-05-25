@@ -5,6 +5,7 @@ import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.entity.OrderStatus;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
+import com.logistic.project.mapper.UserOrderMapper;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,8 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     public UserOrder createOrder(UserOrderDTO orderDTO) throws LogisticException {
-        UserOrder userOrder = new UserOrder();
+        UserOrder userOrder = UserOrderMapper.INSTANCE.entity(orderDTO);
 
-        userOrder.setFromAddress(orderDTO.getFromAddress());
-        userOrder.setToAddress(orderDTO.getToAddress());
-        userOrder.setDescription(orderDTO.getDescription());
-        userOrder.setUserId(orderDTO.getUserId());
         userOrder.setStatusId(OrderStatus.NEW);
 
         UserOrder order = userOrderRepository.save(userOrder);
@@ -33,12 +30,12 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrder updateOrder(UserOrder order) throws LogisticException {
-        Optional<UserOrder> userOrder = userOrderRepository.findById(order.getId());
+    public UserOrder updateOrder(UserOrderDTO orderDTO) throws LogisticException {
+        Optional<UserOrder> userOrder = userOrderRepository.findById(orderDTO.getId());
         if (!userOrder.isPresent())
             throw new LogisticException("UserOrder Doesn't Exist");
 
-        UserOrder modifiedOrder = mapper(userOrder.get(), order);
+        UserOrder modifiedOrder = UserOrderMapper.INSTANCE.entity(orderDTO);
         UserOrder o = userOrderRepository.save(modifiedOrder);
         return o;
     }
@@ -66,13 +63,4 @@ public class UserOrderServiceImpl implements UserOrderService {
         return userOrderRepository.save(userOrder);
     }
 
-    private UserOrder mapper(UserOrder oldOrder, UserOrder updateOrder) {
-        oldOrder.setUserId(updateOrder.getUserId());
-        oldOrder.setDescription(updateOrder.getDescription());
-        oldOrder.setFromAddress(updateOrder.getFromAddress());
-        oldOrder.setToAddress(updateOrder.getToAddress());
-        oldOrder.setPrice(updateOrder.getPrice());
-        oldOrder.setStatusId(updateOrder.getStatusId());
-        return oldOrder;
-    }
 }

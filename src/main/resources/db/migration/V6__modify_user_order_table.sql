@@ -1,0 +1,12 @@
+ALTER TABLE user_order ADD receiver_name varchar(50) NOT NULL;
+ALTER TABLE user_order ADD receiver_phone varchar(50) NOT NULL;
+ALTER TABLE user_order ADD receiver_address varchar(255) NOT NULL;
+ALTER TABLE user_order ADD receiver_postcode varchar(50) NULL;
+ALTER TABLE user_order ADD order_id varchar(100) NULL;
+ALTER TABLE user_order ADD track_number varchar(100) NULL;
+ALTER TABLE user_order ADD sender_name varchar(50) NULL;
+ALTER TABLE user_order ADD sender_address varchar(255) NULL;
+ALTER TABLE user_order ADD sender_phone varchar(50) NULL;
+ALTER TABLE user_order ADD sender_postcode varchar(50) NULL;
+ALTER TABLE user_order DROP from_address;
+ALTER TABLE user_order DROP to_address;

@@ -107,14 +107,20 @@ return :
 POST /api/order/create
 ```json
 {
-	"userId":2,
-	"fromAddress":"china",
-	"toAddress":"canada",
-	"description":"some book and colth"
+	"userId":1,
+	"description":"some cloth",
+	"receiverName":"luo qin wei",
+	"receiverPhone":"5148399106",
+	"receiverAddress":"2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+	"receiverPostCode":"H3H1K6",
+	"senderName":"zhangsan",
+	"senderAddress":"china",
+	"senderPhone":"300",
+	"senderPostCode":712099
 }
 ```
 
-GET /api/order/findAll/2
+GET /api/order/findAll/{userId}
 
 return:
 ```json

@@ -8,15 +8,31 @@ public class UserOrderDTO {
 
     private Integer userId;
 
-    private String fromAddress;
-
-    private String toAddress;
-
     private Integer statusId;
 
     private BigDecimal price;
 
     private String description;
+
+    private String receiverName;
+
+    private String receiverPhone;
+
+    private String receiverAddress;
+
+    private String receiverPostCode;
+
+    private String orderId;
+
+    private String trackNumber;
+
+    private String senderName;
+
+    private String senderAddress;
+
+    private String senderPhone;
+
+    private String senderPostCode;
 
     public Integer getId() {
         return id;
@@ -32,22 +48,6 @@ public class UserOrderDTO {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public String getFromAddress() {
-        return fromAddress;
-    }
-
-    public void setFromAddress(String fromAddress) {
-        this.fromAddress = fromAddress;
-    }
-
-    public String getToAddress() {
-        return toAddress;
-    }
-
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
     }
 
     public Integer getStatusId() {
@@ -72,5 +72,85 @@ public class UserOrderDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
+
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+
+    public String getReceiverPostCode() {
+        return receiverPostCode;
+    }
+
+    public void setReceiverPostCode(String receiverPostCode) {
+        this.receiverPostCode = receiverPostCode;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(String trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getSenderAddress() {
+        return senderAddress;
+    }
+
+    public void setSenderAddress(String senderAddress) {
+        this.senderAddress = senderAddress;
+    }
+
+    public String getSenderPhone() {
+        return senderPhone;
+    }
+
+    public void setSenderPhone(String senderPhone) {
+        this.senderPhone = senderPhone;
+    }
+
+    public String getSenderPostCode() {
+        return senderPostCode;
+    }
+
+    public void setSenderPostCode(String senderPostCode) {
+        this.senderPostCode = senderPostCode;
     }
 }

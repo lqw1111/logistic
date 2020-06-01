@@ -4,11 +4,7 @@ import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -31,5 +27,12 @@ public class UserInfoController {
     public List<UserInfoDTO> findAllUser() throws LogisticException{
         return userInfoService.findAllUser();
     }
+
+    //TODO：单独查询一个人的信息
+    @RequestMapping(value = "/user/{username}",method = RequestMethod.GET)
+    public UserInfoDTO getUserInfo(@PathVariable("username") String username) throws LogisticException{
+        return userInfoService.getUserInfo(username);
+    }
+
 
 }

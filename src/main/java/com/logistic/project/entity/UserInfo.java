@@ -1,6 +1,5 @@
 package com.logistic.project.entity;
 
-import org.springframework.stereotype.Repository;
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +8,7 @@ public class UserInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long uid;
+    private Integer uid;
 
     @Column(name = "username")
     private String username;
@@ -34,11 +33,11 @@ public class UserInfo {
     @Column(name = "address")
     public String address;
 
-    public long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 

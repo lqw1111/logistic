@@ -2,7 +2,7 @@ package com.logistic.project.dto;
 
 public class UserInfoDTO {
 
-    private long uid;
+    private Integer uid;
 
     private String username;
 
@@ -20,11 +20,11 @@ public class UserInfoDTO {
 
     public String address;
 
-    public long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 

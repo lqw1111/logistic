@@ -101,6 +101,20 @@ return :
 ]
 ```
 
+GET /api/user/{username}
+<br>return
+```json
+{
+    "uid": 7,
+    "username": "lqw",
+    "password": null,
+    "role": "user",
+    "phone": "5148399106",
+    "email": "369487836luo@gmail.com",
+    "address": "2100 avneue"
+}
+```
+
 备注：（）中的内容代表可以有也可以没有
 
 #### UserOrder Api
@@ -126,13 +140,38 @@ return:
 ```json
 [
     {
-        "id": 1,
-        "userId": 2,
-        "fromAddress": "china",
-        "toAddress": "canada",
+        "id": 3,
+        "userId": 7,
         "statusId": 1,
         "price": null,
-        "description": "some book and colth"
+        "description": "some book and cloth to canada",
+        "receiverName": "number 7 lqw",
+        "receiverPhone": "5148399106",
+        "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+        "receiverPostCode": "H3H1K6",
+        "orderId": null,
+        "trackNumber": null,
+        "senderName": "lao7",
+        "senderAddress": "china",
+        "senderPhone": "300",
+        "senderPostCode": "712099"
+    },
+    {
+        "id": 4,
+        "userId": 7,
+        "statusId": 1,
+        "price": null,
+        "description": "append some thing",
+        "receiverName": "number 7 lqw",
+        "receiverPhone": "5148399106",
+        "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+        "receiverPostCode": "H3H1K6",
+        "orderId": null,
+        "trackNumber": null,
+        "senderName": "lao7",
+        "senderAddress": "china",
+        "senderPhone": "300",
+        "senderPostCode": "712099"
     }
 ]
 ```
@@ -141,12 +180,86 @@ PUT /api/order/approve/{userId}/{userOrderId}
 
 ```json
 {
-    "id": 1,
-    "userId": 2,
-    "fromAddress": "china",
-    "toAddress": "canada",
+    "id": 3,
+    "userId": 7,
     "statusId": 2,
     "price": null,
-    "description": "some book and colth"
+    "description": "some book and cloth to canada",
+    "receiverName": "number 7 lqw",
+    "receiverPhone": "5148399106",
+    "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+    "receiverPostCode": "H3H1K6",
+    "orderId": null,
+    "trackNumber": null,
+    "senderName": "lao7",
+    "senderAddress": "china",
+    "senderPhone": "300",
+    "senderPostCode": "712099"
+}
+```
+
+PUT /api/order/close/{userId}/{userOrderId}
+
+```json
+{
+    "id": 3,
+    "userId": 7,
+    "statusId": 3,
+    "price": null,
+    "description": "some book and cloth to canada",
+    "receiverName": "number 7 lqw",
+    "receiverPhone": "5148399106",
+    "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+    "receiverPostCode": "H3H1K6",
+    "orderId": null,
+    "trackNumber": null,
+    "senderName": "lao7",
+    "senderAddress": "china",
+    "senderPhone": "300",
+    "senderPostCode": "712099"
+}
+```
+
+PUT /api/order/processing/{userId}/{userOrderId}
+
+```json
+{
+    "id": 3,
+    "userId": 7,
+    "statusId": 4,
+    "price": null,
+    "description": "some book and cloth to canada",
+    "receiverName": "number 7 lqw",
+    "receiverPhone": "5148399106",
+    "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+    "receiverPostCode": "H3H1K6",
+    "orderId": null,
+    "trackNumber": null,
+    "senderName": "lao7",
+    "senderAddress": "china",
+    "senderPhone": "300",
+    "senderPostCode": "712099"
+}
+```
+
+PUT /api/order/finish/{userId}/{userOrderId}
+
+```json
+{
+    "id": 3,
+    "userId": 7,
+    "statusId": 5,
+    "price": null,
+    "description": "some book and cloth to canada",
+    "receiverName": "number 7 lqw",
+    "receiverPhone": "5148399106",
+    "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
+    "receiverPostCode": "H3H1K6",
+    "orderId": null,
+    "trackNumber": null,
+    "senderName": "lao7",
+    "senderAddress": "china",
+    "senderPhone": "300",
+    "senderPostCode": "712099"
 }
 ```

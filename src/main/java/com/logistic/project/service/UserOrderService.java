@@ -1,20 +1,30 @@
 package com.logistic.project.service;
 
 import com.logistic.project.dto.UserOrderDTO;
-import com.logistic.project.entity.UserOrder;
+import com.logistic.project.dto.UserOrderWithParcelDTO;
 import com.logistic.project.exception.LogisticException;
 
 import java.util.List;
 
 public interface UserOrderService {
 
-    UserOrder createOrder(UserOrderDTO userOrderDTO) throws LogisticException;
+    UserOrderDTO createOrder(UserOrderDTO userOrderDTO) throws LogisticException;
 
-    UserOrder updateOrder(UserOrderDTO orderDTO) throws LogisticException;
+    UserOrderDTO updateOrder(UserOrderDTO orderDTO) throws LogisticException;
 
-    List<UserOrder> findAllByUserId(Integer id) throws LogisticException;
+    List<UserOrderDTO> findAllByUserId(Integer userId) throws LogisticException;
 
-    void deleteOrderById(Integer id) throws LogisticException;
+    void deleteOrderById(Integer OrderId) throws LogisticException;
 
-    UserOrder approve(Integer userId, Integer userOrderId) throws LogisticException;
+    UserOrderDTO approveOrder(Integer userId, Integer userOrderId) throws LogisticException;
+
+    UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId) throws LogisticException;
+
+    UserOrderDTO processingOrder(Integer userId, Integer userOrderId) throws LogisticException;
+
+    UserOrderDTO finishOrder(Integer userId, Integer userOrderId) throws LogisticException;
+
+    //TODO: 返回一个大的object 包括UserOrder和Parcel
+    List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException;
+
 }

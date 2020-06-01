@@ -40,8 +40,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
         res.setPassword(null);
 
-        //TODO: add user email confirmation
-        mailService.sendTextMail(res.getEmail(),"测试文本邮箱发送","你好你好！");
+        //TODO: 实现发送确认邮件的逻辑
+//        mailService.sendTextMail(res.getEmail(),"测试文本邮箱发送","你好你好！");
+
         return res;
     }
 
@@ -64,8 +65,22 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserInfoDTO> findAllUser() throws LogisticException {
         List<UserInfo> userInfos = userInfoRepository.findAll();
         List<UserInfoDTO> res = userInfos.stream()
-                .map(userInfo -> {return UserInfoMapper.INSTANCE.toDTO(userInfo);})
+                .map(userInfo -> {
+                    UserInfoDTO userInfoDTO = UserInfoMapper.INSTANCE.toDTO(userInfo);
+                    userInfoDTO.setPassword(null);
+                    return userInfoDTO;
+                })
                 .collect(Collectors.toList());
         return res;
+    }
+
+    @Override
+    public UserInfoDTO getUserInfo(String username) throws LogisticException{
+        UserInfo userInfo = userInfoRepository.findByUsername(username);
+        if (userInfo == null)
+            throw new LogisticException("User Doesn't Exist");
+        UserInfoDTO userInfoDTO = UserInfoMapper.INSTANCE.toDTO(userInfo);
+        userInfoDTO.setPassword(null);
+        return userInfoDTO;
     }
 }

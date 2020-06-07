@@ -1,0 +1,1 @@
+ALTER TABLE parcel MODIFY order_number varchar(255) COMMENT 'the parcels order on the box';

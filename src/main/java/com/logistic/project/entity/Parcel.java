@@ -1,5 +1,7 @@
 package com.logistic.project.entity;
 
+import com.logistic.project.enumeration.ParcelStatus;
+
 import javax.persistence.*;
 
 @Entity
@@ -53,10 +55,6 @@ public class Parcel {
 
     @Column(name = "user_order_id")
     private int userOrderId;
-
-    public enum ParcelStatus {
-        posted, received, bad_parcel
-    }
 
     public int getId() {
         return id;

@@ -3,6 +3,7 @@ package com.logistic.project.service.Impl;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
+import com.logistic.project.enumeration.Role;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
@@ -34,7 +35,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new LogisticException("User Already Exist");
         }
         UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
-        entity.setRole(UserInfo.Role.user);
+        entity.setRole(Role.user);
         entity.setPassword(encryptPassword(entity.getPassword()));
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);

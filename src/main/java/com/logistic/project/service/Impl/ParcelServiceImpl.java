@@ -5,6 +5,7 @@ import com.logistic.project.dao.repository.UserOrderRepository;
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.entity.Parcel;
 import com.logistic.project.entity.UserOrder;
+import com.logistic.project.enumeration.ParcelStatus;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.ParcelMapper;
 import com.logistic.project.service.ParcelService;
@@ -29,7 +30,12 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public ParcelDTO createParcel(ParcelDTO parcelDTO) throws LogisticException {
         Parcel parcel = ParcelMapper.INSTANCE.entity(parcelDTO);
-        parcel.setParcelStatus(Parcel.ParcelStatus.posted);
+        parcel.setParcelStatus(ParcelStatus.waiting);
+        parcel.setUserOrderId(-1);
+
+        Optional<UserOrder> userOrder = userOrderRepository.findById(parcelDTO.getUserOrderId());
+        if (! userOrder.isPresent())
+            throw new LogisticException("User Order Doesn't Exist");
 
         Parcel p = parcelRepository.save(parcel);
         ParcelDTO res = ParcelMapper.INSTANCE.toDTO(p);
@@ -48,15 +54,17 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public void deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException {
+    public ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException {
         Optional<Parcel> parcelOptional = parcelRepository.findById(parcelId);
         if (!parcelOptional.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel parcel = parcelOptional.get();
         if (parcel.getUserOrderId() != parcelUserOrderId)
             throw new LogisticException("User Order Id Doesn't Match");
-        parcel.setUserOrderId(null);
-        parcelRepository.saveAndFlush(parcel);
+        //-1 不属于任何包裹
+        parcel.setUserOrderId(-1);
+        Parcel res = parcelRepository.saveAndFlush(parcel);
+        return ParcelMapper.INSTANCE.toDTO(res);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.logistic.project.dto;
 
-import com.logistic.project.entity.Parcel;
+import com.logistic.project.enumeration.ParcelStatus;
 
 public class ParcelDTO {
 
@@ -33,10 +33,6 @@ public class ParcelDTO {
     private ParcelStatus parcelStatus;
 
     private int userOrderId;
-
-    public enum ParcelStatus {
-        posted, received, bad_parcel
-    }
 
     public int getId() {
         return id;

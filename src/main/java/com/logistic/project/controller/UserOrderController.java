@@ -26,12 +26,6 @@ public class UserOrderController {
         return userOrderService.findAllByUserId(userId);
     }
 
-    @RequestMapping(value = "/approve/{userId}/{userOrderId}", method = RequestMethod.PUT)
-    public UserOrderDTO approveOrder(@PathVariable("userId") Integer userId,
-                                  @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
-        return userOrderService.approveOrder(userId, userOrderId);
-    }
-
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public UserOrderDTO update(@RequestBody UserOrderDTO userOrderDTO) throws LogisticException{
         return userOrderService.updateOrder(userOrderDTO);
@@ -42,19 +36,25 @@ public class UserOrderController {
         userOrderService.deleteOrderById(OrderId);
     }
 
-    @RequestMapping(value = "/close/{userId}/{userOrderId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/approve/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
+    public UserOrderDTO approveOrder(@PathVariable("userId") Integer userId,
+                                     @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
+        return userOrderService.approveOrder(userId, userOrderId);
+    }
+
+    @RequestMapping(value = "/close/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO closeOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.closeUserOrder(userId, userOrderId);
     }
 
-    @RequestMapping(value = "/processing/{userId}/{userOrderId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/processing/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO processingOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.processingOrder(userId, userOrderId);
     }
 
-    @RequestMapping(value = "/finish/{userId}/{userOrderId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/finish/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO finishOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.finishOrder(userId, userOrderId);

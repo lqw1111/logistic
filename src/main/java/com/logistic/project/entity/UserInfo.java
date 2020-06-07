@@ -1,5 +1,7 @@
 package com.logistic.project.entity;
 
+import com.logistic.project.enumeration.Role;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,10 +21,6 @@ public class UserInfo {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-
-    public enum Role {
-        admin,user
-    }
 
     @Column(name = "phone")
     public String phone;

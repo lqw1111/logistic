@@ -28,7 +28,6 @@ public class UserInfoController {
         return userInfoService.findAllUser();
     }
 
-    //TODO：单独查询一个人的信息
     @RequestMapping(value = "/user/{username}",method = RequestMethod.GET)
     public UserInfoDTO getUserInfo(@PathVariable("username") String username) throws LogisticException{
         return userInfoService.getUserInfo(username);

@@ -10,7 +10,7 @@ public interface ParcelService {
 
     void deleteParcel(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
 
-    void deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
+    ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
 
     List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId) throws LogisticException;
 

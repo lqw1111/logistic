@@ -13,7 +13,7 @@ public class OrderStatus {
     public static final Integer FINISH = 5;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", nullable = false)

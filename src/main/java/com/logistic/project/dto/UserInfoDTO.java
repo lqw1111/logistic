@@ -1,5 +1,7 @@
 package com.logistic.project.dto;
 
+import com.logistic.project.enumeration.Role;
+
 public class UserInfoDTO {
 
     private Integer uid;
@@ -9,10 +11,6 @@ public class UserInfoDTO {
     private String password;
 
     private Role role;
-
-    public enum Role {
-        admin,user
-    }
 
     public String phone;
 

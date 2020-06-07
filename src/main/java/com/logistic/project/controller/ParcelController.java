@@ -19,14 +19,14 @@ public class ParcelController {
         return parcelService.createParcel(parcelDTO);
     }
 
-    @RequestMapping(value = "/delete/{parcelId}/{parcelUserOrderId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/parcel/{parcelId}/userorder/{parcelUserOrderId}", method = RequestMethod.DELETE)
     public void deleteParcel(@PathVariable Integer parcelId, @PathVariable Integer parcelUserOrderId) throws LogisticException {
         parcelService.deleteParcel(parcelId, parcelUserOrderId);
     }
 
-    @RequestMapping(value = "/moveout/{parcelId}/{parcelUserOrderId}", method = RequestMethod.PUT)
-    public void moveOutParcelFromUserOrder(@PathVariable Integer parcelId, @PathVariable Integer parcelUserOrderId) throws LogisticException {
-        parcelService.deleteParcelFromUserOrder(parcelId, parcelUserOrderId);
+    @RequestMapping(value = "/moveout/parcel/{parcelId}/userorder/{parcelUserOrderId}", method = RequestMethod.PUT)
+    public ParcelDTO moveOutParcelFromUserOrder(@PathVariable Integer parcelId, @PathVariable Integer parcelUserOrderId) throws LogisticException {
+        return parcelService.deleteParcelFromUserOrder(parcelId, parcelUserOrderId);
     }
 
     @RequestMapping(value = "/findAll/{userOrderId}", method = RequestMethod.GET)
@@ -39,7 +39,7 @@ public class ParcelController {
         return parcelService.updateParcelInformation(parcelDTO);
     }
 
-    @RequestMapping(value = "/move")
+    @RequestMapping(value = "/move", method = RequestMethod.PUT)
     public List<ParcelDTO> update(@RequestParam("newOrderId") Integer newOrderId,
                             @RequestParam("orginOrderId") Integer orginOrderId,
                             @RequestBody List<Integer> parcelIds) throws LogisticException {

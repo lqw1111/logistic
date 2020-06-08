@@ -1,6 +1,10 @@
 package com.logistic.project.configure;
 
 import com.logistic.project.dto.JsonResponse;
+import com.logistic.project.dto.UserInfoDTO;
+import com.logistic.project.entity.UserInfo;
+import com.logistic.project.exception.LogisticException;
+import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -30,6 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private UserInfoService userInfoService;
+
        @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -42,10 +50,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication authentication) throws IOException, ServletException {
+                        User user = (User) authentication.getPrincipal();
+                        UserInfoDTO userInfo = null;
+                        try {
+                            userInfo = userInfoService.getUserInfo(user.getUsername());
+                        } catch (LogisticException e) {
+                            e.printStackTrace();
+                        }
+
                         JsonResponse tmp = new JsonResponse()
                                 .code(HttpStatus.OK.value())
                                 .message("login successfully")
-                                .obj(authentication.getPrincipal());
+                                .obj(userInfo == null ? user : userInfo);
 
                         res.setContentType("application/json;charset=utf-8");
                         try(PrintWriter out = res.getWriter()) {

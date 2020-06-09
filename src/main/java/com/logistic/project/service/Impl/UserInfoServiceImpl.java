@@ -56,9 +56,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo user = userInfoRepository.findByUsername(userInfoDTO.getUsername());
         if (user == null)
             throw new LogisticException("User Doesn't Exist");
-        UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
-        UserInfo info = userInfoRepository.save(entity);
+        user.setRole(userInfoDTO.getRole());
+        user.setAddress(userInfoDTO.getAddress());
+        user.setEmail(userInfoDTO.getEmail());
+        user.setPhone(userInfoDTO.getPhone());
+
+        UserInfo info = userInfoRepository.save(user);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
+
+        res.setPassword(null);
         return res;
     }
 

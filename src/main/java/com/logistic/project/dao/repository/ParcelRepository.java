@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface ParcelRepository extends JpaRepository<Parcel, Integer> {
 
-    @Query(value = "select * from parcel where user_order_id=?1", nativeQuery = true)
-    List<Parcel> findParcelsByUserId(Integer userOrderId);
+    @Query("select pc from Parcel pc where pc.userId = :userId")
+    List<Parcel> findParcelsByUserId(@Param("userId") Integer userId);
 
     @Query("select pc from Parcel pc where pc.id IN (:parcelIds)")
     List<Parcel> findByIds(@Param("parcelIds") List<Integer> parcelIds);

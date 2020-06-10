@@ -369,7 +369,7 @@ PUT /api/parcel/moveout/parcel/{parcelId}/userorder/{parcelUserOrderId}
 }
 ```
 
-找到用户所有包裹：
+找到用户order下所有包裹：
 GET /api/parcel/findAll/{userOrderId}
 
 返回值：
@@ -394,6 +394,93 @@ GET /api/parcel/findAll/{userOrderId}
     }
 ]
 ```
+
+找到用户所有包裹：
+GET /api/parcel/findAll/userid/{userId}
+
+返回值：
+```json
+[
+    {
+        "id": 1,
+        "orderNumber": "111",
+        "senderName": "qinwei luo(change)",
+        "senderAddress": "montreal canada",
+        "senderPhone": "5148399106",
+        "senderPostCode": "H3H1K6",
+        "userId": 7,
+        "receiverName": "xxx",
+        "receiverAddress": "montreal canada",
+        "receiverPhone": "xxxx",
+        "receiverPostCode": "xxxxxx",
+        "contentType": "cloth",
+        "description": "some cloth and some book",
+        "parcelStatus": "waiting",
+        "userOrderId": -1
+    },
+    {
+        "id": 3,
+        "orderNumber": "xxxxxx(快递单号+公司)",
+        "senderName": "qinwei luo",
+        "senderAddress": "montreal canada",
+        "senderPhone": "5148399106",
+        "senderPostCode": "H3H1K6",
+        "userId": 7,
+        "receiverName": "xxx",
+        "receiverAddress": "montreal canada",
+        "receiverPhone": "xxxx",
+        "receiverPostCode": "xxxxxx",
+        "contentType": "cloth",
+        "description": "some cloth and some book",
+        "parcelStatus": "waiting",
+        "userOrderId": -1
+    }
+]
+```
+
+找到用户所有包裹：
+GET /api/parcel/findAll/username/{userName}
+
+返回值：
+```json
+[
+    {
+        "id": 1,
+        "orderNumber": "111",
+        "senderName": "qinwei luo(change)",
+        "senderAddress": "montreal canada",
+        "senderPhone": "5148399106",
+        "senderPostCode": "H3H1K6",
+        "userId": 7,
+        "receiverName": "xxx",
+        "receiverAddress": "montreal canada",
+        "receiverPhone": "xxxx",
+        "receiverPostCode": "xxxxxx",
+        "contentType": "cloth",
+        "description": "some cloth and some book",
+        "parcelStatus": "waiting",
+        "userOrderId": -1
+    },
+    {
+        "id": 3,
+        "orderNumber": "xxxxxx(快递单号+公司)",
+        "senderName": "qinwei luo",
+        "senderAddress": "montreal canada",
+        "senderPhone": "5148399106",
+        "senderPostCode": "H3H1K6",
+        "userId": 7,
+        "receiverName": "xxx",
+        "receiverAddress": "montreal canada",
+        "receiverPhone": "xxxx",
+        "receiverPostCode": "xxxxxx",
+        "contentType": "cloth",
+        "description": "some cloth and some book",
+        "parcelStatus": "waiting",
+        "userOrderId": -1
+    }
+]
+```
+
 
 更新包裹信息：
 PUT /api/parcel/update

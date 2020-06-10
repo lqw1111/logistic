@@ -1,9 +1,11 @@
 package com.logistic.project.service.Impl;
 
 import com.logistic.project.dao.repository.ParcelRepository;
+import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.entity.Parcel;
+import com.logistic.project.entity.UserInfo;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.enumeration.ParcelStatus;
 import com.logistic.project.exception.LogisticException;
@@ -27,16 +29,14 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     private UserOrderRepository userOrderRepository;
 
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+
     @Override
     public ParcelDTO createParcel(ParcelDTO parcelDTO) throws LogisticException {
         Parcel parcel = ParcelMapper.INSTANCE.entity(parcelDTO);
         parcel.setParcelStatus(ParcelStatus.waiting);
-        parcel.setUserOrderId(-1);
-
-        Optional<UserOrder> userOrder = userOrderRepository.findById(parcelDTO.getUserOrderId());
-        if (! userOrder.isPresent())
-            throw new LogisticException("User Order Doesn't Exist");
-
+        parcel.setUserOrderId(parcelDTO.getUserOrderId() == 0 ? -1: parcelDTO.getUserOrderId());
         Parcel p = parcelRepository.save(parcel);
         ParcelDTO res = ParcelMapper.INSTANCE.toDTO(p);
         return res;
@@ -113,5 +113,18 @@ public class ParcelServiceImpl implements ParcelService {
         List<Parcel> save = parcelRepository.saveAll(updateParcels);
         List<ParcelDTO> res = save.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
         return res;
+    }
+
+    @Override
+    public List<ParcelDTO> findAllParcelByUserId(Integer userId) {
+        List<Parcel> parcels = parcelRepository.findParcelsByUserId(userId);
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParcelDTO> findAllParcelByUserName(String userName) {
+        UserInfo userInfo = userInfoRepository.findByUsername(userName);
+        List<Parcel> parcels = parcelRepository.findParcelsByUserId(userInfo.getUid());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
     }
 }

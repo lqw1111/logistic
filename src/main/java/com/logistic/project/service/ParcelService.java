@@ -17,4 +17,8 @@ public interface ParcelService {
     ParcelDTO updateParcelInformation(ParcelDTO parcelDTO) throws LogisticException;
 
     List<ParcelDTO> moveParcelForUserOrder(List<Integer> parcelIds, Integer newUserOrderId, Integer orginUserOrderId) throws LogisticException;
+
+    List<ParcelDTO> findAllParcelByUserId(Integer userId);
+
+    List<ParcelDTO> findAllParcelByUserName(String userName);
 }

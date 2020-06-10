@@ -34,6 +34,16 @@ public class ParcelController {
         return parcelService.findAllParcelByUserOrderId(userOrderId);
     }
 
+    @RequestMapping(value = "/findAll/userid/{userId}", method = RequestMethod.GET)
+    public List<ParcelDTO> getAllParcelByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
+        return parcelService.findAllParcelByUserId(userId);
+    }
+
+    @RequestMapping(value = "/findAll/username/{userName}", method = RequestMethod.GET)
+    public List<ParcelDTO> getAllParcelByUserId(@PathVariable("userName") String userName) throws LogisticException {
+        return parcelService.findAllParcelByUserName(userName);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ParcelDTO updateParcel(@RequestBody ParcelDTO parcelDTO) throws LogisticException {
         return parcelService.updateParcelInformation(parcelDTO);

@@ -89,9 +89,11 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public List<ParcelDTO> moveParcelForUserOrder(List<Integer> parcelIds, Integer newUserOrderId, Integer orginUserOrderId) throws LogisticException {
-        Optional<UserOrder> oldOrder = userOrderRepository.findById(orginUserOrderId);
-        if (!oldOrder.isPresent())
-            throw new LogisticException("Old Order Doesn't Exist");
+        if (orginUserOrderId != -1) {
+            Optional<UserOrder> oldOrder = userOrderRepository.findById(orginUserOrderId);
+            if (!oldOrder.isPresent())
+                throw new LogisticException("Old Order Doesn't Exist");
+        }
 
         Optional<UserOrder> newUserOrder = userOrderRepository.findById(newUserOrderId);
         if (!newUserOrder.isPresent())
@@ -103,10 +105,10 @@ public class ParcelServiceImpl implements ParcelService {
 
         List<Parcel> updateParcels = parcelOptional.get();
         List<Integer> parcelUserId = updateParcels.stream().map(parcel -> parcel.getUserId()).distinct().collect(Collectors.toList());
-        List<Integer> parcelId = updateParcels.stream().map(parcel -> parcel.getId()).distinct().collect(Collectors.toList());
+        List<Integer> parcelUserOrderId = updateParcels.stream().map(parcel -> parcel.getUserOrderId()).distinct().collect(Collectors.toList());
         if (parcelUserId.size() != 1)
             throw new LogisticException("Find Multiple User Id");
-        if (parcelId.size() != 1 || parcelIds.get(0) != orginUserOrderId)
+        if (parcelUserOrderId.size() != 1 || parcelUserOrderId.get(0) != orginUserOrderId)
             throw new LogisticException("Can not Change due to the different User Order Id");
 
         updateParcels.forEach(parcel -> parcel.setUserOrderId(newUserOrderId));

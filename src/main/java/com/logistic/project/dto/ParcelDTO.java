@@ -2,6 +2,8 @@ package com.logistic.project.dto;
 
 import com.logistic.project.enumeration.ParcelStatus;
 
+import java.sql.Timestamp;
+
 public class ParcelDTO {
 
     private int id;
@@ -33,6 +35,12 @@ public class ParcelDTO {
     private ParcelStatus parcelStatus;
 
     private int userOrderId;
+
+    private Timestamp createAt;
+
+    private Timestamp modifiedAt;
+
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -152,5 +160,29 @@ public class ParcelDTO {
 
     public void setUserOrderId(int userOrderId) {
         this.userOrderId = userOrderId;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

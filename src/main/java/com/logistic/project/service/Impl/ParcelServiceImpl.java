@@ -44,18 +44,18 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public void deleteParcel(Integer parcelId, Integer parcelUserOrderId) throws LogisticException {
-        Optional<Parcel> parcelOptional = parcelRepository.findById(parcelId);
+        Optional<Parcel> parcelOptional = parcelRepository.findParcelById(parcelId);
         if (!parcelOptional.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel parcel = parcelOptional.get();
         if (parcel.getUserOrderId() != parcelUserOrderId)
             throw new LogisticException("User Order Id Doesn't Match");
-        parcelRepository.delete(parcel);
+        parcelRepository.deleteParcelById(parcel.getId());
     }
 
     @Override
     public ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException {
-        Optional<Parcel> parcelOptional = parcelRepository.findById(parcelId);
+        Optional<Parcel> parcelOptional = parcelRepository.findParcelById(parcelId);
         if (!parcelOptional.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel parcel = parcelOptional.get();
@@ -78,11 +78,27 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public ParcelDTO updateParcelInformation(ParcelDTO parcelDTO) throws LogisticException {
-        Optional<Parcel> p = parcelRepository.findById(parcelDTO.getId());
+        Optional<Parcel> p = parcelRepository.findParcelById(parcelDTO.getId());
         if (!p.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
 
-        Parcel parcel = parcelRepository.save(ParcelMapper.INSTANCE.entity(parcelDTO));
+        Parcel updateParcel = p.get();
+
+        updateParcel.setOrderNumber(parcelDTO.getOrderNumber());
+        updateParcel.setSenderName(parcelDTO.getSenderName());
+        updateParcel.setSenderAddress(parcelDTO.getSenderAddress());
+        updateParcel.setSenderPhone(parcelDTO.getSenderPhone());
+        updateParcel.setSenderPostCode(parcelDTO.getSenderPostCode());
+        updateParcel.setReceiverName(parcelDTO.getReceiverName());
+        updateParcel.setReceiverAddress(parcelDTO.getReceiverAddress());
+        updateParcel.setReceiverPhone(parcelDTO.getReceiverPhone());
+        updateParcel.setReceiverPostCode(parcelDTO.getReceiverPostCode());
+        updateParcel.setContentType(parcelDTO.getContentType());
+        updateParcel.setDescription(parcelDTO.getDescription());
+        updateParcel.setParcelStatus(parcelDTO.getParcelStatus());
+        updateParcel.setUserOrderId(parcelDTO.getUserOrderId());
+
+        Parcel parcel = parcelRepository.save(updateParcel);
         ParcelDTO res = ParcelMapper.INSTANCE.toDTO(parcel);
         return res;
     }
@@ -90,12 +106,12 @@ public class ParcelServiceImpl implements ParcelService {
     @Override
     public List<ParcelDTO> moveParcelForUserOrder(List<Integer> parcelIds, Integer newUserOrderId, Integer orginUserOrderId) throws LogisticException {
         if (orginUserOrderId != -1) {
-            Optional<UserOrder> oldOrder = userOrderRepository.findById(orginUserOrderId);
+            Optional<UserOrder> oldOrder = userOrderRepository.findUserOrderById(orginUserOrderId);
             if (!oldOrder.isPresent())
                 throw new LogisticException("Old Order Doesn't Exist");
         }
 
-        Optional<UserOrder> newUserOrder = userOrderRepository.findById(newUserOrderId);
+        Optional<UserOrder> newUserOrder = userOrderRepository.findUserOrderById(newUserOrderId);
         if (!newUserOrder.isPresent())
             throw new LogisticException("New Order Doesn't Exist");
 

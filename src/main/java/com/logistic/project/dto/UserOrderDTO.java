@@ -1,6 +1,7 @@
 package com.logistic.project.dto;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class UserOrderDTO {
 
@@ -33,6 +34,24 @@ public class UserOrderDTO {
     private String senderPhone;
 
     private String senderPostCode;
+
+    private String orderComment;
+
+    private String pathInfo;
+
+    private String weight;
+
+    private String volumn;
+
+    private String expectDeliveryDate;
+
+    private Timestamp createAt;
+
+    private Timestamp modifiedAt;
+
+    private String paymentInfo;
+
+    private boolean deleted;
 
     public Integer getId() {
         return id;
@@ -152,5 +171,77 @@ public class UserOrderDTO {
 
     public void setSenderPostCode(String senderPostCode) {
         this.senderPostCode = senderPostCode;
+    }
+
+    public String getOrderComment() {
+        return orderComment;
+    }
+
+    public void setOrderComment(String orderComment) {
+        this.orderComment = orderComment;
+    }
+
+    public String getPathInfo() {
+        return pathInfo;
+    }
+
+    public void setPathInfo(String pathInfo) {
+        this.pathInfo = pathInfo;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getVolumn() {
+        return volumn;
+    }
+
+    public void setVolumn(String volumn) {
+        this.volumn = volumn;
+    }
+
+    public String getExpectDeliveryDate() {
+        return expectDeliveryDate;
+    }
+
+    public void setExpectDeliveryDate(String expectDeliveryDate) {
+        this.expectDeliveryDate = expectDeliveryDate;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public String getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setPaymentInfo(String paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

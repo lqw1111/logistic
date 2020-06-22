@@ -1,8 +1,8 @@
 package com.logistic.project.entity;
 
 import com.logistic.project.enumeration.ParcelStatus;
-
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="parcel")
@@ -55,6 +55,15 @@ public class Parcel {
 
     @Column(name = "user_order_id")
     private int userOrderId;
+
+    @Column(name = "create_at")
+    private Timestamp createAt;
+
+    @Column(name = "modified_at")
+    private Timestamp modifiedAt;
+
+    @Column(name = "deleted")
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -174,5 +183,33 @@ public class Parcel {
 
     public void setUserOrderId(Integer userOrderId) {
         this.userOrderId = userOrderId;
+    }
+
+    public void setUserOrderId(int userOrderId) {
+        this.userOrderId = userOrderId;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -41,14 +41,36 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     public UserOrderDTO updateOrder(UserOrderDTO orderDTO) throws LogisticException {
-        Optional<UserOrder> userOrder = userOrderRepository.findById(orderDTO.getId());
+        Optional<UserOrder> userOrder = userOrderRepository.findUserOrderById(orderDTO.getId());
         if (!userOrder.isPresent())
             throw new LogisticException("UserOrder Doesn't Exist");
 
-        UserOrder modifiedOrder = UserOrderMapper.INSTANCE.entity(orderDTO);
-        if (!modifiedOrder.getStatusId().equals(OrderStatus.NEW))
+        UserOrder updateUserOrder = userOrder.get();
+
+        if (!updateUserOrder.getStatusId().equals(OrderStatus.NEW))
             throw new LogisticException("Can't update Order Because admin already processing it, please contact with admin");
-        UserOrder o = userOrderRepository.save(modifiedOrder);
+
+        updateUserOrder.setStatusId(orderDTO.getStatusId());
+        updateUserOrder.setPrice(orderDTO.getPrice());
+        updateUserOrder.setDescription(orderDTO.getDescription());
+        updateUserOrder.setReceiverName(orderDTO.getReceiverName());
+        updateUserOrder.setReceiverAddress(orderDTO.getReceiverAddress());
+        updateUserOrder.setReceiverPhone(orderDTO.getReceiverPhone());
+        updateUserOrder.setReceiverPostCode(orderDTO.getReceiverPostCode());
+        updateUserOrder.setOrderId(orderDTO.getOrderId());
+        updateUserOrder.setTrackNumber(orderDTO.getTrackNumber());
+        updateUserOrder.setSenderName(orderDTO.getSenderName());
+        updateUserOrder.setSenderAddress(orderDTO.getSenderAddress());
+        updateUserOrder.setSenderPhone(orderDTO.getSenderPhone());
+        updateUserOrder.setSenderPostCode(orderDTO.getSenderPostCode());
+        updateUserOrder.setOrderComment(orderDTO.getOrderComment());
+        updateUserOrder.setPathInfo(orderDTO.getPathInfo());
+        updateUserOrder.setWeight(orderDTO.getWeight());
+        updateUserOrder.setVolumn(orderDTO.getVolumn());
+        updateUserOrder.setExpectDeliveryDate(orderDTO.getExpectDeliveryDate());
+        updateUserOrder.setPaymentInfo(orderDTO.getPaymentInfo());
+
+        UserOrder o = userOrderRepository.save(updateUserOrder);
         return UserOrderMapper.INSTANCE.toDTO(o);
     }
 
@@ -61,9 +83,9 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     public void deleteOrderById(Integer OrderId) throws LogisticException {
-        if (!userOrderRepository.findById(OrderId).isPresent())
+        if (!userOrderRepository.findUserOrderById(OrderId).isPresent())
             throw new LogisticException("UserOrder Doesn't Exist");
-        userOrderRepository.deleteById(OrderId);
+        userOrderRepository.deleteUserOrderById(OrderId);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.logistic.project.dto;
 
 import com.logistic.project.enumeration.Role;
 
+import java.sql.Timestamp;
+
 public class UserInfoDTO {
 
     private Integer uid;
@@ -17,6 +19,10 @@ public class UserInfoDTO {
     public String email;
 
     public String address;
+
+    public String wxId;
+
+    public Timestamp lastActiveTime;
 
     public Integer getUid() {
         return uid;
@@ -72,5 +78,21 @@ public class UserInfoDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getWxId() {
+        return wxId;
+    }
+
+    public void setWxId(String wxId) {
+        this.wxId = wxId;
+    }
+
+    public Timestamp getLastActiveTime() {
+        return lastActiveTime;
+    }
+
+    public void setLastActiveTime(Timestamp lastActiveTime) {
+        this.lastActiveTime = lastActiveTime;
     }
 }

@@ -3,6 +3,7 @@ package com.logistic.project.entity;
 import com.logistic.project.enumeration.Role;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name="user")
@@ -30,6 +31,12 @@ public class UserInfo {
 
     @Column(name = "address")
     public String address;
+
+    @Column(name = "wx_id")
+    public String wxId;
+
+    @Column(name = "last_active_time")
+    public Timestamp lastActiveTime;
 
     public Integer getUid() {
         return uid;
@@ -85,5 +92,21 @@ public class UserInfo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getWxId() {
+        return wxId;
+    }
+
+    public void setWxId(String wxId) {
+        this.wxId = wxId;
+    }
+
+    public Timestamp getLastActiveTime() {
+        return lastActiveTime;
+    }
+
+    public void setLastActiveTime(Timestamp lastActiveTime) {
+        this.lastActiveTime = lastActiveTime;
     }
 }

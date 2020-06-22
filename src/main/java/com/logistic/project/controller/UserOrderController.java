@@ -32,7 +32,7 @@ public class UserOrderController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteOrderById(@PathVariable Integer OrderId) throws LogisticException{
+    public void deleteOrderById(@PathVariable("id") Integer OrderId) throws LogisticException{
         userOrderService.deleteOrderById(OrderId);
     }
 

@@ -69,7 +69,7 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId) throws LogisticException {
-        List<Parcel> parcels = parcelRepository.findParcelsByUserId(userOrderId);
+        List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrderId);
         List<ParcelDTO> res = new ArrayList<>();
         parcels.forEach(parcel -> {res.add(ParcelMapper.INSTANCE.toDTO(parcel));});
 

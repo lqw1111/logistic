@@ -60,6 +60,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         user.setAddress(userInfoDTO.getAddress());
         user.setEmail(userInfoDTO.getEmail());
         user.setPhone(userInfoDTO.getPhone());
+        user.setWxId(userInfoDTO.getWxId());
 
         UserInfo info = userInfoRepository.save(user);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);

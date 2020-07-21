@@ -26,6 +26,12 @@ public class UserOrderController {
         return userOrderService.findAllByUserId(userId);
     }
 
+    //find by id
+    @RequestMapping(value = "/find/{orderId}", method = RequestMethod.GET)
+    public UserOrderDTO findById(@PathVariable("orderId") Integer orderId) throws LogisticException {
+        return userOrderService.findById(orderId);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public UserOrderDTO update(@RequestBody UserOrderDTO userOrderDTO) throws LogisticException{
         return userOrderService.updateOrder(userOrderDTO);

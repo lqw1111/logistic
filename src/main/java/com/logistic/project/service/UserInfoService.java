@@ -16,4 +16,6 @@ public interface UserInfoService {
     List<UserInfoDTO> findAllUser() throws LogisticException;
 
     UserInfoDTO getUserInfo(String username) throws LogisticException;
+
+    List<UserInfoDTO> findAllByLastActive() throws LogisticException;
 }

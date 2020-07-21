@@ -2,6 +2,8 @@ package com.logistic.project.service;
 
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.exception.LogisticException;
+import sun.rmi.runtime.Log;
+
 import java.util.List;
 
 public interface ParcelService {
@@ -21,4 +23,12 @@ public interface ParcelService {
     List<ParcelDTO> findAllParcelByUserId(Integer userId);
 
     List<ParcelDTO> findAllParcelByUserName(String userName);
+
+    ParcelDTO findById(Integer parcelId) throws LogisticException;
+
+    ParcelDTO updateParcelToWaiting(Integer parcelId) throws LogisticException;
+
+    ParcelDTO updateParcelToProblem(Integer parcelId) throws LogisticException;
+
+    ParcelDTO updateParcelToVerify(Integer parcelId) throws LogisticException;
 }

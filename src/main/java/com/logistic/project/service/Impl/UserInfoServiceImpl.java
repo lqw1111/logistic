@@ -71,7 +71,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<UserInfoDTO> findAllUser() throws LogisticException {
-        List<UserInfo> userInfos = userInfoRepository.findAll();
+        List<UserInfo> userInfos = userInfoRepository.findAllByDeletedIsFalse();
         List<UserInfoDTO> res = userInfos.stream()
                 .map(userInfo -> {
                     UserInfoDTO userInfoDTO = UserInfoMapper.INSTANCE.toDTO(userInfo);
@@ -90,5 +90,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfoDTO userInfoDTO = UserInfoMapper.INSTANCE.toDTO(userInfo);
         userInfoDTO.setPassword(null);
         return userInfoDTO;
+    }
+
+    @Override
+    public List<UserInfoDTO> findAllByLastActive() throws LogisticException {
+        List<UserInfo> userInfos = userInfoRepository.findAllByDeletedIsFalse();
+        userInfos.sort((u1, u2) -> {return u2.getLastActiveTime().compareTo(u1.getLastActiveTime());});
+        List<UserInfoDTO> res = userInfos.stream()
+                .map(userInfo -> {
+                    UserInfoDTO userInfoDTO = UserInfoMapper.INSTANCE.toDTO(userInfo);
+                    userInfoDTO.setPassword(null);
+                    return userInfoDTO;
+                })
+                .collect(Collectors.toList());
+        return res;
     }
 }

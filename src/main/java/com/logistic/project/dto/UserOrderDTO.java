@@ -1,8 +1,11 @@
 package com.logistic.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
 public class UserOrderDTO {
 
     private Integer id;

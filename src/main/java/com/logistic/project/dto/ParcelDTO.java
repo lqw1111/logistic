@@ -1,9 +1,11 @@
 package com.logistic.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.logistic.project.enumeration.ParcelStatus;
 
 import java.sql.Timestamp;
 
+@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
 public class ParcelDTO {
 
     private int id;
@@ -41,6 +43,8 @@ public class ParcelDTO {
     private Timestamp modifiedAt;
 
     private boolean deleted;
+
+    private String comment;
 
     public int getId() {
         return id;
@@ -184,5 +188,13 @@ public class ParcelDTO {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

@@ -27,4 +27,5 @@ public interface UserOrderService {
     //TODO: 返回一个大的object 包括UserOrder和Parcel
     List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException;
 
+    UserOrderDTO findById(Integer orderId) throws LogisticException;
 }

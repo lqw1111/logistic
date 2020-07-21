@@ -1,11 +1,15 @@
 package com.logistic.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.logistic.project.enumeration.ParcelStatus;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name="parcel")
+@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
 public class Parcel {
 
     @Id
@@ -56,14 +60,19 @@ public class Parcel {
     @Column(name = "user_order_id")
     private int userOrderId;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.INSERT)
     private Timestamp createAt;
 
-    @Column(name = "modified_at")
+    @Column(name = "modified_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.ALWAYS)
     private Timestamp modifiedAt;
 
     @Column(name = "deleted")
     private boolean deleted;
+
+    @Column(name = "comment")
+    public String comment;
 
     public int getId() {
         return id;
@@ -211,5 +220,13 @@ public class Parcel {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

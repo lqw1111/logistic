@@ -1,6 +1,8 @@
 package com.logistic.project.entity;
 
 import com.logistic.project.enumeration.Role;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -37,6 +39,17 @@ public class UserInfo {
 
     @Column(name = "last_active_time")
     public Timestamp lastActiveTime;
+
+    @Column(name = "create_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.INSERT)
+    public Timestamp createAt;
+
+    @Column(name = "modified_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.ALWAYS)
+    public Timestamp modifiedAt;
+
+    @Column(name = "deleted")
+    public Boolean deleted;
 
     public Integer getUid() {
         return uid;
@@ -108,5 +121,29 @@ public class UserInfo {
 
     public void setLastActiveTime(Timestamp lastActiveTime) {
         this.lastActiveTime = lastActiveTime;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

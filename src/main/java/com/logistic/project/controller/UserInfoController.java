@@ -33,5 +33,9 @@ public class UserInfoController {
         return userInfoService.getUserInfo(username);
     }
 
+    @RequestMapping(value = "/user/findAll/sort/lastactive", method = RequestMethod.GET)
+    public List<UserInfoDTO> findAllByLastActive() throws LogisticException{
+        return userInfoService.findAllByLastActive();
+    }
 
 }

@@ -14,6 +14,8 @@ import com.logistic.project.service.ParcelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,10 @@ public class ParcelServiceImpl implements ParcelService {
         Parcel parcel = ParcelMapper.INSTANCE.entity(parcelDTO);
         parcel.setParcelStatus(ParcelStatus.waiting);
         parcel.setUserOrderId(parcelDTO.getUserOrderId() == 0 ? -1: parcelDTO.getUserOrderId());
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(parcelDTO.getUserId());
+
         Parcel p = parcelRepository.save(parcel);
         ParcelDTO res = ParcelMapper.INSTANCE.toDTO(p);
         return res;
@@ -63,6 +69,10 @@ public class ParcelServiceImpl implements ParcelService {
             throw new LogisticException("User Order Id Doesn't Match");
         //-1 不属于任何包裹
         parcel.setUserOrderId(-1);
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(parcel.getUserId());
+
         Parcel res = parcelRepository.saveAndFlush(parcel);
         return ParcelMapper.INSTANCE.toDTO(res);
     }
@@ -97,6 +107,10 @@ public class ParcelServiceImpl implements ParcelService {
         updateParcel.setDescription(parcelDTO.getDescription());
         updateParcel.setParcelStatus(parcelDTO.getParcelStatus());
         updateParcel.setUserOrderId(parcelDTO.getUserOrderId());
+        updateParcel.setComment(parcelDTO.getComment());
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(parcelDTO.getUserId());
 
         Parcel parcel = parcelRepository.save(updateParcel);
         ParcelDTO res = ParcelMapper.INSTANCE.toDTO(parcel);
@@ -128,6 +142,10 @@ public class ParcelServiceImpl implements ParcelService {
             throw new LogisticException("Can not Change due to the different User Order Id");
 
         updateParcels.forEach(parcel -> parcel.setUserOrderId(newUserOrderId));
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(newUserOrder.get().getUserId());
+
         List<Parcel> save = parcelRepository.saveAll(updateParcels);
         List<ParcelDTO> res = save.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
         return res;
@@ -144,5 +162,44 @@ public class ParcelServiceImpl implements ParcelService {
         UserInfo userInfo = userInfoRepository.findByUsername(userName);
         List<Parcel> parcels = parcelRepository.findParcelsByUserId(userInfo.getUid());
         return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ParcelDTO findById(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcelOptional = parcelRepository.findParcelById(parcelId);
+        if (!parcelOptional.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        ParcelDTO parcelDTO = ParcelMapper.INSTANCE.toDTO(parcelOptional.get());
+        return parcelDTO;
+    }
+
+    @Override
+    public ParcelDTO updateParcelToWaiting(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcel = parcelRepository.findParcelById(parcelId);
+        if (!parcel.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        Parcel p = parcel.get();
+        p.setParcelStatus(ParcelStatus.waiting);
+        return ParcelMapper.INSTANCE.toDTO(p);
+    }
+
+    @Override
+    public ParcelDTO updateParcelToProblem(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcel = parcelRepository.findParcelById(parcelId);
+        if (!parcel.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        Parcel p = parcel.get();
+        p.setParcelStatus(ParcelStatus.problem);
+        return ParcelMapper.INSTANCE.toDTO(p);
+    }
+
+    @Override
+    public ParcelDTO updateParcelToVerify(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcel = parcelRepository.findParcelById(parcelId);
+        if (!parcel.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        Parcel p = parcel.get();
+        p.setParcelStatus(ParcelStatus.verify);
+        return ParcelMapper.INSTANCE.toDTO(p);
     }
 }

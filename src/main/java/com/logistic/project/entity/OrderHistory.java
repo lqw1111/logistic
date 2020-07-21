@@ -1,11 +1,17 @@
 package com.logistic.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "order_history")
-public class OrderHistory {
+public class OrderHistory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +31,18 @@ public class OrderHistory {
 
     @Column(name = "score")
     private Integer score;
+
+    @Column(insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.INSERT)
+    public Timestamp createAt;
+
+    @Column(insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.ALWAYS)
+    public Timestamp modifiedAt;
+
+    @Column(name = "deleted")
+    @Generated(value = GenerationTime.INSERT)
+    public Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -72,5 +90,29 @@ public class OrderHistory {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

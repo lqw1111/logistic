@@ -1,17 +1,16 @@
 package com.logistic.project.service.Impl;
 
 import com.logistic.project.dao.repository.ParcelRepository;
+import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
-import com.logistic.project.entity.OrderHistory;
 import com.logistic.project.entity.OrderStatus;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.ParcelMapper;
 import com.logistic.project.mapper.UserOrderMapper;
-import com.logistic.project.service.OrderHistoryService;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,9 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Autowired
     private ParcelRepository parcelRepository;
 
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+
     @Override
     public UserOrderDTO createOrder(UserOrderDTO orderDTO) throws LogisticException {
         UserOrder userOrder = UserOrderMapper.INSTANCE.entity(orderDTO);
@@ -35,6 +37,9 @@ public class UserOrderServiceImpl implements UserOrderService {
         userOrder.setStatusId(OrderStatus.NEW);
 
         UserOrder order = userOrderRepository.save(userOrder);
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(userOrder.getUserId());
 
         return UserOrderMapper.INSTANCE.toDTO(order);
     }
@@ -69,6 +74,9 @@ public class UserOrderServiceImpl implements UserOrderService {
         updateUserOrder.setVolumn(orderDTO.getVolumn());
         updateUserOrder.setExpectDeliveryDate(orderDTO.getExpectDeliveryDate());
         updateUserOrder.setPaymentInfo(orderDTO.getPaymentInfo());
+
+        //update user time
+        userInfoRepository.updateUserLastActiveTime(updateUserOrder.getUserId());
 
         UserOrder o = userOrderRepository.save(updateUserOrder);
         return UserOrderMapper.INSTANCE.toDTO(o);
@@ -150,6 +158,16 @@ public class UserOrderServiceImpl implements UserOrderService {
             return userOrderWithParcelDTO;
         }).collect(Collectors.toList());
         return res;
+    }
+
+    @Override
+    public UserOrderDTO findById(Integer orderId) throws LogisticException{
+        Optional<UserOrder> userOrderOptional = userOrderRepository.findUserOrderById(orderId);
+        if (!userOrderOptional.isPresent()) {
+            throw new LogisticException("Order Doesn't Exist");
+        }
+        UserOrderDTO userOrder = UserOrderMapper.INSTANCE.toDTO(userOrderOptional.get());
+        return userOrder;
     }
 
 

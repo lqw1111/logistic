@@ -1,9 +1,12 @@
 package com.logistic.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.logistic.project.enumeration.Role;
 
+import javax.persistence.Column;
 import java.sql.Timestamp;
 
+@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
 public class UserInfoDTO {
 
     private Integer uid;
@@ -23,6 +26,12 @@ public class UserInfoDTO {
     public String wxId;
 
     public Timestamp lastActiveTime;
+
+    public Timestamp createAt;
+
+    public Timestamp modifiedAt;
+
+    public Boolean deleted;
 
     public Integer getUid() {
         return uid;
@@ -94,5 +103,29 @@ public class UserInfoDTO {
 
     public void setLastActiveTime(Timestamp lastActiveTime) {
         this.lastActiveTime = lastActiveTime;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

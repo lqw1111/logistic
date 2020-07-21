@@ -29,6 +29,12 @@ public class ParcelController {
         return parcelService.deleteParcelFromUserOrder(parcelId, parcelUserOrderId);
     }
 
+    //find by id
+    @RequestMapping(value = "/find/{parcelId}", method = RequestMethod.GET)
+    public ParcelDTO findById(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.findById(parcelId);
+    }
+
     @RequestMapping(value = "/findAll/{userOrderId}", method = RequestMethod.GET)
     public List<ParcelDTO> getAllParcel(@PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return parcelService.findAllParcelByUserOrderId(userOrderId);
@@ -54,6 +60,21 @@ public class ParcelController {
                             @RequestParam("orginOrderId") Integer orginOrderId,
                             @RequestBody List<Integer> parcelIds) throws LogisticException {
         return parcelService.moveParcelForUserOrder(parcelIds, newOrderId, orginOrderId);
+    }
+
+    @RequestMapping(value = "/{parcelId}/waiting", method = RequestMethod.PUT)
+    public ParcelDTO updateParcelStatusToWaiting(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.updateParcelToWaiting(parcelId);
+    }
+
+    @RequestMapping(value = "/{parcelId}/problem", method = RequestMethod.PUT)
+    public ParcelDTO updateParcelStatusToProblem(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.updateParcelToProblem(parcelId);
+    }
+
+    @RequestMapping(value = "/{parcelId}/verify", method = RequestMethod.PUT)
+    public ParcelDTO updateParcelStatusToVerify(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.updateParcelToVerify(parcelId);
     }
 
 }

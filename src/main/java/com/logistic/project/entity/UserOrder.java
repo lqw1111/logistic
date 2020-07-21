@@ -1,12 +1,18 @@
 package com.logistic.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user_order")
-public class UserOrder {
+@JsonIgnoreProperties({"createAt"})
+public class UserOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,10 +75,12 @@ public class UserOrder {
     @Column(name = "expect_delivery_date")
     private String expectDeliveryDate;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.INSERT)
     private Timestamp createAt;
 
-    @Column(name = "modified_at")
+    @Column(name = "modified_at", insertable = false, updatable = false, nullable = false)
+    @Generated(value = GenerationTime.ALWAYS)
     private Timestamp modifiedAt;
 
     @Column(name = "payment_info")

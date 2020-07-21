@@ -1,7 +1,11 @@
 package com.logistic.project.dto;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
+@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
 public class OrderHistoryDTO {
 
     private Integer id;
@@ -15,6 +19,12 @@ public class OrderHistoryDTO {
     private String comment;
 
     private Integer score;
+
+    private Timestamp createAt;
+
+    private Timestamp modifiedAt;
+
+    private Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -62,5 +72,29 @@ public class OrderHistoryDTO {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

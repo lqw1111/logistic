@@ -72,7 +72,7 @@ public class UserOrderController {
         return userOrderService.submitOrder(userId, userOrderId);
     }
 
-    @RequestMapping(value = "/find/{userId}")
+    @RequestMapping(value = "/find/user/{userId}")
     public List<UserOrderWithParcelDTO> findUserOrderWithParcel(@PathVariable("userId") Integer userId) throws LogisticException{
         return userOrderService.findUserOrderWithParcel(userId);
     }

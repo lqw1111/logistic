@@ -22,4 +22,6 @@ public interface OrderHistoryService {
     void deleteById(Integer orderHistoryId) throws LogisticException;
 
     List<OrderHistoryDTO> findAll() throws LogisticException;
+
+    List<Map<String,Object>> findAllWithOrderInfoByUserId(Integer userId) throws LogisticException;
 }

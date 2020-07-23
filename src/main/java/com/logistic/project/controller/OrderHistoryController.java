@@ -41,6 +41,11 @@ public class OrderHistoryController {
         return orderHistoryService.findAllWithOrderInfo();
     }
 
+    @RequestMapping(value = "/findAll/info/{userId}", method = RequestMethod.GET)
+    public List<Map<String, Object>> findAllWithOrderInfoByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
+        return orderHistoryService.findAllWithOrderInfoByUserId(userId);
+    }
+
     //update
     @RequestMapping(value = "/update/{orderHistoryId}", method = RequestMethod.PUT)
     public OrderHistoryDTO updateOrderHistory(@PathVariable("orderHistoryId") Integer orderHistoryId, @RequestBody OrderHistoryDTO orderHistoryDTO) throws LogisticException {

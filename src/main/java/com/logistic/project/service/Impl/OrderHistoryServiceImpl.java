@@ -123,4 +123,18 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
                 .map(orderHistory -> {return OrderHistoryMapper.INSTANCE.toDTO(orderHistory);}).collect(Collectors.toList());
         return res;
     }
+
+    @Override
+    public List<Map<String, Object>> findAllWithOrderInfoByUserId(Integer userId) throws LogisticException {
+        List<OrderHistory> orderHistories = orderHistoryRepository.findAllByDeletedIsFalse();
+        List<Map<String, Object>> res = orderHistories.stream()
+                .filter(orderHistory -> orderHistory.getUserId().equals(userId))
+                .map(orderHistory -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("orderHistory", orderHistory);
+                    map.put("order", userOrderRepository.findById(orderHistory.getUserOrderId()).get());
+                    return map;
+                }).collect(Collectors.toList());
+        return res;
+    }
 }

@@ -28,4 +28,6 @@ public interface UserOrderService {
     List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException;
 
     UserOrderDTO findById(Integer orderId) throws LogisticException;
+
+    UserOrderDTO submitOrder(Integer userId, Integer userOrderId) throws LogisticException;
 }

@@ -97,11 +97,23 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO approveOrder(Integer userId, Integer userOrderId) throws LogisticException {
+    public UserOrderDTO submitOrder(Integer userId, Integer userOrderId) throws LogisticException {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
         if (!userOrder.getStatusId().equals(OrderStatus.NEW))
+            throw new LogisticException("Order Status Exception");
+        userOrder.setStatusId(OrderStatus.SUBMIT);
+        UserOrder order = userOrderRepository.save(userOrder);
+        return UserOrderMapper.INSTANCE.toDTO(order);
+    }
+
+    @Override
+    public UserOrderDTO approveOrder(Integer userId, Integer userOrderId) throws LogisticException {
+        UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
+        if (userOrder == null)
+            throw new LogisticException("UserOrder Doesn't Exist");
+        if (!userOrder.getStatusId().equals(OrderStatus.SUBMIT))
             throw new LogisticException("Order Status Exception");
         userOrder.setStatusId(OrderStatus.APPROVED);
         UserOrder order = userOrderRepository.save(userOrder);
@@ -113,7 +125,9 @@ public class UserOrderServiceImpl implements UserOrderService {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
-        if (!userOrder.getStatusId().equals(OrderStatus.NEW))
+        if (!userOrder.getStatusId().equals(OrderStatus.NEW)
+                && !userOrder.getStatusId().equals(OrderStatus.SUBMIT)
+                && !userOrder.getStatusId().equals(OrderStatus.APPROVED))
             throw new LogisticException("Order Status Exception");
         userOrder.setStatusId(OrderStatus.CLOSED);
         UserOrder order = userOrderRepository.save(userOrder);

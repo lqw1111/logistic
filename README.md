@@ -242,6 +242,9 @@ PUT /api/order/approve/user/{userId}/userorder/{userOrderId}
 }
 ```
 
+提交一个订单
+PUT /api/order/submit/user/{userId}/userorder/{userOrderId}
+
 拒绝一个订单
 
 PUT /api/order/close/user/{userId}/userorder/{userOrderId}
@@ -1195,5 +1198,8 @@ PUT /orderhistory/update/1
 ```
 
 删除
-DELETE http://localhost:8080/api/orderhistory/delete/{orderId}
+DELETE /api/orderhistory/delete/{orderId}
+
+按用户查找
+GET /api/orderhistory/findAll/info/{userId}
 

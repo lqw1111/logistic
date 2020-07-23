@@ -7,10 +7,11 @@ import javax.persistence.*;
 public class OrderStatus {
 
     public static final Integer NEW = 1;
-    public static final Integer APPROVED = 2;
-    public static final Integer CLOSED = 3;
-    public static final Integer PROCESSING = 4;
-    public static final Integer FINISH = 5;
+    public static final Integer SUBMIT = 2;
+    public static final Integer APPROVED = 3;
+    public static final Integer CLOSED = 4;
+    public static final Integer PROCESSING = 5;
+    public static final Integer FINISH = 6;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

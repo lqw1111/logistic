@@ -1205,3 +1205,22 @@ DELETE /api/orderhistory/delete/{orderId}
 按用户查找
 GET /api/orderhistory/findAll/info/{userId}
 
+### 新增 2020.7.25
+找到所有parcel并按照modified排序
+
+GET /api/parcel
+
+按状态找parcel
+
+GET /api/parcel/status/waiting
+
+GET /api/parcel/status/problem
+
+GET /api/parcel/status/verify
+
+按照状态找order
+
+GET /api/order
+
+GET /api/order/status/{statusId}
+

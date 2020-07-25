@@ -27,4 +27,8 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
 
     @Query("select uo from UserOrder uo where uo.id = :userOrderId and uo.deleted = 0")
     Optional<UserOrder> findUserOrderById(@Param("userOrderId") Integer userOrderId);
+
+    List<UserOrder> findAllByDeletedIsFalseOrderByModifiedAt();
+
+    List<UserOrder> findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(Integer statusId);
 }

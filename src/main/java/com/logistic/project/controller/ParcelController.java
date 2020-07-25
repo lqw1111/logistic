@@ -77,4 +77,23 @@ public class ParcelController {
         return parcelService.updateParcelToVerify(parcelId);
     }
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<ParcelDTO> findAll() throws LogisticException {
+        return parcelService.findAll();
+    }
+
+    @RequestMapping(value = "/status/waiting", method = RequestMethod.GET)
+    public List<ParcelDTO> findAllWaiting() throws LogisticException {
+        return parcelService.findAllWaiting();
+    }
+
+    @RequestMapping(value = "/status/problem", method = RequestMethod.GET)
+    public List<ParcelDTO> findAllProblem() throws LogisticException {
+        return parcelService.findAllProblem();
+    }
+
+    @RequestMapping(value = "/status/verify", method = RequestMethod.GET)
+    public List<ParcelDTO> findAllVerify() throws LogisticException {
+        return parcelService.findAllVerify();
+    }
 }

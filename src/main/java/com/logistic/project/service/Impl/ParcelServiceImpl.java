@@ -202,4 +202,28 @@ public class ParcelServiceImpl implements ParcelService {
         p.setParcelStatus(ParcelStatus.verify);
         return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
     }
+
+    @Override
+    public List<ParcelDTO> findAll() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByDeletedIsFalseOrderByModifiedAt();
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParcelDTO> findAllWaiting() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.waiting.toString());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParcelDTO> findAllProblem() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.problem.toString());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParcelDTO> findAllVerify() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.verify.toString());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
 }

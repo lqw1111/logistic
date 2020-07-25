@@ -2,6 +2,7 @@ package com.logistic.project.controller;
 
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
+import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +73,20 @@ public class UserOrderController {
         return userOrderService.submitOrder(userId, userOrderId);
     }
 
-    @RequestMapping(value = "/find/user/{userId}")
+    @RequestMapping(value = "/find/user/{userId}", method = RequestMethod.GET)
     public List<UserOrderWithParcelDTO> findUserOrderWithParcel(@PathVariable("userId") Integer userId) throws LogisticException{
         return userOrderService.findUserOrderWithParcel(userId);
+    }
+
+    //find all
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<UserOrderDTO> findAll() throws LogisticException {
+        return userOrderService.findAll();
+    }
+
+    //find all status
+    @RequestMapping(value = "/status/{statusId}", method = RequestMethod.GET)
+    public List<UserOrderDTO> findAllByStatus(@PathVariable("statusId") Integer statusId) throws LogisticException {
+        return userOrderService.findAllByStatusId(statusId);
     }
 }

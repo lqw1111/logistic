@@ -30,4 +30,8 @@ public interface UserOrderService {
     UserOrderDTO findById(Integer orderId) throws LogisticException;
 
     UserOrderDTO submitOrder(Integer userId, Integer userOrderId) throws LogisticException;
+
+    List<UserOrderDTO> findAll() throws LogisticException;
+
+    List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException;
 }

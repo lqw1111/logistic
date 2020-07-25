@@ -184,5 +184,17 @@ public class UserOrderServiceImpl implements UserOrderService {
         return userOrder;
     }
 
+    @Override
+    public List<UserOrderDTO> findAll() throws LogisticException {
+        List<UserOrder> userOrders = userOrderRepository.findAllByDeletedIsFalseOrderByModifiedAt();
+        return userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException {
+        List<UserOrder> userOrders = userOrderRepository.findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(statusId);
+        return userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+    }
+
 
 }

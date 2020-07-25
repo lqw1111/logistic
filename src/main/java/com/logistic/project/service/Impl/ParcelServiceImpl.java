@@ -180,7 +180,7 @@ public class ParcelServiceImpl implements ParcelService {
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel p = parcel.get();
         p.setParcelStatus(ParcelStatus.waiting);
-        return ParcelMapper.INSTANCE.toDTO(p);
+        return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
     }
 
     @Override
@@ -190,7 +190,7 @@ public class ParcelServiceImpl implements ParcelService {
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel p = parcel.get();
         p.setParcelStatus(ParcelStatus.problem);
-        return ParcelMapper.INSTANCE.toDTO(p);
+        return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
     }
 
     @Override
@@ -200,6 +200,6 @@ public class ParcelServiceImpl implements ParcelService {
             throw new LogisticException("Parcel Doesn't Exist");
         Parcel p = parcel.get();
         p.setParcelStatus(ParcelStatus.verify);
-        return ParcelMapper.INSTANCE.toDTO(p);
+        return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
     }
 }

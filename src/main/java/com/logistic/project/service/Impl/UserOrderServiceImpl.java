@@ -52,8 +52,8 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         UserOrder updateUserOrder = userOrder.get();
 
-        if (!updateUserOrder.getStatusId().equals(OrderStatus.NEW))
-            throw new LogisticException("Can't update Order Because admin already processing it, please contact with admin");
+//        if (updateUserOrder.getStatusId() >= OrderStatus.APPROVED)
+//            throw new LogisticException("Can't update Order Because admin already processing it, please contact with admin");
 
         updateUserOrder.setStatusId(orderDTO.getStatusId());
         updateUserOrder.setPrice(orderDTO.getPrice());

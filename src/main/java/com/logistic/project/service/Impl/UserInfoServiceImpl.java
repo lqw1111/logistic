@@ -37,6 +37,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
         entity.setRole(Role.user);
         entity.setPassword(encryptPassword(entity.getPassword()));
+        entity.setDeleted(false);
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
         res.setPassword(null);

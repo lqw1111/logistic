@@ -6,7 +6,7 @@ import com.logistic.project.enumeration.Role;
 import javax.persistence.Column;
 import java.sql.Timestamp;
 
-@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
+@JsonIgnoreProperties(value = {"password", "deleted"})
 public class UserInfoDTO {
 
     private Integer uid;

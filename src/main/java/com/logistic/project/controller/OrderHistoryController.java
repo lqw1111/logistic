@@ -26,12 +26,12 @@ public class OrderHistoryController {
 
     //find all(可以排序，根据分数情况。根据时间)
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public List<OrderHistoryDTO> findAll(@RequestParam("sort") String sort, @RequestParam("sortBy") String sortBy) throws LogisticException {
+    public List<Map<String, Object>> findAll(@RequestParam("sort") String sort, @RequestParam("sortBy") String sortBy) throws LogisticException {
         return orderHistoryService.findAllSort(sort, sortBy);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<OrderHistoryDTO> findAll() throws LogisticException {
+    public List<Map<String, Object>> findAll() throws LogisticException {
         return orderHistoryService.findAll();
     }
 

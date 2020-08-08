@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
+@JsonIgnoreProperties(value = {"deleted"})
 public class OrderHistoryDTO {
 
     private Integer id;

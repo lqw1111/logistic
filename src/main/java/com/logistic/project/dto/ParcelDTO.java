@@ -5,7 +5,7 @@ import com.logistic.project.enumeration.ParcelStatus;
 
 import java.sql.Timestamp;
 
-@JsonIgnoreProperties(value = {"createAt", "modifiedAt", "deleted"})
+@JsonIgnoreProperties(value = {"deleted"})
 public class ParcelDTO {
 
     private int id;

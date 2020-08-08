@@ -13,7 +13,7 @@ public interface OrderHistoryService {
 
     OrderHistoryDTO createOrderHistory(OrderHistoryDTO orderHistoryDTO) throws LogisticException;
 
-    List<OrderHistoryDTO> findAllSort(String sort, String sortBy) throws LogisticException;
+    List<Map<String, Object>> findAllSort(String sort, String sortBy) throws LogisticException;
 
     List<Map<String, Object>> findAllWithOrderInfo() throws LogisticException;
 
@@ -21,7 +21,7 @@ public interface OrderHistoryService {
 
     void deleteById(Integer orderHistoryId) throws LogisticException;
 
-    List<OrderHistoryDTO> findAll() throws LogisticException;
+    List<Map<String, Object>> findAll() throws LogisticException;
 
     List<Map<String,Object>> findAllWithOrderInfoByUserId(Integer userId) throws LogisticException;
 }

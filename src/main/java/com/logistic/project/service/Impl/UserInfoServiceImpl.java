@@ -29,12 +29,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfoDTO insertUser(UserInfoDTO userInfoDTO) throws LogisticException {
-        UserInfo user = userInfoRepository.findByUsername(userInfoDTO.getUsername());
+    public UserInfoDTO insertUser(UserInfo userInfo) throws LogisticException {
+        UserInfo user = userInfoRepository.findByUsername(userInfo.getUsername());
         if (user != null) {
             throw new LogisticException("User Already Exist");
         }
-        UserInfo entity = UserInfoMapper.INSTANCE.entity(userInfoDTO);
+        UserInfo entity = userInfo;
         entity.setRole(Role.user);
         entity.setPassword(encryptPassword(entity.getPassword()));
         entity.setDeleted(false);

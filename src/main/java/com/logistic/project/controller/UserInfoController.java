@@ -1,6 +1,7 @@
 package com.logistic.project.controller;
 
 import com.logistic.project.dto.UserInfoDTO;
+import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public UserInfoDTO register(@RequestBody UserInfoDTO userInfo) throws LogisticException {
+    public UserInfoDTO register(@RequestBody UserInfo userInfo) throws LogisticException {
         return userInfoService.insertUser(userInfo);
     }
 

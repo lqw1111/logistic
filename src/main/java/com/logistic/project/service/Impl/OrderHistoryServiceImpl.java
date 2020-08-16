@@ -9,7 +9,6 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.OrderHistoryMapper;
-import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.mapper.UserOrderMapper;
 import com.logistic.project.service.OrderHistoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -75,14 +74,7 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
                 orderHistories.sort((o1, o2) -> {return o2.getScore() - (o1.getScore());});
             }
         }
-        List<Map<String, Object>> res = orderHistories.stream()
-                .map(orderHistory -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("orderHistory", orderHistory);
-                    map.put("order", UserOrderMapper.INSTANCE.toDTO(userOrderRepository.findById(orderHistory.getUserOrderId()).get()));
-                    map.put("user", UserInfoMapper.INSTANCE.toDTO(userInfoRepository.findById(orderHistory.getUserId()).get()));
-                    return map;
-                }).collect(Collectors.toList());
+        List<Map<String, Object>> res = getHistories(orderHistories);
         return res;
     }
 
@@ -91,10 +83,13 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
         List<OrderHistory> orderHistories = orderHistoryRepository.findAllByDeletedIsFalse();
         List<Map<String, Object>> res = orderHistories.stream()
                 .map(orderHistory -> {
+                    UserInfo userInfo = userInfoRepository.findById(orderHistory.getUserId()).get();
                     Map<String, Object> map = new HashMap<>();
-                    map.put("orderHistory", orderHistory);
-                    map.put("order", UserOrderMapper.INSTANCE.toDTO(userOrderRepository.findById(orderHistory.getUserOrderId()).get()));
-                    map.put("user", UserInfoMapper.INSTANCE.toDTO(userInfoRepository.findById(orderHistory.getUserId()).get()));
+                    map.put("id", orderHistory.getId());
+                    map.put("userName", userInfo.getUsername());
+                    map.put("comment", orderHistory.getComment());
+                    map.put("score", orderHistory.getScore());
+                    map.put("createAt", orderHistory.getCreateAt());
                     return map;
                 }).collect(Collectors.toList());
         return res;
@@ -128,14 +123,7 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     @Override
     public List<Map<String, Object>> findAll() throws LogisticException {
         List<OrderHistory> orderHistories = orderHistoryRepository.findAllByDeletedIsFalse();
-        List<Map<String, Object>> res = orderHistories.stream()
-                .map(orderHistory -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("orderHistory", orderHistory);
-                    map.put("order", UserOrderMapper.INSTANCE.toDTO(userOrderRepository.findById(orderHistory.getUserOrderId()).get()));
-                    map.put("user", UserInfoMapper.INSTANCE.toDTO(userInfoRepository.findById(orderHistory.getUserId()).get()));
-                    return map;
-                }).collect(Collectors.toList());
+        List<Map<String, Object>> res = getHistories(orderHistories);
         return res;
     }
 
@@ -145,12 +133,25 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
         List<Map<String, Object>> res = orderHistories.stream()
                 .filter(orderHistory -> orderHistory.getUserId().equals(userId))
                 .map(orderHistory -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("orderHistory", orderHistory);
-                    map.put("order", UserOrderMapper.INSTANCE.toDTO(userOrderRepository.findById(orderHistory.getUserOrderId()).get()));
-                    map.put("user", UserInfoMapper.INSTANCE.toDTO(userInfoRepository.findById(orderHistory.getUserId()).get()));
-                    return map;
+                    return mapToJoin(orderHistory);
                 }).collect(Collectors.toList());
         return res;
+    }
+
+    private List<Map<String, Object>> getHistories(List<OrderHistory> orderHistories) {
+        List<Map<String, Object>> res = orderHistories.stream()
+                .map(orderHistory -> {
+                    return mapToJoin(orderHistory);
+                }).collect(Collectors.toList());
+        return res;
+    }
+
+    private Map<String, Object> mapToJoin(OrderHistory orderHistory) {
+        UserInfo userInfo = userInfoRepository.findById(orderHistory.getUserId()).get();
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName", userInfo.getUsername());
+        map.put("order", UserOrderMapper.INSTANCE.toDTO(userOrderRepository.findById(orderHistory.getUserOrderId()).get()));
+        map.put("orderHistory", OrderHistoryMapper.INSTANCE.toDTO(orderHistory));
+        return map;
     }
 }

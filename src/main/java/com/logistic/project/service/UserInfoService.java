@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserInfoService {
     UserInfo findByUsername(String username);
 
-    UserInfoDTO insertUser(UserInfoDTO userInfoDTO) throws LogisticException;
+    UserInfoDTO insertUser(UserInfo userInfo) throws LogisticException;
 
     UserInfoDTO updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException ;
 

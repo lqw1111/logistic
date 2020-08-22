@@ -83,8 +83,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 //指定登录页是"/login"
                 .loginPage("/login")
-                //登录成功后默认跳转到
                 .permitAll()
+                //登录成功后默认跳转到
+                .and()
+                .rememberMe()
+                // 即登录页面的记住登录按钮的参数名
+                .rememberMeParameter("remember-me")
+                // 过期时间
+                .tokenValiditySeconds(1800)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -102,6 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         }
                     }
                 })
+                .deleteCookies("remember-me")
                 .permitAll()
                 .and()
                 .csrf()

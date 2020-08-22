@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 即登录页面的记住登录按钮的参数名
                 .rememberMeParameter("remember-me")
                 // 过期时间
-                .tokenValiditySeconds(1800)
+                .tokenValiditySeconds(60)
                 .and()
                 .logout()
                 .logoutUrl("/logout")

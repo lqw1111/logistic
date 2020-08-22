@@ -615,117 +615,37 @@ return
 }
 ```
 
-获取
-GET /api/orderhistory/findAll?sort=asc&sortBy=created
-<br>
-参数列表 sortBy(created、score) |   sort(asc, des)
+获取 仅仅评论 不需要权限即可取得
+GET /api/orderhistory/findAll/info
+
 
 ```json
-[
-    {
-        "id": 1,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "1",
-        "score": 10
+[ 
+   {
+	"score": 10,
+	"comment": "ugugugugu ulishey shejchsg bhyfge khsue bvhfndge shiwejc baklalalabalablablab",
+	"id": 21,
+	"userName": "lele",
+	"createAt": "2020-08-05T17:23:50.000+0000"
     },
     {
-        "id": 3,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 10
+	"score": 8,
+	"comment": "very goood",
+	"id": 23,
+	"userName": "lele",
+	"createAt": "2020-08-05T17:28:30.000+0000"
     },
-    {
-        "id": 4,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 10
-    },
-    {
-        "id": 5,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 10
-    },
-    {
-        "id": 6,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 10
-    },
-    {
-        "id": 7,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 10
-    },
-    {
-        "id": 8,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 9
-    },
-    {
-        "id": 9,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 8
-    },
-    {
-        "id": 10,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 7
-    },
-    {
-        "id": 11,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 6
-    },
-    {
-        "id": 12,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 5
-    },
-    {
-        "id": 13,
-        "userId": 7,
-        "userOrderId": 4,
-        "finishTime": null,
-        "comment": "excellent",
-        "score": 4
-    }
+
 ]
 ```
 
 GET /orderhistory
-获取所有
+获取所有 没有排序
 
-获取所有history和order                                                           
-GET /api/orderhistory/findAll/info    
+获取所有history和order 可以调整排序
+GET /api/orderhistory/findAll?sort=asc&sortBy=created
+<br>
+参数列表 sortBy(created、score) |   sort(asc, des)  
 ```json
 [
     {
@@ -804,390 +724,10 @@ GET /api/orderhistory/findAll/info
             "deleted": false
         }
     },
-    {
-        "orderHistory": {
-            "id": 4,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 10,
-            "createAt": "2020-07-19T20:35:43.000+0000",
-            "modifiedAt": "2020-07-19T20:35:43.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 5,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 10,
-            "createAt": "2020-07-19T20:46:29.000+0000",
-            "modifiedAt": "2020-07-19T20:46:29.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 6,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 10,
-            "createAt": "2020-07-19T20:47:26.000+0000",
-            "modifiedAt": "2020-07-19T20:47:26.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 7,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 10,
-            "createAt": "2020-07-19T20:53:02.000+0000",
-            "modifiedAt": "2020-07-19T20:53:02.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 8,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 9,
-            "createAt": "2020-07-19T21:23:39.000+0000",
-            "modifiedAt": "2020-07-19T21:23:39.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 9,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 8,
-            "createAt": "2020-07-19T21:23:43.000+0000",
-            "modifiedAt": "2020-07-19T21:23:43.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 10,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 7,
-            "createAt": "2020-07-19T21:23:49.000+0000",
-            "modifiedAt": "2020-07-19T21:23:49.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 11,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 6,
-            "createAt": "2020-07-19T21:23:53.000+0000",
-            "modifiedAt": "2020-07-19T21:23:53.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 12,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 5,
-            "createAt": "2020-07-19T21:23:56.000+0000",
-            "modifiedAt": "2020-07-19T21:23:56.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    },
-    {
-        "orderHistory": {
-            "id": 13,
-            "userId": 7,
-            "userOrderId": 4,
-            "finishTime": null,
-            "comment": "excellent",
-            "score": 4,
-            "createAt": "2020-07-19T21:24:00.000+0000",
-            "modifiedAt": "2020-07-19T21:24:00.000+0000",
-            "deleted": false
-        },
-        "order": {
-            "id": 4,
-            "userId": 7,
-            "statusId": 1,
-            "price": null,
-            "description": "append some thing and i want to modify",
-            "receiverName": "number 7 lqw",
-            "receiverPhone": "5148399106",
-            "receiverAddress": "2100 Boulevard De Maisonneu,Montreal,Quebec,Canada",
-            "receiverPostCode": "H3H1K6",
-            "orderId": null,
-            "trackNumber": null,
-            "senderName": "lao7",
-            "senderAddress": "china",
-            "senderPhone": "300",
-            "senderPostCode": "712099",
-            "orderComment": null,
-            "pathInfo": null,
-            "weight": null,
-            "volumn": null,
-            "expectDeliveryDate": null,
-            "modifiedAt": "2020-07-19T15:42:26.000+0000",
-            "paymentInfo": null,
-            "deleted": false
-        }
-    }
 ]
 ```
 
-PUT /orderhistory/update/1
+PUT /orderhistory/update/1  （暂未使用）
 ```json
 {
     "id": 1,
@@ -1199,10 +739,10 @@ PUT /orderhistory/update/1
 }
 ```
 
-删除
-DELETE /api/orderhistory/delete/{orderId}
+删除（一旦删除 这整条History都会消失 所以要谨慎 是否可以设置屏蔽功能？选择隐藏这条评价，然后findAll的时候将无法拿到这条评价去给客户看到 以免有恶意评价出现）
+DELETE /api/orderhistory/delete/{historyId}
 
-按用户查找
+按用户查找（可以直接搜索 暂时没使用）
 GET /api/orderhistory/findAll/info/{userId}
 
 ### 新增 2020.7.25

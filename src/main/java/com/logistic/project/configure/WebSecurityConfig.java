@@ -88,7 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 // 即登录页面的记住登录按钮的参数名
-                .rememberMeParameter("remember-me")
                 // 过期时间
                 .tokenValiditySeconds(60)
                 .and()
@@ -108,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         }
                     }
                 })
-                .deleteCookies("remember-me")
+                .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
                 .csrf()

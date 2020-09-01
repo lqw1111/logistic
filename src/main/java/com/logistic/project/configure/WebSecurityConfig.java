@@ -86,11 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 //登录成功后默认跳转到
                 .and()
-                .rememberMe()
-                // 即登录页面的记住登录按钮的参数名
                 // 过期时间
-                .tokenValiditySeconds(60)
-                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(new LogoutSuccessHandler() {
@@ -108,6 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .deleteCookies("JSESSIONID")
+                .deleteCookies("remember-me")
                 .permitAll()
                 .and()
                 .csrf()

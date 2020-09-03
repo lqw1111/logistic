@@ -16,10 +16,15 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
     @Query("SELECT user FROM UserInfo user WHERE user.username = :username AND user.deleted = 0")
     UserInfo findByUsername(@Param("username") String username);
 
+    @Query("SELECT user FROM UserInfo user WHERE user.username = :username AND user.email = :email AND user.deleted = 0")
+    UserInfo findByUsernameAndEmail(@Param("username") String username, @Param("email") String email);
+
     List<UserInfo> findAllByDeletedIsFalse();
 
     @Modifying
     @Transactional
     @Query("update UserInfo u set u.lastActiveTime = CURRENT_TIMESTAMP where u.uid = :userId")
     int updateUserLastActiveTime(@Param("userId") Integer UserId);
+
+    UserInfo findByEmailAndDeletedIsFalse(String userEmail);
 }

@@ -1,5 +1,7 @@
 package com.logistic.project.service;
 
+import com.logistic.project.dto.JsonResponse;
+import com.logistic.project.dto.ResetPasswordDTO;
 import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
@@ -18,4 +20,8 @@ public interface UserInfoService {
     UserInfoDTO getUserInfo(String username) throws LogisticException;
 
     List<UserInfoDTO> findAllByLastActive() throws LogisticException;
+
+    void forgetPassword(String userEmail) throws LogisticException;
+
+    JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException;
 }

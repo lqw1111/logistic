@@ -1,6 +1,8 @@
 package com.logistic.project.service.Impl;
 
 import com.logistic.project.dao.repository.UserInfoRepository;
+import com.logistic.project.dto.JsonResponse;
+import com.logistic.project.dto.ResetPasswordDTO;
 import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.enumeration.Role;
@@ -8,10 +10,15 @@ import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
 import com.logistic.project.service.UserInfoService;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
+
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +37,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfoDTO insertUser(UserInfo userInfo) throws LogisticException {
-        UserInfo user = userInfoRepository.findByUsername(userInfo.getUsername());
+        UserInfo user = userInfoRepository.findByUsernameAndEmail(userInfo.getUsername(), userInfo.getEmail());
         if (user != null) {
             throw new LogisticException("User Already Exist");
         }
@@ -55,8 +62,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfoDTO updateUserByName(UserInfoDTO userInfoDTO) throws LogisticException {
         UserInfo user = userInfoRepository.findByUsername(userInfoDTO.getUsername());
-        if (user == null)
+        if (user == null) {
             throw new LogisticException("User Doesn't Exist");
+        }
+        UserInfo userInfo = userInfoRepository.findByEmailAndDeletedIsFalse(userInfoDTO.getEmail());
+        if (userInfo != null && !user.getUid().equals(userInfo.getUid())) {
+            throw new LogisticException("Email Already Registed");
+        }
         user.setRole(userInfoDTO.getRole());
         user.setAddress(userInfoDTO.getAddress());
         user.setEmail(userInfoDTO.getEmail());
@@ -105,5 +117,58 @@ public class UserInfoServiceImpl implements UserInfoService {
                 })
                 .collect(Collectors.toList());
         return res;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void forgetPassword(String userEmail) throws LogisticException {
+        UserInfo user = userInfoRepository.findByEmailAndDeletedIsFalse(userEmail);
+        if (user == null) {
+            throw new LogisticException("User Doesn't Exist");
+        }
+        String newPassword = getRandomString(8);
+        user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        userInfoRepository.save(user);
+        mailService.sendTextMail(userEmail, "忘记密码", constructContent(user, newPassword));
+    }
+
+    @Override
+    public JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException {
+        UserInfo userInfo = userInfoRepository.findByUsernameAndEmail(resetPasswordDTO.getUsername(), resetPasswordDTO.getEmail());
+        if(userInfo == null) {
+            throw new LogisticException("User Doesn't Exist");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(resetPasswordDTO.getOldPassword(), userInfo.getPassword())
+                || resetPasswordDTO.getOldPassword().equals(resetPasswordDTO.getNewPassword())) {
+            throw new LogisticException("Password Error");
+        }
+        userInfo.setPassword(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
+        userInfoRepository.save(userInfo);
+        JsonResponse res = new JsonResponse();
+        res.succ().message("Update Success");
+        return res;
+    }
+
+    private String constructContent(UserInfo userInfo, String newPassword) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
+                .append("\n")
+                .append("您").append(" ").append(userInfo.getUsername()).append(" 忘记了密码.").append("\n")
+                .append("密码重置为 ").append(newPassword).append("\n").append("\n")
+                .append("谢谢您的支持!").append("\n")
+                .append("一闪团队");
+        return sb.toString();
+    }
+
+    public String getRandomString(int length){
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0 ; i < length ; i++){
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 }

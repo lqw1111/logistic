@@ -1,5 +1,7 @@
 package com.logistic.project.controller;
 
+import com.logistic.project.dto.JsonResponse;
+import com.logistic.project.dto.ResetPasswordDTO;
 import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
@@ -37,6 +39,16 @@ public class UserInfoController {
     @RequestMapping(value = "/user/findAll/sort/lastactive", method = RequestMethod.GET)
     public List<UserInfoDTO> findAllByLastActive() throws LogisticException{
         return userInfoService.findAllByLastActive();
+    }
+
+    @RequestMapping(value = "/restpassword", method = RequestMethod.POST)
+    public JsonResponse resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) throws LogisticException {
+        return userInfoService.resetPassword(resetPasswordDTO);
+    }
+
+    @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
+    public void forgetPassword(@RequestParam("userEmail") String userEmail) throws LogisticException {
+        userInfoService.forgetPassword(userEmail);
     }
 
 }

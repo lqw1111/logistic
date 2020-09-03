@@ -764,3 +764,35 @@ GET /api/order
 
 GET /api/order/status/{statusId}
 
+### 新增 2020.09.01
+
+忘记密码，更新密码
+
+POST /api/forget/password?userEmail=qinwei@livebarn.com
+<br>
+
+表单提交,发送邮件
+
+
+POST /api/restpassword
+```json
+{
+    "username":"lqw",
+    "email":"qinwei@livebarn.com",
+    "oldPassword":"12345",
+    "newPassword":"123456"
+}
+```
+
+Response:
+```json
+{
+    "code": 200,
+    "message": "Update Success"
+}
+```
+
+
+无效Session:
+
+POST /api/session/invalidate

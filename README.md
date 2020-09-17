@@ -796,3 +796,174 @@ Response:
 无效Session:
 
 POST /api/session/invalidate
+
+
+### 新增 2020.09.17
+
+计算器
+
+POST /api/calculate
+
+输入
+```json
+{
+    "countryId":115,
+    "length":15.00,
+    "hight":15.00,
+    "width":20.00,
+    "weight":2.600
+}
+```
+
+返回
+```json
+[
+    {
+        "route": "燕文航空挂号-普货",
+        "price": "425.00"
+    },
+    {
+        "route": "燕文专线追踪小包-普货",
+        "price": "638.00"
+    },
+    {
+        "route": "燕文专线追踪小包-特货",
+        "price": "670.00"
+    },
+    {
+        "route": "中邮华南E特快",
+        "price": "435.00"
+    },
+    {
+        "route": "燕文专线快递-普货",
+        "price": "730.00"
+    }
+]
+```
+
+
+国家查询
+
+按照中文名查询（支持模糊查询）
+
+GET /api/country/chinesename/{chineseName}
+
+例子：
+/api/country/chinesename/美
+
+返回
+```json
+[
+    {
+        "id": 115,
+        "twoLetterCode": "US",
+        "name": "America",
+        "chineseName": "美国"
+    },
+    {
+        "id": 263,
+        "twoLetterCode": "AM",
+        "name": "Armenia",
+        "chineseName": "亚美尼亚"
+    },
+    {
+        "id": 2788,
+        "twoLetterCode": "ST",
+        "name": "Sao Tome and Princip",
+        "chineseName": "圣多美和普林西比"
+    },
+    {
+        "id": 2834,
+        "twoLetterCode": "UM",
+        "name": "United States Minor ",
+        "chineseName": "美国本土外小岛屿"
+    },
+    {
+        "id": 373,
+        "twoLetterCode": "AS",
+        "name": "Amercian Samoa",
+        "chineseName": "美属萨摩亚"
+    },
+    {
+        "id": 374,
+        "twoLetterCode": "VI",
+        "name": "The United States Vi",
+        "chineseName": "美属维尔京群岛"
+    }
+]
+```
+
+按照英文名查询（支持模糊查询）
+
+GET /api/country/name/{name}
+
+例子：
+/api/country/name/ab
+
+返回
+```json
+[
+    {
+        "id": 354,
+        "twoLetterCode": "AE",
+        "name": "United Arab Emirates",
+        "chineseName": "阿联酋"
+    },
+    {
+        "id": 377,
+        "twoLetterCode": "SA",
+        "name": "Saudi Arabia",
+        "chineseName": "沙特阿拉伯"
+    },
+    {
+        "id": 50,
+        "twoLetterCode": "GA",
+        "name": "Gabon",
+        "chineseName": "加蓬"
+    },
+    {
+        "id": 56,
+        "twoLetterCode": "ZW",
+        "name": "Zimbabwe",
+        "chineseName": "津巴布韦"
+    }
+]
+```
+
+
+查询所有
+
+GET /api/country
+
+路线信息
+
+GET /api/routeinfo
+
+```json
+[
+    {
+        "id": 1,
+        "name": "燕文航空挂号-普货"
+    },
+    {
+        "id": 2,
+        "name": "燕邮宝挂号-特货"
+    },
+    {
+        "id": 3,
+        "name": "燕文专线追踪小包-普货"
+    },
+    {
+        "id": 4,
+        "name": "燕文专线追踪小包-特货"
+    },
+    {
+        "id": 5,
+        "name": "中邮华南E特快"
+    },
+    {
+        "id": 6,
+        "name": "燕文专线快递-普货"
+    }
+]
+```

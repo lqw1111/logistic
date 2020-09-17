@@ -61,10 +61,16 @@ public class UserOrderController {
         return userOrderService.processingOrder(userId, userOrderId);
     }
 
+
     @RequestMapping(value = "/finish/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO finishOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.finishOrder(userId, userOrderId);
+    }
+
+    @RequestMapping(value = "/issue/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
+    public UserOrderDTO issueOrder(@PathVariable("userId") Integer userId, @PathVariable("userOrderId") Integer userOrderId) throws  LogisticException {
+        return userOrderService.issueOrder(userId, userOrderId);
     }
 
     @RequestMapping(value = "/submit/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)

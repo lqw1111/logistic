@@ -12,6 +12,7 @@ public class OrderStatus {
     public static final Integer CLOSED = 4;
     public static final Integer PROCESSING = 5;
     public static final Integer FINISH = 6;
+    public static final Integer ISSUE = 7;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

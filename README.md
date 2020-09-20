@@ -315,6 +315,38 @@ PUT /api/order/finish/user/{userId}/userorder/{userOrderId}
 }
 ```
 
+报错一个订单
+
+PUT /api/order/issue/user/{userId}/userorder/{userOrderId}
+
+```json
+{
+    "id": 1,
+    "userId": 2,
+    "statusId": 7,
+    "price": null,
+    "description": "111",
+    "receiverName": "1111",
+    "receiverPhone": "11111",
+    "receiverAddress": "???/Quebec/1111111/1111",
+    "receiverPostCode": "1111",
+    "orderId": "YSfb0bdd4c-cb56-4a28-b6b7-21f098f2bf5c",
+    "trackNumber": null,
+    "senderName": null,
+    "senderAddress": null,
+    "senderPhone": null,
+    "senderPostCode": null,
+    "orderComment": null,
+    "pathInfo": null,
+    "weight": null,
+    "volumn": null,
+    "expectDeliveryDate": null,
+    "createAt": "2020-09-20T14:16:46.000+0000",
+    "modifiedAt": "2020-09-20T15:30:22.000+0000",
+    "paymentInfo": null
+}
+```
+
 GET /api/order/find/user/{userId}
 
 #### Parcel API

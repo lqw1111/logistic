@@ -168,6 +168,21 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
+    public UserOrderDTO issueOrder(Integer userId, Integer userOrderId) throws LogisticException {
+        UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
+        if (userOrder == null)
+            throw new LogisticException("UserOrder Doesn't Exist");
+        if (!userOrder.getStatusId().equals(OrderStatus.PROCESSING))
+            throw new LogisticException("Order Status Exception");
+        userOrder.setStatusId(OrderStatus.ISSUE);
+
+        //TODO: 创造order history，发送邮件提醒
+
+        UserOrder order = userOrderRepository.save(userOrder);
+        return UserOrderMapper.INSTANCE.toDTO(order);
+    }
+
+    @Override
     public List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException {
         List<UserOrderDTO> userOrders = userOrderRepository.findByUserId(userId).stream()
                 .map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());

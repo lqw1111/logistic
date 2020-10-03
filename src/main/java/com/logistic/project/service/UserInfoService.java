@@ -6,6 +6,7 @@ import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserInfoService {
@@ -24,4 +25,6 @@ public interface UserInfoService {
     void forgetPassword(String userEmail) throws LogisticException;
 
     JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException;
+
+    void activeAccount(String userEmail, String token, String userName) throws LogisticException;
 }

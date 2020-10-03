@@ -23,6 +23,10 @@ public class UserInfoDTO {
 
     public String address;
 
+    public String token;
+
+    public boolean active;
+
     public String wxId;
 
     public Timestamp lastActiveTime;
@@ -87,6 +91,22 @@ public class UserInfoDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getWxId() {

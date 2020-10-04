@@ -3,6 +3,7 @@ package com.logistic.project.service.Impl;
 import com.logistic.project.dao.repository.ParcelRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
+import com.logistic.project.dto.IssueMessageDTO;
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
@@ -80,7 +81,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         updateUserOrder.setVolumn(orderDTO.getVolumn());
         updateUserOrder.setExpectDeliveryDate(orderDTO.getExpectDeliveryDate());
         updateUserOrder.setPaymentInfo(orderDTO.getPaymentInfo());
-
+        updateUserOrder.setIssueMessage(orderDTO.getIssueMessage());
         //update user time
         userInfoRepository.updateUserLastActiveTime(updateUserOrder.getUserId());
 
@@ -218,4 +219,17 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
 
+    @Override
+    public UserOrderDTO updateIssueMessage(IssueMessageDTO issueMessageDTO) throws LogisticException {
+        Optional<UserOrder> userOrder = userOrderRepository.findUserOrderById(issueMessageDTO.getId());
+        if (!userOrder.isPresent())
+            throw new LogisticException("UserOrder Doesn't Exist");
+
+        UserOrder updateUserOrder = userOrder.get();
+        updateUserOrder.setIssueMessage(issueMessageDTO.getIssueMessage());
+        userInfoRepository.updateUserLastActiveTime(updateUserOrder.getUserId());
+
+        UserOrder o = userOrderRepository.save(updateUserOrder);
+        return UserOrderMapper.INSTANCE.toDTO(o);
+    }
 }

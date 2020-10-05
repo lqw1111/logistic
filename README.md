@@ -1052,6 +1052,7 @@ POST /api/payment
     "userName":"lqw",
     "orderId":3,
     "promotionCode":"aba12ec6-5572-4aed-9e74-b31ec4484186",
+    "paymentTypeId":1,
     "price":21.00,
     "paid":21.00,
     "actualPaid":null
@@ -1091,45 +1092,6 @@ GET /api/payment/user/{userId}
         "actualPaid": null,
         "validate": false,
         "paidAt": "2020-10-04T20:17:23.000+0000"
-    },
-    {
-        "id": 2,
-        "userId": 7,
-        "userEmail": "qinwei@livebarn.com",
-        "userName": "lqw",
-        "orderId": 3,
-        "promotionCode": null,
-        "price": 21.00,
-        "paid": 21.00,
-        "actualPaid": null,
-        "validate": false,
-        "paidAt": "2020-10-04T20:21:06.000+0000"
-    },
-    {
-        "id": 3,
-        "userId": 7,
-        "userEmail": "qinwei@livebarn.com",
-        "userName": "lqw",
-        "orderId": 3,
-        "promotionCode": null,
-        "price": 21.00,
-        "paid": 21.00,
-        "actualPaid": null,
-        "validate": false,
-        "paidAt": "2020-10-04T20:21:36.000+0000"
-    },
-    {
-        "id": 4,
-        "userId": 7,
-        "userEmail": "qinwei@livebarn.com",
-        "userName": "lqw",
-        "orderId": 3,
-        "promotionCode": "aba12ec6-5572-4aed-9e74-b31ec4484186",
-        "price": 21.00,
-        "paid": 21.00,
-        "actualPaid": null,
-        "validate": false,
-        "paidAt": "2020-10-04T20:22:38.000+0000"
     }
 ]
 ```
@@ -1174,4 +1136,21 @@ POST /api/payment/validate/{paymentId}
     "validate": true,
     "paidAt": "2020-10-04T20:17:23.000+0000"
 }
+```
+
+查询支付方式：
+
+GET /api/paymenttype
+
+```json
+[
+    {
+        "id": 1,
+        "name": "wechat"
+    },
+    {
+        "id": 2,
+        "name": "alipay"
+    }
+]
 ```

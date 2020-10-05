@@ -17,6 +17,8 @@ public class PaymentDTO {
 
     public String promotionCode;
 
+    public Integer paymentTypeId;
+
     public BigDecimal price;
 
     public BigDecimal paid;
@@ -76,6 +78,14 @@ public class PaymentDTO {
 
     public void setPromotionCode(String promotionCode) {
         this.promotionCode = promotionCode;
+    }
+
+    public Integer getPaymentTypeId() {
+        return paymentTypeId;
+    }
+
+    public void setPaymentTypeId(Integer paymentTypeId) {
+        this.paymentTypeId = paymentTypeId;
     }
 
     public BigDecimal getPrice() {

@@ -10,15 +10,11 @@ import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
 import com.logistic.project.service.UserInfoService;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.runtime.Log;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;

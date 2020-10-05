@@ -52,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         List<Payment> payments = paymentRepository.findAllByUserIdAndOrderId(payment.getUserId(), payment.getOrderId());
         if (payments.size() != 0) {
-            throw new LogisticException("Payment Alread Processing");
+            throw new LogisticException("Payment Already Processing");
         }
 
         Payment res = paymentRepository.save(payment);

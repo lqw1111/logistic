@@ -30,6 +30,9 @@ public class Payment {
     @Column(name = "promotion_code")
     public String promotionCode;
 
+    @Column(name = "payment_type_id")
+    public Integer paymentTypeId;
+
     @Column(name = "price")
     public BigDecimal price;
 
@@ -95,6 +98,14 @@ public class Payment {
 
     public void setPromotionCode(String promotionCode) {
         this.promotionCode = promotionCode;
+    }
+
+    public Integer getPaymentTypeId() {
+        return paymentTypeId;
+    }
+
+    public void setPaymentTypeId(Integer paymentTypeId) {
+        this.paymentTypeId = paymentTypeId;
     }
 
     public BigDecimal getPrice() {

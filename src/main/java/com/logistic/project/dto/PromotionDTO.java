@@ -1,45 +1,26 @@
-package com.logistic.project.entity;
+package com.logistic.project.dto;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "promotion")
-public class Promotion {
+public class PromotionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
-    @Column(name = "promotion_code")
     public String promotionCode;
 
-    @Column(name = "user_id")
     public Integer userId;
 
-    @Column(name = "discount")
     public Integer discount;
 
-    @Column(name = "price")
     public Integer price;
 
-    @Column(name = "promotion_type_id")
     public Integer promotionTypeId;
 
-    @Column(name = "expire_date")
     public Timestamp expireDate;
 
-    @Column(name = "validate")
     public boolean validate;
 
-    @Column(name = "create_at")
-    @Generated(value = GenerationTime.INSERT)
     public Timestamp createAt;
-
-    public Promotion() {
-    }
 
     public Integer getId() {
         return id;

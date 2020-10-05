@@ -6,8 +6,8 @@ CREATE TABLE promotion
     discount int,
     price int,
     promotion_type_id int NOT NULL,
-    expire_date timestamp NOT NULL,
-    validate boolean DEFAULT false  NOT NULL,
+    expire_date timestamp,
+    validate boolean DEFAULT true  NOT NULL,
     create_at timestamp DEFAULT current_timestamp NOT NULL
 );
 

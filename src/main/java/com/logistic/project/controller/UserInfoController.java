@@ -8,6 +8,8 @@ import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,15 @@ public class UserInfoController {
     @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
     public void forgetPassword(@RequestParam("userEmail") String userEmail) throws LogisticException {
         userInfoService.forgetPassword(userEmail);
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public void active(@RequestParam("email") String userEmail,
+                       @RequestParam("token") String token,
+                       @RequestParam("username") String userName,
+                       HttpServletResponse resp) throws Exception {
+        userInfoService.activeAccount(userEmail, token, userName);
+        resp.sendRedirect("https://www.youtube.com/");
     }
 
 }

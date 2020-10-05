@@ -999,3 +999,179 @@ GET /api/routeinfo
     }
 ]
 ```
+
+### 新增 2020.10.03
+查询该用户所有优惠券
+
+GET  /api/promotion/user/{userId}
+
+return:
+```json
+[
+    {
+        "id": 1,
+        "promotionCode": "8daa74d4-52b9-44cd-8fb3-204e7575ed3c",
+        "userId": 21,
+        "discount": null,
+        "price": 5,
+        "promotionTypeId": 1,
+        "expireDate": null,
+        "validate": true,
+        "createAt": "2020-10-04T19:29:34.000+0000"
+    },
+    {
+        "id": 2,
+        "promotionCode": "39b4dfb7-07aa-4454-9584-d8e87b4a8cef",
+        "userId": 21,
+        "discount": null,
+        "price": 5,
+        "promotionTypeId": 2,
+        "expireDate": null,
+        "validate": true,
+        "createAt": "2020-10-04T19:29:51.000+0000"
+    }
+]
+```
+
+创建现金优惠券（管理员使用）
+
+POST /api/promotion/price/user/{userId}/price/{price}
+
+创建折扣优惠券（管理员使用）
+
+POST /api/promotion/discount/user/{userId}/discount/{price}
+
+
+支付
+
+POST /api/payment
+```json
+{
+    "userId":7,
+    "userEmail":"qinwei@livebarn.com",
+    "userName":"lqw",
+    "orderId":3,
+    "promotionCode":"aba12ec6-5572-4aed-9e74-b31ec4484186",
+    "price":21.00,
+    "paid":21.00,
+    "actualPaid":null
+}
+```
+
+返回
+```json
+{
+    "id": 4,
+    "userId": 7,
+    "userEmail": "qinwei@livebarn.com",
+    "userName": "lqw",
+    "orderId": 3,
+    "promotionCode": "aba12ec6-5572-4aed-9e74-b31ec4484186",
+    "price": 21.00,
+    "paid": 21.00,
+    "actualPaid": null,
+    "validate": false,
+    "paidAt": "2020-10-04T20:22:38.000+0000"
+}
+```
+查询用户支付:
+
+GET /api/payment/user/{userId}
+```json
+[
+    {
+        "id": 1,
+        "userId": 7,
+        "userEmail": "qinwei@livebarn.com",
+        "userName": "lqw",
+        "orderId": 3,
+        "promotionCode": null,
+        "price": 21.00,
+        "paid": 21.00,
+        "actualPaid": null,
+        "validate": false,
+        "paidAt": "2020-10-04T20:17:23.000+0000"
+    },
+    {
+        "id": 2,
+        "userId": 7,
+        "userEmail": "qinwei@livebarn.com",
+        "userName": "lqw",
+        "orderId": 3,
+        "promotionCode": null,
+        "price": 21.00,
+        "paid": 21.00,
+        "actualPaid": null,
+        "validate": false,
+        "paidAt": "2020-10-04T20:21:06.000+0000"
+    },
+    {
+        "id": 3,
+        "userId": 7,
+        "userEmail": "qinwei@livebarn.com",
+        "userName": "lqw",
+        "orderId": 3,
+        "promotionCode": null,
+        "price": 21.00,
+        "paid": 21.00,
+        "actualPaid": null,
+        "validate": false,
+        "paidAt": "2020-10-04T20:21:36.000+0000"
+    },
+    {
+        "id": 4,
+        "userId": 7,
+        "userEmail": "qinwei@livebarn.com",
+        "userName": "lqw",
+        "orderId": 3,
+        "promotionCode": "aba12ec6-5572-4aed-9e74-b31ec4484186",
+        "price": 21.00,
+        "paid": 21.00,
+        "actualPaid": null,
+        "validate": false,
+        "paidAt": "2020-10-04T20:22:38.000+0000"
+    }
+]
+```
+
+设置实际付钱数
+
+POST /api/payment/paid/{acutalPaid}/payment/{paymentId}
+
+actualPaid: 保留两位小数
+
+```json
+{
+    "id": 1,
+    "userId": 7,
+    "userEmail": "qinwei@livebarn.com",
+    "userName": "lqw",
+    "orderId": 3,
+    "promotionCode": null,
+    "price": 21.00,
+    "paid": 21.00,
+    "actualPaid": 21.00,
+    "validate": false,
+    "paidAt": "2020-10-04T20:17:23.000+0000"
+}
+```
+
+验证支付
+
+POST /api/payment/validate/{paymentId}
+
+```json
+{
+    "id": 1,
+    "userId": 7,
+    "userEmail": "qinwei@livebarn.com",
+    "userName": "lqw",
+    "orderId": 3,
+    "promotionCode": null,
+    "price": 21.00,
+    "paid": 21.00,
+    "actualPaid": 21.00,
+    "validate": true,
+    "paidAt": "2020-10-04T20:17:23.000+0000"
+}
+```

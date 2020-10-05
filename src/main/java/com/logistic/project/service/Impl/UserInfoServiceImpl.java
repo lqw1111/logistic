@@ -12,17 +12,23 @@ import com.logistic.project.service.MailService;
 import com.logistic.project.service.UserInfoService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sun.rmi.runtime.Log;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
+
+    @Value("${company.main.page}")
+    public String mainPage;
 
     @Autowired
     private UserInfoRepository userInfoRepository;
@@ -36,6 +42,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserInfoDTO insertUser(UserInfo userInfo) throws LogisticException {
         UserInfo user = userInfoRepository.findByUsernameAndEmail(userInfo.getUsername(), userInfo.getEmail());
         if (user != null) {
@@ -45,12 +52,17 @@ public class UserInfoServiceImpl implements UserInfoService {
         entity.setRole(Role.user);
         entity.setPassword(encryptPassword(entity.getPassword()));
         entity.setDeleted(false);
+
+        String token = UUID.randomUUID().toString();
+        entity.setToken(token);
+        entity.setActive(false);
+
+        String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
+        mailService.sendTextMail(userInfo.getEmail(),"激活邮箱", contructActiveEmail(entity, activeUrl));
+
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
         res.setPassword(null);
-
-        //TODO: 实现发送确认邮件的逻辑
-//        mailService.sendTextMail(res.getEmail(),"测试文本邮箱发送","你好你好！");
 
         return res;
     }
@@ -150,12 +162,37 @@ public class UserInfoServiceImpl implements UserInfoService {
         return res;
     }
 
+    @Override
+    public void activeAccount(String userEmail, String token, String userName) throws LogisticException{
+        UserInfo userInfo = userInfoRepository.findByUsernameAndEmail(userName, userEmail);
+        if (userInfo == null) {
+            throw new LogisticException("User Doesn't Exist");
+        }
+        if (userInfo.getToken().equals(token)) {
+            userInfo.setActive(true);
+            userInfoRepository.save(userInfo);
+        } else {
+            throw new LogisticException("Active Fail");
+        }
+    }
+
     private String constructContent(UserInfo userInfo, String newPassword) {
         StringBuilder sb = new StringBuilder();
         sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
                 .append("\n")
                 .append("您").append(" ").append(userInfo.getUsername()).append(" 忘记了密码.").append("\n")
                 .append("密码重置为 ").append(newPassword).append("\n").append("\n")
+                .append("谢谢您的支持!").append("\n")
+                .append("一闪团队");
+        return sb.toString();
+    }
+
+    private String contructActiveEmail(UserInfo userInfo, String activeUrl) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
+                .append("\n")
+                .append("请点击链接激活账户").append(" ").append("\n")
+                .append(activeUrl).append("\n").append("\n")
                 .append("谢谢您的支持!").append("\n")
                 .append("一闪团队");
         return sb.toString();

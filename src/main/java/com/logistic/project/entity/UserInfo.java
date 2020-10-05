@@ -34,6 +34,12 @@ public class UserInfo {
     @Column(name = "address")
     public String address;
 
+    @Column(name = "token")
+    public String token;
+
+    @Column(name = "active")
+    public boolean active;
+
     @Column(name = "wx_id")
     public String wxId;
 
@@ -105,6 +111,22 @@ public class UserInfo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getWxId() {

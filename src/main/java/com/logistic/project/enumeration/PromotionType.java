@@ -1,8 +1,8 @@
 package com.logistic.project.enumeration;
 
 public enum PromotionType {
-    PRICE(1, "price"),
-    DISCOUNT(2, "discount");
+    PRICE(2, "price"),
+    DISCOUNT(1, "discount");
 
     private Integer id;
     private String type;

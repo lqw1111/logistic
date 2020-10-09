@@ -40,7 +40,7 @@ public class PromotionServiceImpl implements PromotionService {
         promotion.setPromotionCode(UUID.randomUUID().toString());
         promotion.setUserId(userId);
         promotion.setPromotionTypeId(PromotionType.DISCOUNT.getId());
-        promotion.setPrice(discount);
+        promotion.setDiscount(discount);
         promotion.setValidate(true);
         Promotion res = promotionRepository.save(promotion);
         return res;

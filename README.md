@@ -346,6 +346,38 @@ PUT /api/order/issue/user/{userId}/userorder/{userOrderId}
     "paymentInfo": null
 }
 ```
+Issue一个报错
+
+PUT /update/issue/message
+
+```json
+{
+   "id": 1,
+      "userId": 1,
+      "statusId": 2,
+      "price": null,
+      "description": "asdasda",
+      "receiverName": "asdasd",
+      "receiverPhone": "asdasd",
+      "receiverAddress": "????/ontario/dasd/asdasd",
+      "receiverPostCode": "asdasd",
+      "orderId": "YSeca87866-d292-4395-a802-b97a3109c0f2",
+      "trackNumber": null,
+      "senderName": null,
+      "senderAddress": null,
+      "senderPhone": null,
+      "senderPostCode": null,
+      "orderComment": null,
+      "pathInfo": null,
+      "weight": null,
+      "volumn": null,
+      "expectDeliveryDate": null,
+      "createAt": "2020-10-03T20:13:02.000+0000",
+      "modifiedAt": "2020-10-03T20:17:46.000+0000",
+      "paymentInfo": null,
+      "issueMessage": "123"
+}
+```
 
 GET /api/order/find/user/{userId}
 

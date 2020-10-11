@@ -54,6 +54,8 @@ public class UserOrderDTO {
 
     private String paymentInfo;
 
+    private String issueMessage;
+
     private boolean deleted;
 
     public Integer getId() {
@@ -246,5 +248,13 @@ public class UserOrderDTO {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getIssueMessage() {
+        return issueMessage;
+    }
+
+    public void setIssueMessage(String issueMessage) {
+        this.issueMessage = issueMessage;
     }
 }

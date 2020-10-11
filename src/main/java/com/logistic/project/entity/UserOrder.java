@@ -89,6 +89,9 @@ public class UserOrder implements Serializable {
     @Column(name = "deleted")
     private boolean deleted;
 
+    @Column(name= "issue_message")
+    private String issueMessage;
+
     public Integer getId() {
         return id;
     }
@@ -279,5 +282,13 @@ public class UserOrder implements Serializable {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public void setIssueMessage(String issueMessage) {
+        this.issueMessage = issueMessage;
+    }
+
+    public String getIssueMessage() {
+        return this.issueMessage;
     }
 }

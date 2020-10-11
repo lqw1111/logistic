@@ -1,5 +1,6 @@
 package com.logistic.project.service;
 
+import com.logistic.project.dto.IssueMessageDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
 import com.logistic.project.exception.LogisticException;
@@ -11,6 +12,8 @@ public interface UserOrderService {
     UserOrderDTO createOrder(UserOrderDTO userOrderDTO) throws LogisticException;
 
     UserOrderDTO updateOrder(UserOrderDTO orderDTO) throws LogisticException;
+
+    UserOrderDTO updateIssueMessage(IssueMessageDTO issueMessageDTO) throws LogisticException;
 
     List<UserOrderDTO> findAllByUserId(Integer userId) throws LogisticException;
 

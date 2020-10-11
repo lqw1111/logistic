@@ -1,5 +1,6 @@
 package com.logistic.project.controller;
 
+import com.logistic.project.dto.IssueMessageDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
 import com.logistic.project.entity.UserOrder;
@@ -71,6 +72,11 @@ public class UserOrderController {
     @RequestMapping(value = "/issue/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO issueOrder(@PathVariable("userId") Integer userId, @PathVariable("userOrderId") Integer userOrderId) throws  LogisticException {
         return userOrderService.issueOrder(userId, userOrderId);
+    }
+
+    @RequestMapping(value = "/update/issue/message", method = RequestMethod.PUT)
+    public UserOrderDTO updateIssueMessage(@RequestBody IssueMessageDTO issueMessageDTO) throws LogisticException{
+        return userOrderService.updateIssueMessage(issueMessageDTO);
     }
 
     @RequestMapping(value = "/submit/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)

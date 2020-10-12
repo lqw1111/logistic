@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = userInfoService.findByUsername(username);
-        if (userInfo == null){
+        if (userInfo == null || !userInfo.isActive() || userInfo.getDeleted()){
             throw new UsernameNotFoundException("not found");
         }
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

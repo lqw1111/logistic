@@ -48,8 +48,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public List<Promotion> findAllPromotionByUser(Integer userId) throws LogisticException {
-        UserInfo userInfo = userInfoRepository.findById(userId).orElseGet(null);
-        if (userInfo == null) {
+        if (!userInfoRepository.findById(userId).isPresent()) {
             throw new LogisticException("User Doesn't Exist");
         }
         return promotionRepository.findAllByUserIdAndValidateIsTrue(userId);

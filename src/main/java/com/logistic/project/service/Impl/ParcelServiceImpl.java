@@ -14,6 +14,8 @@ import com.logistic.project.service.ParcelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -116,6 +118,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<ParcelDTO> moveParcelForUserOrder(List<Integer> parcelIds, Integer newUserOrderId, Integer orginUserOrderId) throws LogisticException {
         if (orginUserOrderId != -1) {
             Optional<UserOrder> oldOrder = userOrderRepository.findUserOrderById(orginUserOrderId);
@@ -136,8 +139,13 @@ public class ParcelServiceImpl implements ParcelService {
         List<Integer> parcelUserOrderId = updateParcels.stream().map(parcel -> parcel.getUserOrderId()).distinct().collect(Collectors.toList());
         if (parcelUserId.size() != 1)
             throw new LogisticException("Find Multiple User Id");
-        if (parcelUserOrderId.size() != 1 || parcelUserOrderId.get(0) != orginUserOrderId)
+        if (parcelUserOrderId.size() != 1 || !parcelUserOrderId.get(0).equals(orginUserOrderId))
             throw new LogisticException("Can not Change due to the different User Order Id");
+
+        UserOrder userOrder = newUserOrder.get();
+        if (!userOrder.getUserId().equals(parcelUserId.get(0))) {
+            throw new LogisticException("Parcel and Order Doesn't belong to one User");
+        }
 
         updateParcels.forEach(parcel -> parcel.setUserOrderId(newUserOrderId));
 

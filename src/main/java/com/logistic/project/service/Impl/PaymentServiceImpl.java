@@ -61,6 +61,8 @@ public class PaymentServiceImpl implements PaymentService {
             promotionService.invalidatePromotion(payment.getPromotionCode(), userInfo.getUid());
         }
 
+        //TODO：发送邮件支付成功
+
         return PaymentMapper.INSTANCE.toDTO(res);
     }
 
@@ -100,6 +102,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentDTO> findPaymentByUserId(Integer userId) throws LogisticException {
+        if (!userInfoRepository.findById(userId).isPresent()) {
+            throw new LogisticException("User Doesn't Exist");
+        }
         List<Payment> payments = paymentRepository.findAllByUserId(userId);
         return payments.stream().map(payment -> PaymentMapper.INSTANCE.toDTO(payment)).collect(Collectors.toList());
     }

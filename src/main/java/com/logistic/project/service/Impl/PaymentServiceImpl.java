@@ -10,6 +10,8 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.PaymentMapper;
+import com.logistic.project.service.MailService;
+import com.logistic.project.service.MailTemplateService;
 import com.logistic.project.service.PaymentService;
 import com.logistic.project.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private MailTemplateService mailTemplateService;
 
     @Override
     public PaymentDTO createPayment(PaymentDTO paymentDTO) throws LogisticException {
@@ -62,6 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         //TODO：发送邮件支付成功
+        mailService.sendTextMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
 
         return PaymentMapper.INSTANCE.toDTO(res);
     }

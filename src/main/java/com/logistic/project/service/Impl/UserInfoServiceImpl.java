@@ -9,6 +9,7 @@ import com.logistic.project.enumeration.Role;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
+import com.logistic.project.service.MailTemplateService;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private MailTemplateService mailTemplateService;
+
     @Override
     public UserInfo findByUsername(String username) {
         return userInfoRepository.findByUsername(username);
@@ -54,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         entity.setActive(false);
 
         String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
-        mailService.sendTextMail(userInfo.getEmail(),"激活邮箱", contructActiveEmail(entity, activeUrl));
+        mailService.sendTextMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
@@ -137,7 +141,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         String newPassword = getRandomString(8);
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userInfoRepository.save(user);
-        mailService.sendTextMail(userEmail, "忘记密码", constructContent(user, newPassword));
+        mailService.sendTextMail(userEmail, "忘记密码", mailTemplateService.constructContent(user, newPassword));
     }
 
     @Override
@@ -180,27 +184,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
-    private String constructContent(UserInfo userInfo, String newPassword) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
-                .append("\n")
-                .append("您").append(" ").append(userInfo.getUsername()).append(" 忘记了密码.").append("\n")
-                .append("密码重置为 ").append(newPassword).append("\n").append("\n")
-                .append("谢谢您的支持!").append("\n")
-                .append("一闪团队");
-        return sb.toString();
-    }
 
-    private String contructActiveEmail(UserInfo userInfo, String activeUrl) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
-                .append("\n")
-                .append("请点击链接激活账户").append(" ").append("\n")
-                .append(activeUrl).append("\n").append("\n")
-                .append("谢谢您的支持!").append("\n")
-                .append("一闪团队");
-        return sb.toString();
-    }
 
     public String getRandomString(int length){
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

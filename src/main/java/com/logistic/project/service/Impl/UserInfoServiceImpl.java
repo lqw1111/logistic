@@ -172,6 +172,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
+    @Override
+    public void isActive(String username) throws LogisticException {
+        UserInfo userInfo = userInfoRepository.findByUsername(username);
+        if (!userInfo.isActive()) {
+            throw new LogisticException("Account Need Active");
+        }
+    }
+
     private String constructContent(UserInfo userInfo, String newPassword) {
         StringBuilder sb = new StringBuilder();
         sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")

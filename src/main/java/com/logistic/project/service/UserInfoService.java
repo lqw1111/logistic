@@ -27,4 +27,6 @@ public interface UserInfoService {
     JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException;
 
     void activeAccount(String userEmail, String token, String userName) throws LogisticException;
+
+    void isActive(String username) throws LogisticException;
 }

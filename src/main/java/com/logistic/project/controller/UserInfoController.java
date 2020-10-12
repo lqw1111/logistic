@@ -62,4 +62,9 @@ public class UserInfoController {
         resp.sendRedirect("https://www.youtube.com/");
     }
 
+    @RequestMapping(value = "/isActive/{username}", method = RequestMethod.GET)
+    public void isActive(@PathVariable("username") String username) throws LogisticException {
+        userInfoService.isActive(username);
+    }
+
 }

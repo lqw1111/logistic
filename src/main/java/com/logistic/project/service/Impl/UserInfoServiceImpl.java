@@ -40,8 +40,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserInfoDTO insertUser(UserInfo userInfo) throws LogisticException {
-        UserInfo user = userInfoRepository.findByUsernameAndEmail(userInfo.getUsername(), userInfo.getEmail());
-        if (user != null) {
+        List<UserInfo> users = userInfoRepository.findByUsernameOrEmail(userInfo.getUsername(), userInfo.getEmail());
+        if (users.size() > 0) {
             throw new LogisticException("User Already Exist");
         }
         UserInfo entity = userInfo;

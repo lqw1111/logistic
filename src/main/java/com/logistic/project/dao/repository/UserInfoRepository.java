@@ -27,4 +27,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
     int updateUserLastActiveTime(@Param("userId") Integer UserId);
 
     UserInfo findByEmailAndDeletedIsFalse(String userEmail);
+
+    @Query("SELECT user FROM UserInfo user WHERE user.username = :username OR user.email = :email AND user.deleted = 0")
+    List<UserInfo> findByUsernameOrEmail(String username, String email);
 }

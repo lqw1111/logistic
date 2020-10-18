@@ -1,5 +1,5 @@
 package com.logistic.project.enumeration;
 
 public enum ParcelStatus {
-    waiting, problem, verify
+    waiting, problem, verify, shipping, finish
 }

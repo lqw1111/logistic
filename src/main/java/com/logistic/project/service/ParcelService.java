@@ -30,6 +30,8 @@ public interface ParcelService {
 
     ParcelDTO updateParcelToVerify(Integer parcelId) throws LogisticException;
 
+    ParcelDTO updateParcelToShipping(Integer parcelId) throws LogisticException;
+
     List<ParcelDTO> findAll() throws LogisticException;
 
     List<ParcelDTO> findAllWaiting() throws LogisticException;
@@ -37,4 +39,10 @@ public interface ParcelService {
     List<ParcelDTO> findAllProblem() throws LogisticException;
 
     List<ParcelDTO> findAllVerify() throws LogisticException;
+
+    List<ParcelDTO> findAllShipping() throws LogisticException;
+
+    ParcelDTO updateParcelToFinish(Integer parcelId) throws LogisticException;
+
+    List<ParcelDTO> findAllFinish() throws LogisticException;
 }

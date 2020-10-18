@@ -15,4 +15,6 @@ public interface PaymentService {
     PaymentDTO validatePayment(Integer paymentId) throws LogisticException;
 
     List<PaymentDTO> findPaymentByUserId(Integer userId) throws LogisticException;
+
+    List<PaymentDTO> findAll() throws LogisticException;
 }

@@ -17,6 +17,12 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<PaymentDTO> findAll() throws LogisticException {
+        return paymentService.findAll();
+    }
+
+
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public List<PaymentDTO> findPaymentByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
         return paymentService.findPaymentByUserId(userId);

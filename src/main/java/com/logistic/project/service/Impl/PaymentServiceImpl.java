@@ -10,10 +10,7 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.PaymentMapper;
-import com.logistic.project.service.MailService;
-import com.logistic.project.service.MailTemplateService;
-import com.logistic.project.service.PaymentService;
-import com.logistic.project.service.PromotionService;
+import com.logistic.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +39,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     private MailTemplateService mailTemplateService;
+
+    @Autowired
+    private UserOrderService userOrderService;
 
     @Override
     public PaymentDTO createPayment(PaymentDTO paymentDTO) throws LogisticException {
@@ -102,9 +102,8 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setValidate(true);
         Payment res = paymentRepository.save(payment);
 
-        UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(payment.getUserId(), payment.getOrderId());
-        userOrder.setStatusId(OrderStatus.PROCESSING);
-        userOrderRepository.save(userOrder);
+        //验证支付之后自动更新包裹状态
+        userOrderService.processingOrder(payment.getUserId(), payment.getOrderId());
 
         return PaymentMapper.INSTANCE.toDTO(res);
     }
@@ -115,6 +114,12 @@ public class PaymentServiceImpl implements PaymentService {
             throw new LogisticException("User Doesn't Exist");
         }
         List<Payment> payments = paymentRepository.findAllByUserId(userId);
+        return payments.stream().map(payment -> PaymentMapper.INSTANCE.toDTO(payment)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentDTO> findAll() throws LogisticException {
+        List<Payment> payments = paymentRepository.findAll();
         return payments.stream().map(payment -> PaymentMapper.INSTANCE.toDTO(payment)).collect(Collectors.toList());
     }
 

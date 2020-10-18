@@ -1186,3 +1186,46 @@ GET /api/paymenttype
     }
 ]
 ```
+
+### 新增 2020.10.17
+
+现在所有订单在支付验证之后，订单状态会变为processing，相应的包裹状态会变为shipping
+
+在用户确认收到订单之后，订单状态会变成finish，相应的包裹状态会变成finish
+
+PUT /api/parcel/{parcelId}/shipping
+```json
+{
+    "id": 8,
+    "orderNumber": "SF顺丰 SF123113",
+    "senderName": "Supreme",
+    "senderAddress": "陕西省 西安市",
+    "senderPhone": "",
+    "senderPostCode": "1234",
+    "userId": 21,
+    "receiverName": "",
+    "receiverAddress": "",
+    "receiverPhone": "",
+    "receiverPostCode": "",
+    "contentType": "普货",
+    "description": "衣服",
+    "parcelStatus": "shipping",
+    "userOrderId": 11,
+    "createAt": "2020-10-11T23:02:07.000+0000",
+    "modifiedAt": "2020-10-17T22:24:28.000+0000",
+    "comment": null
+}
+```
+
+查找左右状态为shipping的包裹
+
+GET /api/parcel/status/shipping
+
+设置包裹状态为finish
+
+PUT /api/parcel/{parcelId}/finish
+
+查找左右状态为finish的包裹
+
+GET /api/parcel/status/shipping
+

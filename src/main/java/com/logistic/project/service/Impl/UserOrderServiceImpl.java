@@ -8,7 +8,9 @@ import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
 import com.logistic.project.entity.OrderStatus;
+import com.logistic.project.entity.Parcel;
 import com.logistic.project.entity.UserOrder;
+import com.logistic.project.enumeration.ParcelStatus;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.ParcelMapper;
 import com.logistic.project.mapper.UserOrderMapper;
@@ -16,6 +18,8 @@ import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -142,6 +146,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserOrderDTO processingOrder(Integer userId, Integer userOrderId) throws LogisticException {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
@@ -150,10 +155,18 @@ public class UserOrderServiceImpl implements UserOrderService {
             throw new LogisticException("Order Status Exception");
         userOrder.setStatusId(OrderStatus.PROCESSING);
         UserOrder order = userOrderRepository.save(userOrder);
+
+        // 更改order下相应的包裹状态为processing
+        List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrderId);
+        for (Parcel p : parcels) {
+            p.setParcelStatus(ParcelStatus.shipping);
+        }
+        parcelRepository.saveAll(parcels);
         return UserOrderMapper.INSTANCE.toDTO(order);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserOrderDTO finishOrder(Integer userId, Integer userOrderId) throws LogisticException {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
@@ -163,6 +176,13 @@ public class UserOrderServiceImpl implements UserOrderService {
         userOrder.setStatusId(OrderStatus.FINISH);
 
         //TODO: 创造order history，发送邮件提醒
+
+        //完成订单后，订单下面的包裹更新为finish
+        List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrderId);
+        for (Parcel p : parcels) {
+            p.setParcelStatus(ParcelStatus.finish);
+        }
+        parcelRepository.saveAll(parcels);
 
         UserOrder order = userOrderRepository.save(userOrder);
         return UserOrderMapper.INSTANCE.toDTO(order);

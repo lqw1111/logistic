@@ -210,6 +210,26 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
+    public ParcelDTO updateParcelToShipping(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcel = parcelRepository.findParcelById(parcelId);
+        if (!parcel.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        Parcel p = parcel.get();
+        p.setParcelStatus(ParcelStatus.shipping);
+        return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
+    }
+
+    @Override
+    public ParcelDTO updateParcelToFinish(Integer parcelId) throws LogisticException {
+        Optional<Parcel> parcel = parcelRepository.findParcelById(parcelId);
+        if (!parcel.isPresent())
+            throw new LogisticException("Parcel Doesn't Exist");
+        Parcel p = parcel.get();
+        p.setParcelStatus(ParcelStatus.finish);
+        return ParcelMapper.INSTANCE.toDTO(parcelRepository.save(p));
+    }
+
+    @Override
     public List<ParcelDTO> findAll() throws LogisticException {
         List<Parcel> parcels = parcelRepository.findAllByDeletedIsFalseOrderByModifiedAt();
         return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
@@ -232,4 +252,17 @@ public class ParcelServiceImpl implements ParcelService {
         List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.verify.toString());
         return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ParcelDTO> findAllShipping() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.shipping.toString());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParcelDTO> findAllFinish() throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.finish.toString());
+        return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
 }

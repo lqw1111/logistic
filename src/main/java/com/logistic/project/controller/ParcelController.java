@@ -77,6 +77,16 @@ public class ParcelController {
         return parcelService.updateParcelToVerify(parcelId);
     }
 
+    @RequestMapping(value = "/{parcelId}/shipping", method = RequestMethod.PUT)
+    public ParcelDTO updateParcelStatusToShipping(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.updateParcelToShipping(parcelId);
+    }
+
+    @RequestMapping(value = "/{parcelId}/finish", method = RequestMethod.PUT)
+    public ParcelDTO updateParcelStatusToFinish(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
+        return parcelService.updateParcelToFinish(parcelId);
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<ParcelDTO> findAll() throws LogisticException {
         return parcelService.findAll();
@@ -95,5 +105,15 @@ public class ParcelController {
     @RequestMapping(value = "/status/verify", method = RequestMethod.GET)
     public List<ParcelDTO> findAllVerify() throws LogisticException {
         return parcelService.findAllVerify();
+    }
+
+    @RequestMapping(value = "/status/shipping", method = RequestMethod.GET)
+    public List<ParcelDTO> findAllShipping() throws LogisticException {
+        return parcelService.findAllShipping();
+    }
+
+    @RequestMapping(value = "/status/finish", method = RequestMethod.GET)
+    public List<ParcelDTO> findAllFinish() throws LogisticException {
+        return parcelService.findAllFinish();
     }
 }

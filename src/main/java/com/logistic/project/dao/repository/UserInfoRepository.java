@@ -28,6 +28,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     UserInfo findByEmailAndDeletedIsFalse(String userEmail);
 
-    @Query("SELECT user FROM UserInfo user WHERE user.username = :username OR user.email = :email AND user.deleted = 0")
-    List<UserInfo> findByUsernameOrEmail(String username, String email);
+    @Query("SELECT user FROM UserInfo user WHERE (user.username = :username OR user.email = :email) AND user.deleted = 0 AND user.active = 1")
+    List<UserInfo> findByUsernameOrEmail(@Param("username") String username, @Param("email") String email);
 }

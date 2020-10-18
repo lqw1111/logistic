@@ -57,6 +57,12 @@ public class UserInfo {
     @Column(name = "deleted")
     public Boolean deleted;
 
+    @Column(name = "invited_by")
+    public Integer invitedBy;
+
+    @Column(name = "invited_code")
+    public String invitedCode;
+
     public Integer getUid() {
         return uid;
     }
@@ -167,5 +173,21 @@ public class UserInfo {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Integer getInvitedBy() {
+        return invitedBy;
+    }
+
+    public void setInvitedBy(Integer invitedBy) {
+        this.invitedBy = invitedBy;
+    }
+
+    public String getInvitedCode() {
+        return invitedCode;
+    }
+
+    public void setInvitedCode(String invitedCode) {
+        this.invitedCode = invitedCode;
     }
 }

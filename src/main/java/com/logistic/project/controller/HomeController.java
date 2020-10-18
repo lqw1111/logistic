@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class HomeController {
+public class HomeController extends BaseController{
 
     @PreAuthorize("hasAnyRole('admin', 'user')")
     @RequestMapping("/home")
     public String home(){
-        return "home";
+        return getPrincipal();
     }
 }

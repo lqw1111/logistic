@@ -37,6 +37,10 @@ public class UserInfoDTO {
 
     public Boolean deleted;
 
+    public Integer invitedBy;
+
+    public String invitedCode;
+
     public Integer getUid() {
         return uid;
     }
@@ -147,5 +151,21 @@ public class UserInfoDTO {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Integer getInvitedBy() {
+        return invitedBy;
+    }
+
+    public void setInvitedBy(Integer invitedBy) {
+        this.invitedBy = invitedBy;
+    }
+
+    public String getInvitedCode() {
+        return invitedCode;
+    }
+
+    public void setInvitedCode(String invitedCode) {
+        this.invitedCode = invitedCode;
     }
 }

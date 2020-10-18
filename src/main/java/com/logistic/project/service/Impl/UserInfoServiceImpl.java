@@ -57,6 +57,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         entity.setToken(token);
         entity.setActive(false);
 
+        if (userInfo.getInvitedCode() != null) {
+            String invitedCode = userInfo.getInvitedCode();
+            UserInfo user = userInfoRepository.findByToken(invitedCode);
+            if (user == null) {
+                throw new LogisticException("Invited User Not Exist");
+            }
+            entity.setInvitedBy(user.getUid());
+        }
+
         String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
         mailService.sendTextMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
@@ -167,6 +176,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = userInfoRepository.findByUsernameAndEmail(userName, userEmail);
         if (userInfo == null) {
             throw new LogisticException("User Doesn't Exist");
+        }
+        if (userInfo.isActive()) {
+            throw new LogisticException("User Already Active");
         }
         if (userInfo.getToken().equals(token)) {
             userInfo.setActive(true);

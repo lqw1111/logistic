@@ -30,4 +30,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     @Query("SELECT user FROM UserInfo user WHERE (user.username = :username OR user.email = :email) AND user.deleted = 0 AND user.active = 1")
     List<UserInfo> findByUsernameOrEmail(@Param("username") String username, @Param("email") String email);
+
+    @Query("SELECT user FROM UserInfo user WHERE user.token = :token AND user.deleted = 0 AND user.active = 1")
+    UserInfo findByToken(@Param("token") String token);
 }

@@ -138,6 +138,9 @@ public class UserOrderServiceImpl implements UserOrderService {
                 && !userOrder.getStatusId().equals(OrderStatus.SUBMIT)
                 && !userOrder.getStatusId().equals(OrderStatus.APPROVED))
             throw new LogisticException("Order Status Exception");
+
+        //TODO : 用户关闭之后，如果订单中有包裹，把包裹移出，所属订单变为-1即可
+
         userOrder.setStatusId(OrderStatus.CLOSED);
         UserOrder order = userOrderRepository.save(userOrder);
         return UserOrderMapper.INSTANCE.toDTO(order);

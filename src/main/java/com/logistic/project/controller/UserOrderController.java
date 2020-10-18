@@ -7,6 +7,7 @@ import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,11 +41,13 @@ public class UserOrderController {
         return userOrderService.updateOrder(userOrderDTO);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteOrderById(@PathVariable("id") Integer OrderId) throws LogisticException{
         userOrderService.deleteOrderById(OrderId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/approve/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO approveOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
@@ -57,12 +60,12 @@ public class UserOrderController {
         return userOrderService.closeUserOrder(userId, userOrderId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/processing/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO processingOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
         return userOrderService.processingOrder(userId, userOrderId);
     }
-
 
     @RequestMapping(value = "/finish/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO finishOrder(@PathVariable("userId") Integer userId,
@@ -75,6 +78,7 @@ public class UserOrderController {
         return userOrderService.issueOrder(userId, userOrderId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/update/issue/message", method = RequestMethod.PUT)
     public UserOrderDTO updateIssueMessage(@RequestBody IssueMessageDTO issueMessageDTO) throws LogisticException{
         return userOrderService.updateIssueMessage(issueMessageDTO);
@@ -92,12 +96,14 @@ public class UserOrderController {
     }
 
     //find all
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<UserOrderDTO> findAll() throws LogisticException {
         return userOrderService.findAll();
     }
 
     //find all status
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/{statusId}", method = RequestMethod.GET)
     public List<UserOrderDTO> findAllByStatus(@PathVariable("statusId") Integer statusId) throws LogisticException {
         return userOrderService.findAllByStatusId(statusId);

@@ -6,6 +6,7 @@ import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.OrderHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,17 +26,20 @@ public class OrderHistoryController {
     }
 
     //find all(可以排序，根据分数情况。根据时间)
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     public List<Map<String, Object>> findAll(@RequestParam("sort") String sort, @RequestParam("sortBy") String sortBy) throws LogisticException {
         return orderHistoryService.findAllSort(sort, sortBy);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Map<String, Object>> findAll() throws LogisticException {
         return orderHistoryService.findAll();
     }
 
     //find all by user id attached with order info
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/findAll/info", method = RequestMethod.GET)
     public List<Map<String, Object>> findAllWithOrderInfo() throws LogisticException {
         return orderHistoryService.findAllWithOrderInfo();
@@ -53,6 +57,7 @@ public class OrderHistoryController {
     }
 
     //delete
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/delete/{orderHistoryId}", method = RequestMethod.DELETE)
     public void deleteById(@PathVariable("orderHistoryId") Integer orderHistoryId) throws LogisticException {
         orderHistoryService.deleteById(orderHistoryId);

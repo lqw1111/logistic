@@ -4,6 +4,7 @@ import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.ParcelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class ParcelController {
         return parcelService.createParcel(parcelDTO);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/delete/parcel/{parcelId}/userorder/{parcelUserOrderId}", method = RequestMethod.DELETE)
     public void deleteParcel(@PathVariable Integer parcelId, @PathVariable Integer parcelUserOrderId) throws LogisticException {
         parcelService.deleteParcel(parcelId, parcelUserOrderId);
@@ -68,16 +70,19 @@ public class ParcelController {
         return parcelService.updateParcelToWaiting(parcelId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/{parcelId}/problem", method = RequestMethod.PUT)
     public ParcelDTO updateParcelStatusToProblem(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
         return parcelService.updateParcelToProblem(parcelId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/{parcelId}/verify", method = RequestMethod.PUT)
     public ParcelDTO updateParcelStatusToVerify(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
         return parcelService.updateParcelToVerify(parcelId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/{parcelId}/shipping", method = RequestMethod.PUT)
     public ParcelDTO updateParcelStatusToShipping(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
         return parcelService.updateParcelToShipping(parcelId);
@@ -88,31 +93,37 @@ public class ParcelController {
         return parcelService.updateParcelToFinish(parcelId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<ParcelDTO> findAll() throws LogisticException {
         return parcelService.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/waiting", method = RequestMethod.GET)
     public List<ParcelDTO> findAllWaiting() throws LogisticException {
         return parcelService.findAllWaiting();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/problem", method = RequestMethod.GET)
     public List<ParcelDTO> findAllProblem() throws LogisticException {
         return parcelService.findAllProblem();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/verify", method = RequestMethod.GET)
     public List<ParcelDTO> findAllVerify() throws LogisticException {
         return parcelService.findAllVerify();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/shipping", method = RequestMethod.GET)
     public List<ParcelDTO> findAllShipping() throws LogisticException {
         return parcelService.findAllShipping();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/finish", method = RequestMethod.GET)
     public List<ParcelDTO> findAllFinish() throws LogisticException {
         return parcelService.findAllFinish();

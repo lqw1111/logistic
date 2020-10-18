@@ -4,6 +4,7 @@ import com.logistic.project.entity.Promotion;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -19,12 +20,14 @@ public class PromotionController {
         return promotionService.findAllPromotionByUser(userId);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/discount/user/{userId}/discount/{discount}", method = RequestMethod.POST)
     public Promotion createDiscountPromotion(@PathVariable("userId") Integer userId,
                                      @PathVariable("discount") Integer discount) throws LogisticException {
         return promotionService.createDiscountPromotion(userId, discount);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/price/user/{userId}/price/{price}", method = RequestMethod.POST)
     public Promotion createPricePromotion(@PathVariable("userId") Integer userId,
                                           @PathVariable("price") Integer price) throws LogisticException {

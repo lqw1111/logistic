@@ -19,9 +19,9 @@ public class PromotionGivenService {
     private PromotionService promotionService;
 
     @Pointcut(value = "execution(public com.logistic.project.dto.UserInfoDTO com.logistic.project.controller.UserInfoController.register(com.logistic.project.entity.UserInfo))")
-    public void pointCut(){};
+    public void registerPointCut(){};
 
-    @AfterReturning(value = "pointCut()",returning = "result")
+    @AfterReturning(value = "registerPointCut()",returning = "result")
     public void newUserPromotion(JoinPoint joinPoint, UserInfoDTO result) throws LogisticException {
         Promotion promotion = promotionService.createDiscountPromotion(result.getUid(), 5);
         log.info("新用户注册 : " + result.getUsername());

@@ -14,6 +14,7 @@ import com.logistic.project.enumeration.ParcelStatus;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.ParcelMapper;
 import com.logistic.project.mapper.UserOrderMapper;
+import com.logistic.project.service.ParcelService;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,9 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
+
+    @Autowired
+    private ParcelService parcelService;
 
     @Override
     public UserOrderDTO createOrder(UserOrderDTO orderDTO) throws LogisticException {
@@ -99,10 +103,18 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteOrderById(Integer OrderId) throws LogisticException {
         if (!userOrderRepository.findUserOrderById(OrderId).isPresent())
             throw new LogisticException("UserOrder Doesn't Exist");
         userOrderRepository.deleteUserOrderById(OrderId);
+
+        List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(OrderId);
+        if (parcels.size() != 0) {
+            for (Parcel parcel : parcels) {
+                parcelService.deleteParcelFromUserOrder(parcel.getId(), OrderId);
+            }
+        }
     }
 
     @Override
@@ -130,6 +142,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId) throws LogisticException {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
@@ -140,6 +153,12 @@ public class UserOrderServiceImpl implements UserOrderService {
             throw new LogisticException("Order Status Exception");
 
         //TODO : 用户关闭之后，如果订单中有包裹，把包裹移出，所属订单变为-1即可
+        List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrder.getId());
+        if (parcels.size() != 0) {
+            for (Parcel parcel : parcels) {
+                parcelService.deleteParcelFromUserOrder(parcel.getId(), userOrder.getId());
+            }
+        }
 
         userOrder.setStatusId(OrderStatus.CLOSED);
         UserOrder order = userOrderRepository.save(userOrder);

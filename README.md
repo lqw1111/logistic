@@ -1229,3 +1229,28 @@ PUT /api/parcel/{parcelId}/finish
 
 GET /api/parcel/status/shipping
 
+用户订单统计
+
+GET /api/order/statistics/user/{userId}
+```json
+{
+    "NEW": 0,
+    "ISSUE": 0,
+    "CLOSED": 0,
+    "SUBMIT": 0,
+    "PROCESSING": 1,
+    "APPROVED": 1,
+    "FINISH": 2
+}
+```
+
+GET /api/parcel/statistics/user/{userId}
+```json
+{
+    "problem": 0,
+    "waiting": 0,
+    "shipping": 1,
+    "verify": 1,
+    "finish": 0
+}
+```

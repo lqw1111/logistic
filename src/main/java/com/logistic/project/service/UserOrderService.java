@@ -6,6 +6,7 @@ import com.logistic.project.dto.UserOrderWithParcelDTO;
 import com.logistic.project.exception.LogisticException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserOrderService {
 
@@ -39,4 +40,6 @@ public interface UserOrderService {
     List<UserOrderDTO> findAll() throws LogisticException;
 
     List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException;
+
+    Map<String,Integer> statisticsData(Integer userId) throws LogisticException;
 }

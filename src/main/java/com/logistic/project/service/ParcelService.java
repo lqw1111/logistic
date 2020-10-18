@@ -3,6 +3,7 @@ package com.logistic.project.service;
 import com.logistic.project.dto.ParcelDTO;
 import com.logistic.project.exception.LogisticException;
 import java.util.List;
+import java.util.Map;
 
 public interface ParcelService {
 
@@ -45,4 +46,6 @@ public interface ParcelService {
     ParcelDTO updateParcelToFinish(Integer parcelId) throws LogisticException;
 
     List<ParcelDTO> findAllFinish() throws LogisticException;
+
+    Map<String,Integer> statisticsData(Integer userId) throws LogisticException;
 }

@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -263,6 +261,17 @@ public class ParcelServiceImpl implements ParcelService {
     public List<ParcelDTO> findAllFinish() throws LogisticException {
         List<Parcel> parcels = parcelRepository.findAllByParcelStatus(ParcelStatus.finish.toString());
         return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Integer> statisticsData(Integer userId) throws LogisticException {
+        Map<String, Integer> map = new HashMap<>();
+        map.put(ParcelStatus.waiting.toString(), parcelRepository.findAllByParcelStatusAndUserId(ParcelStatus.waiting.toString(), userId).size());
+        map.put(ParcelStatus.problem.toString(), parcelRepository.findAllByParcelStatusAndUserId(ParcelStatus.problem.toString(), userId).size());
+        map.put(ParcelStatus.verify.toString(), parcelRepository.findAllByParcelStatusAndUserId(ParcelStatus.verify.toString(), userId).size());
+        map.put(ParcelStatus.shipping.toString(), parcelRepository.findAllByParcelStatusAndUserId(ParcelStatus.shipping.toString(), userId).size());
+        map.put(ParcelStatus.finish.toString(), parcelRepository.findAllByParcelStatusAndUserId(ParcelStatus.finish.toString(), userId).size());
+        return map;
     }
 
 }

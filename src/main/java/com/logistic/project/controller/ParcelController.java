@@ -6,6 +6,7 @@ import com.logistic.project.service.ParcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/parcel")
@@ -115,5 +116,10 @@ public class ParcelController {
     @RequestMapping(value = "/status/finish", method = RequestMethod.GET)
     public List<ParcelDTO> findAllFinish() throws LogisticException {
         return parcelService.findAllFinish();
+    }
+
+    @RequestMapping(value = "/statistics/user/{userId}", method = RequestMethod.GET)
+    public Map<String, Integer> statisticsData(@PathVariable("userId") Integer userId) throws LogisticException {
+        return parcelService.statisticsData(userId);
     }
 }

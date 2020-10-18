@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/order")
@@ -100,5 +101,10 @@ public class UserOrderController {
     @RequestMapping(value = "/status/{statusId}", method = RequestMethod.GET)
     public List<UserOrderDTO> findAllByStatus(@PathVariable("statusId") Integer statusId) throws LogisticException {
         return userOrderService.findAllByStatusId(statusId);
+    }
+
+    @RequestMapping(value = "/statistics/user/{userId}", method = RequestMethod.GET)
+    public Map<String, Integer> statisticsData(@PathVariable("userId") Integer userId) throws LogisticException {
+        return userOrderService.statisticsData(userId);
     }
 }

@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -236,6 +234,19 @@ public class UserOrderServiceImpl implements UserOrderService {
     public List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException {
         List<UserOrder> userOrders = userOrderRepository.findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(statusId);
         return userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Integer> statisticsData(Integer userId) throws LogisticException {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("NEW", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.NEW, userId).size());
+        map.put("SUBMIT", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.SUBMIT, userId).size());
+        map.put("APPROVED", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.APPROVED, userId).size());
+        map.put("CLOSED", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.CLOSED, userId).size());
+        map.put("PROCESSING", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.PROCESSING, userId).size());
+        map.put("FINISH", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.FINISH, userId).size());
+        map.put("ISSUE", userOrderRepository.findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(OrderStatus.ISSUE, userId).size());
+        return map;
     }
 
 

@@ -31,4 +31,6 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
     List<UserOrder> findAllByDeletedIsFalseOrderByModifiedAt();
 
     List<UserOrder> findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(Integer statusId);
+
+    List<UserOrder> findAllByStatusIdAndUserIdAndDeletedIsFalseOrderByModifiedAt(Integer statusId, Integer userId);
 }

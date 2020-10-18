@@ -7,6 +7,7 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ public class UserInfoController {
         return userInfoService.updateUserByName(userInfoDTO);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/user/findAll", method = RequestMethod.GET)
     public List<UserInfoDTO> findAllUser() throws LogisticException{
         return userInfoService.findAllUser();
@@ -38,6 +40,7 @@ public class UserInfoController {
         return userInfoService.getUserInfo(username);
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/user/findAll/sort/lastactive", method = RequestMethod.GET)
     public List<UserInfoDTO> findAllByLastActive() throws LogisticException{
         return userInfoService.findAllByLastActive();

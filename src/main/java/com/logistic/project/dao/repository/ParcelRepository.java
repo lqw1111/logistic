@@ -36,4 +36,7 @@ public interface ParcelRepository extends JpaRepository<Parcel, Integer> {
 
     @Query(nativeQuery = true, value = "select * from parcel where parcel_status = ?1 and deleted = false order by modified_at")
     List<Parcel> findAllByParcelStatus(String parcelStatus);
+
+    @Query(nativeQuery = true, value = "select * from parcel where parcel_status = ?1 and user_id = ?2 and deleted = false order by modified_at")
+    List<Parcel> findAllByParcelStatusAndUserId(String parcelStatus, Integer userId);
 }

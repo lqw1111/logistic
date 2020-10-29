@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler((req, res, err) -> {
                     JsonResponse tmp = new JsonResponse()
                             .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                            .message("fail to login");
+                            .message(err.getMessage());
 
                     res.setContentType("application/json;charset=utf-8");
                     try(PrintWriter out = res.getWriter()) {

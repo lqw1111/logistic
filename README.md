@@ -378,8 +378,69 @@ PUT /update/issue/message
       "issueMessage": "123"
 }
 ```
-
+找到附带所有包裹信息的订单信息
 GET /api/order/find/user/{userId}
+
+[
+{
+        "id": 60,
+        "userId": 15,
+        "statusId": 3,
+        "price": 356.00,
+        "description": "",
+        "receiverName": "???",
+        "receiverPhone": "3452647836",
+        "receiverAddress": "Canada/Quebec/1411 du fort street/",
+        "receiverPostCode": "H3H2N7",
+        "orderId": "YS2bbfc39b-43aa-42ba-b3d1-43972a6d42cc",
+        "trackNumber": null,
+        "senderName": null,
+        "senderAddress": null,
+        "senderPhone": null,
+        "senderPostCode": null,
+        "parcels": [
+            {
+                "id": 20,
+                "orderNumber": "EMS 1224536799",
+                "senderName": "mama",
+                "senderAddress": "2345 brossard",
+                "senderPhone": "qq",
+                "senderPostCode": "N4H2M7",
+                "userId": 15,
+                "receiverName": "",
+                "receiverAddress": "",
+                "receiverPhone": "",
+                "receiverPostCode": "",
+                "contentType": "??",
+                "description": "jumpjump",
+                "parcelStatus": "verify",
+                "userOrderId": 60,
+                "createAt": "2020-07-05T21:03:12.000+0000",
+                "modifiedAt": "2020-10-13T23:33:05.000+0000",
+                "comment": null
+            },
+            {
+                "id": 41,
+                "orderNumber": "SF?? 2345678",
+                "senderName": "liuqingqing",
+                "senderAddress": "1411 du fort street",
+                "senderPhone": "2345768",
+                "senderPostCode": "H3H2N7",
+                "userId": 15,
+                "receiverName": "",
+                "receiverAddress": "",
+                "receiverPhone": "",
+                "receiverPostCode": "",
+                "contentType": "????",
+                "description": "erftgyiphnoe",
+                "parcelStatus": "verify",
+                "userOrderId": 60,
+                "createAt": "2020-09-30T15:23:07.000+0000",
+                "modifiedAt": "2020-10-13T23:33:05.000+0000",
+                "comment": null
+            }
+        ]
+    },]
 
 #### Parcel API
 创建包裹

@@ -171,9 +171,14 @@ GET /api/order/find/{orderId}
 	"senderName":"zhangsan",
 	"senderAddress":"china",
 	"senderPhone":"300",
-	"senderPostCode":712099
+	"senderPostCode":712099，
+	"issueMessage":#####,
+	"pathInfo":***,
+	....
 }
 ```
+找到用户ID对应的所有包裹
+GET /api/order/findAll/${userId}
 
 找到该用户所有包裹
 GET /api/order/findAll/{userId}

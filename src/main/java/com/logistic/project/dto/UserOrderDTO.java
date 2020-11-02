@@ -58,6 +58,36 @@ public class UserOrderDTO {
 
     private boolean deleted;
 
+    public UserOrderDTO(){}
+
+    public UserOrderDTO(UserOrderDTO userOrderDTO) {
+        this.id = userOrderDTO.getId();
+        this.userId = userOrderDTO.getUserId();
+        this.statusId = userOrderDTO.getStatusId();
+        this.price = userOrderDTO.getPrice();
+        this.description = userOrderDTO.getDescription();
+        this.receiverName = userOrderDTO.getReceiverName();
+        this.receiverPhone = userOrderDTO.getReceiverPhone();
+        this.receiverAddress = userOrderDTO.getReceiverAddress();
+        this.receiverPostCode = userOrderDTO.getReceiverPostCode();
+        this.orderId = userOrderDTO.getOrderId();
+        this.trackNumber = userOrderDTO.getTrackNumber();
+        this.senderName = userOrderDTO.getSenderName();
+        this.senderAddress = userOrderDTO.getSenderAddress();
+        this.senderPhone = userOrderDTO.getSenderPhone();
+        this.senderPostCode = userOrderDTO.getSenderPostCode();
+        this.orderComment = userOrderDTO.getOrderComment();
+        this.pathInfo = userOrderDTO.getPathInfo();
+        this.weight = userOrderDTO.getWeight();
+        this.volumn = userOrderDTO.getVolumn();
+        this.expectDeliveryDate = userOrderDTO.getExpectDeliveryDate();
+        this.createAt = userOrderDTO.getCreateAt();
+        this.modifiedAt = userOrderDTO.getModifiedAt();
+        this.paymentInfo = userOrderDTO.getPaymentInfo();
+        this.issueMessage = userOrderDTO.getIssueMessage();
+        this.deleted = userOrderDTO.isDeleted();
+    }
+
     public Integer getId() {
         return id;
     }

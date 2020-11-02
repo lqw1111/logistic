@@ -1,15 +1,11 @@
 package com.logistic.project.controller;
 
 import com.logistic.project.dto.OrderHistoryDTO;
-import com.logistic.project.entity.OrderHistory;
-import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.OrderHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +35,6 @@ public class OrderHistoryController {
     }
 
     //find all by user id attached with order info
-    @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/findAll/info", method = RequestMethod.GET)
     public List<Map<String, Object>> findAllWithOrderInfo() throws LogisticException {
         return orderHistoryService.findAllWithOrderInfo();

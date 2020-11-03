@@ -11,7 +11,7 @@ public interface PromotionService {
 
     Promotion createDiscountPromotion(Integer userId, Integer discount) throws LogisticException;
 
-    List<Promotion> findAllPromotionByUser(Integer userId) throws LogisticException;
+    List<Promotion> findAllPromotionByUser(Integer userId, String username) throws LogisticException;
 
     void invalidatePromotion(String promotionCode, Integer userId) throws LogisticException;
 }

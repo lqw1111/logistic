@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/parcel")
-public class ParcelController {
+public class ParcelController extends BaseController {
 
     @Autowired
     private ParcelService parcelService;
@@ -35,17 +35,17 @@ public class ParcelController {
     //find by id
     @RequestMapping(value = "/find/{parcelId}", method = RequestMethod.GET)
     public ParcelDTO findById(@PathVariable("parcelId") Integer parcelId) throws LogisticException {
-        return parcelService.findById(parcelId);
+        return parcelService.findById(parcelId, getPrincipal());
     }
 
     @RequestMapping(value = "/findAll/{userOrderId}", method = RequestMethod.GET)
     public List<ParcelDTO> getAllParcel(@PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
-        return parcelService.findAllParcelByUserOrderId(userOrderId);
+        return parcelService.findAllParcelByUserOrderId(userOrderId, getPrincipal());
     }
 
     @RequestMapping(value = "/findAll/userid/{userId}", method = RequestMethod.GET)
     public List<ParcelDTO> getAllParcelByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
-        return parcelService.findAllParcelByUserId(userId);
+        return parcelService.findAllParcelByUserId(userId, getPrincipal());
     }
 
     @RequestMapping(value = "/findAll/username/{userName}", method = RequestMethod.GET)
@@ -55,7 +55,7 @@ public class ParcelController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ParcelDTO updateParcel(@RequestBody ParcelDTO parcelDTO) throws LogisticException {
-        return parcelService.updateParcelInformation(parcelDTO);
+        return parcelService.updateParcelInformation(parcelDTO, getPrincipal());
     }
 
     @RequestMapping(value = "/move", method = RequestMethod.PUT)

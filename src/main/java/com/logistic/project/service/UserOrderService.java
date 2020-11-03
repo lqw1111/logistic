@@ -12,30 +12,30 @@ public interface UserOrderService {
 
     UserOrderDTO createOrder(UserOrderDTO userOrderDTO) throws LogisticException;
 
-    UserOrderDTO updateOrder(UserOrderDTO orderDTO) throws LogisticException;
+    UserOrderDTO updateOrder(UserOrderDTO orderDTO, String username) throws LogisticException;
 
     UserOrderDTO updateIssueMessage(IssueMessageDTO issueMessageDTO) throws LogisticException;
 
-    List<UserOrderDTO> findAllByUserId(Integer userId) throws LogisticException;
+    List<UserOrderDTO> findAllByUserId(Integer userId, String username) throws LogisticException;
 
     void deleteOrderById(Integer OrderId) throws LogisticException;
 
     UserOrderDTO approveOrder(Integer userId, Integer userOrderId) throws LogisticException;
 
-    UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId) throws LogisticException;
+    UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId, String username) throws LogisticException;
 
     UserOrderDTO processingOrder(Integer userId, Integer userOrderId) throws LogisticException;
 
-    UserOrderDTO finishOrder(Integer userId, Integer userOrderId) throws LogisticException;
+    UserOrderDTO finishOrder(Integer userId, Integer userOrderId, String username) throws LogisticException;
 
-    UserOrderDTO issueOrder(Integer userId, Integer userOrderId) throws LogisticException;
+    UserOrderDTO issueOrder(Integer userId, Integer userOrderId, String username) throws LogisticException;
 
     //TODO: 返回一个大的object 包括UserOrder和Parcel
-    List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException;
+    List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId, String username) throws LogisticException;
 
-    UserOrderDTO findById(Integer orderId) throws LogisticException;
+    UserOrderDTO findById(Integer orderId, String username) throws LogisticException;
 
-    UserOrderDTO submitOrder(Integer userId, Integer userOrderId) throws LogisticException;
+    UserOrderDTO submitOrder(Integer userId, Integer userOrderId, String username) throws LogisticException;
 
     List<UserOrderDTO> findAll() throws LogisticException;
 

@@ -3,7 +3,6 @@ package com.logistic.project.controller;
 import com.logistic.project.dto.IssueMessageDTO;
 import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.dto.UserOrderWithParcelDTO;
-import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/order")
-public class UserOrderController {
+public class UserOrderController extends BaseController {
 
     @Autowired
     private UserOrderService userOrderService;
@@ -27,18 +26,18 @@ public class UserOrderController {
 
     @RequestMapping(value = "/findAll/{userId}", method = RequestMethod.GET)
     public List<UserOrderDTO> findByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
-        return userOrderService.findAllByUserId(userId);
+        return userOrderService.findAllByUserId(userId, getPrincipal());
     }
 
     //find by id
     @RequestMapping(value = "/find/{orderId}", method = RequestMethod.GET)
     public UserOrderDTO findById(@PathVariable("orderId") Integer orderId) throws LogisticException {
-        return userOrderService.findById(orderId);
+        return userOrderService.findById(orderId, getPrincipal());
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public UserOrderDTO update(@RequestBody UserOrderDTO userOrderDTO) throws LogisticException{
-        return userOrderService.updateOrder(userOrderDTO);
+        return userOrderService.updateOrder(userOrderDTO, getPrincipal());
     }
 
     @PreAuthorize("hasAnyRole('admin')")
@@ -57,7 +56,7 @@ public class UserOrderController {
     @RequestMapping(value = "/close/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO closeOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
-        return userOrderService.closeUserOrder(userId, userOrderId);
+        return userOrderService.closeUserOrder(userId, userOrderId, getPrincipal());
     }
 
     @PreAuthorize("hasAnyRole('admin')")
@@ -70,12 +69,12 @@ public class UserOrderController {
     @RequestMapping(value = "/finish/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO finishOrder(@PathVariable("userId") Integer userId,
                                      @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
-        return userOrderService.finishOrder(userId, userOrderId);
+        return userOrderService.finishOrder(userId, userOrderId, getPrincipal());
     }
 
     @RequestMapping(value = "/issue/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO issueOrder(@PathVariable("userId") Integer userId, @PathVariable("userOrderId") Integer userOrderId) throws  LogisticException {
-        return userOrderService.issueOrder(userId, userOrderId);
+        return userOrderService.issueOrder(userId, userOrderId, getPrincipal());
     }
 
     @PreAuthorize("hasAnyRole('admin')")
@@ -87,12 +86,12 @@ public class UserOrderController {
     @RequestMapping(value = "/submit/user/{userId}/userorder/{userOrderId}", method = RequestMethod.PUT)
     public UserOrderDTO submitOrder(@PathVariable("userId") Integer userId,
                                     @PathVariable("userOrderId") Integer userOrderId) throws LogisticException {
-        return userOrderService.submitOrder(userId, userOrderId);
+        return userOrderService.submitOrder(userId, userOrderId, getPrincipal());
     }
 
     @RequestMapping(value = "/find/user/{userId}", method = RequestMethod.GET)
     public List<UserOrderWithParcelDTO> findUserOrderWithParcel(@PathVariable("userId") Integer userId) throws LogisticException{
-        return userOrderService.findUserOrderWithParcel(userId);
+        return userOrderService.findUserOrderWithParcel(userId, getPrincipal());
     }
 
     //find all

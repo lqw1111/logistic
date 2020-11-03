@@ -1,5 +1,6 @@
 package com.logistic.project.service.Impl;
 
+import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.OrderHistoryRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
@@ -96,8 +97,11 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     }
 
     @Override
-    public OrderHistoryDTO updateById(Integer orderHistoryId, OrderHistoryDTO orderHistoryDTO) throws LogisticException {
+    public OrderHistoryDTO updateById(Integer orderHistoryId, OrderHistoryDTO orderHistoryDTO, String username) throws LogisticException {
         OrderHistory updateOrderHistory = orderHistoryRepository.findByIdAndDeletedIsFalse(orderHistoryId);
+        if (!BaseController.validAccess(userInfoRepository.findById(updateOrderHistory.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         if (updateOrderHistory == null){
             throw new LogisticException("Order History Doesn't Exist");
         }
@@ -128,7 +132,11 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     }
 
     @Override
-    public List<Map<String, Object>> findAllWithOrderInfoByUserId(Integer userId) throws LogisticException {
+    public List<Map<String, Object>> findAllWithOrderInfoByUserId(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
         List<OrderHistory> orderHistories = orderHistoryRepository.findAllByDeletedIsFalse();
         List<Map<String, Object>> res = orderHistories.stream()
                 .filter(orderHistory -> orderHistory.getUserId().equals(userId))

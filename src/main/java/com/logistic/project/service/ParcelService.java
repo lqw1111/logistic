@@ -13,17 +13,17 @@ public interface ParcelService {
 
     ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
 
-    List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId) throws LogisticException;
+    List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId, String username) throws LogisticException;
 
-    ParcelDTO updateParcelInformation(ParcelDTO parcelDTO) throws LogisticException;
+    ParcelDTO updateParcelInformation(ParcelDTO parcelDTO, String username) throws LogisticException;
 
     List<ParcelDTO> moveParcelForUserOrder(List<Integer> parcelIds, Integer newUserOrderId, Integer orginUserOrderId) throws LogisticException;
 
-    List<ParcelDTO> findAllParcelByUserId(Integer userId);
+    List<ParcelDTO> findAllParcelByUserId(Integer userId, String username) throws LogisticException;
 
     List<ParcelDTO> findAllParcelByUserName(String userName);
 
-    ParcelDTO findById(Integer parcelId) throws LogisticException;
+    ParcelDTO findById(Integer parcelId, String username) throws LogisticException;
 
     ParcelDTO updateParcelToWaiting(Integer parcelId) throws LogisticException;
 

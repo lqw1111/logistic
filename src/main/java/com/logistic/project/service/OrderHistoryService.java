@@ -13,11 +13,11 @@ public interface OrderHistoryService {
 
     List<Map<String, Object>> findAllWithOrderInfo() throws LogisticException;
 
-    OrderHistoryDTO updateById(Integer orderHistoryId, OrderHistoryDTO orderHistoryDTO) throws LogisticException;
+    OrderHistoryDTO updateById(Integer orderHistoryId, OrderHistoryDTO orderHistoryDTO, String username) throws LogisticException;
 
     void deleteById(Integer orderHistoryId) throws LogisticException;
 
     List<Map<String, Object>> findAll() throws LogisticException;
 
-    List<Map<String,Object>> findAllWithOrderInfoByUserId(Integer userId) throws LogisticException;
+    List<Map<String,Object>> findAllWithOrderInfoByUserId(Integer userId, String userName) throws LogisticException;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
-public class PaymentController {
+public class PaymentController extends BaseController {
 
     @Autowired
     private PaymentService paymentService;
@@ -26,7 +26,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public List<PaymentDTO> findPaymentByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
-        return paymentService.findPaymentByUserId(userId);
+        return paymentService.findPaymentByUserId(userId, getPrincipal());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

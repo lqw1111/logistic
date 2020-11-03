@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/orderhistory")
-public class OrderHistoryController {
+public class OrderHistoryController extends BaseController {
 
     @Autowired
     private OrderHistoryService orderHistoryService;
@@ -42,13 +42,13 @@ public class OrderHistoryController {
 
     @RequestMapping(value = "/findAll/info/{userId}", method = RequestMethod.GET)
     public List<Map<String, Object>> findAllWithOrderInfoByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
-        return orderHistoryService.findAllWithOrderInfoByUserId(userId);
+        return orderHistoryService.findAllWithOrderInfoByUserId(userId, getPrincipal());
     }
 
     //update
     @RequestMapping(value = "/update/{orderHistoryId}", method = RequestMethod.PUT)
     public OrderHistoryDTO updateOrderHistory(@PathVariable("orderHistoryId") Integer orderHistoryId, @RequestBody OrderHistoryDTO orderHistoryDTO) throws LogisticException {
-        return orderHistoryService.updateById(orderHistoryId, orderHistoryDTO);
+        return orderHistoryService.updateById(orderHistoryId, orderHistoryDTO, getPrincipal());
     }
 
     //delete

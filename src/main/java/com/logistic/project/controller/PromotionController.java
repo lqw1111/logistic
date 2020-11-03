@@ -10,14 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/promotion")
-public class PromotionController {
+public class PromotionController extends BaseController {
 
     @Autowired
     private PromotionService promotionService;
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public List<Promotion> findAllPromotionByUser(@PathVariable("userId") Integer userId) throws LogisticException {
-        return promotionService.findAllPromotionByUser(userId);
+        return promotionService.findAllPromotionByUser(userId, getPrincipal());
     }
 
     @PreAuthorize("hasAnyRole('admin')")

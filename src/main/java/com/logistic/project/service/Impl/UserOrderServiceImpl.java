@@ -1,5 +1,6 @@
 package com.logistic.project.service.Impl;
 
+import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.ParcelRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
@@ -58,12 +59,15 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO updateOrder(UserOrderDTO orderDTO) throws LogisticException {
+    public UserOrderDTO updateOrder(UserOrderDTO orderDTO, String username) throws LogisticException {
         Optional<UserOrder> userOrder = userOrderRepository.findUserOrderById(orderDTO.getId());
         if (!userOrder.isPresent())
             throw new LogisticException("UserOrder Doesn't Exist");
 
         UserOrder updateUserOrder = userOrder.get();
+        if (!BaseController.validAccess(userInfoRepository.findById(updateUserOrder.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
 
 //        if (updateUserOrder.getStatusId() >= OrderStatus.APPROVED)
 //            throw new LogisticException("Can't update Order Because admin already processing it, please contact with admin");
@@ -96,7 +100,10 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public List<UserOrderDTO> findAllByUserId(Integer userId) throws LogisticException {
+    public List<UserOrderDTO> findAllByUserId(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         List<UserOrder> userOrders = userOrderRepository.findByUserId(userId);
         List<UserOrderDTO> res = userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
         return res;
@@ -118,7 +125,10 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO submitOrder(Integer userId, Integer userOrderId) throws LogisticException {
+    public UserOrderDTO submitOrder(Integer userId, Integer userOrderId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
@@ -143,7 +153,10 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId) throws LogisticException {
+    public UserOrderDTO closeUserOrder(Integer userId, Integer userOrderId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
@@ -187,7 +200,11 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserOrderDTO finishOrder(Integer userId, Integer userOrderId) throws LogisticException {
+    public UserOrderDTO finishOrder(Integer userId, Integer userOrderId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
@@ -209,7 +226,11 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO issueOrder(Integer userId, Integer userOrderId) throws LogisticException {
+    public UserOrderDTO issueOrder(Integer userId, Integer userOrderId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
@@ -224,7 +245,10 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId) throws LogisticException {
+    public List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         List<UserOrderDTO> userOrders = userOrderRepository.findByUserId(userId).stream()
                 .map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
         List<UserOrderWithParcelDTO> res = userOrders.stream().map(userOrderDTO -> {
@@ -237,13 +261,18 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO findById(Integer orderId) throws LogisticException{
+    public UserOrderDTO findById(Integer orderId, String username) throws LogisticException{
         Optional<UserOrder> userOrderOptional = userOrderRepository.findUserOrderById(orderId);
         if (!userOrderOptional.isPresent()) {
             throw new LogisticException("Order Doesn't Exist");
         }
-        UserOrderDTO userOrder = UserOrderMapper.INSTANCE.toDTO(userOrderOptional.get());
-        return userOrder;
+        UserOrder userOrder = userOrderOptional.get();
+
+        if (!BaseController.validAccess(userInfoRepository.findById(userOrder.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+        UserOrderDTO res = UserOrderMapper.INSTANCE.toDTO(userOrder);
+        return res;
     }
 
     @Override

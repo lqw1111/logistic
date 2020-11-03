@@ -1,5 +1,6 @@
 package com.logistic.project.service.Impl;
 
+import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.PromotionRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.entity.Promotion;
@@ -47,7 +48,10 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public List<Promotion> findAllPromotionByUser(Integer userId) throws LogisticException {
+    public List<Promotion> findAllPromotionByUser(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         if (!userInfoRepository.findById(userId).isPresent()) {
             throw new LogisticException("User Doesn't Exist");
         }

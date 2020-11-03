@@ -1,5 +1,6 @@
 package com.logistic.project.service.Impl;
 
+import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.ParcelRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
@@ -76,7 +77,15 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId) throws LogisticException {
+    public List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId, String username) throws LogisticException {
+        UserOrder userOrder = userOrderRepository.findById(userOrderId).orElse(null);
+        if (userOrder == null) {
+            throw new LogisticException("Order Doesn't Exist");
+        }
+        if (!BaseController.validAccess(userInfoRepository.findById(userOrder.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
         List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrderId);
         List<ParcelDTO> res = new ArrayList<>();
         parcels.forEach(parcel -> {res.add(ParcelMapper.INSTANCE.toDTO(parcel));});
@@ -85,12 +94,16 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public ParcelDTO updateParcelInformation(ParcelDTO parcelDTO) throws LogisticException {
+    public ParcelDTO updateParcelInformation(ParcelDTO parcelDTO, String username) throws LogisticException {
         Optional<Parcel> p = parcelRepository.findParcelById(parcelDTO.getId());
         if (!p.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
 
         Parcel updateParcel = p.get();
+
+        if (!BaseController.validAccess(userInfoRepository.findById(updateParcel.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
 
         updateParcel.setOrderNumber(parcelDTO.getOrderNumber());
         updateParcel.setSenderName(parcelDTO.getSenderName());
@@ -156,7 +169,10 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public List<ParcelDTO> findAllParcelByUserId(Integer userId) {
+    public List<ParcelDTO> findAllParcelByUserId(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
         List<Parcel> parcels = parcelRepository.findParcelsByUserId(userId);
         return parcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
     }
@@ -169,11 +185,17 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public ParcelDTO findById(Integer parcelId) throws LogisticException {
+    public ParcelDTO findById(Integer parcelId, String username) throws LogisticException {
         Optional<Parcel> parcelOptional = parcelRepository.findParcelById(parcelId);
         if (!parcelOptional.isPresent())
             throw new LogisticException("Parcel Doesn't Exist");
-        ParcelDTO parcelDTO = ParcelMapper.INSTANCE.toDTO(parcelOptional.get());
+
+        Parcel parcel = parcelOptional.get();
+        if (!BaseController.validAccess(userInfoRepository.findById(parcel.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
+        ParcelDTO parcelDTO = ParcelMapper.INSTANCE.toDTO(parcel);
         return parcelDTO;
     }
 

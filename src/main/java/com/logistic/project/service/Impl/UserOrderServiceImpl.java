@@ -118,9 +118,8 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(OrderId);
         if (parcels.size() != 0) {
-            for (Parcel parcel : parcels) {
-                parcelService.deleteParcelFromUserOrder(parcel.getId(), OrderId);
-            }
+            List<Integer> parcelIds = parcels.stream().map(parcel -> parcel.getId()).collect(Collectors.toList());
+            parcelService.deleteParcelFromUserOrder(parcelIds, OrderId);
         }
     }
 
@@ -167,10 +166,10 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         //TODO : 用户关闭之后，如果订单中有包裹，把包裹移出，所属订单变为-1即可
         List<Parcel> parcels = parcelRepository.findParcelsByUserOrderId(userOrder.getId());
+
         if (parcels.size() != 0) {
-            for (Parcel parcel : parcels) {
-                parcelService.deleteParcelFromUserOrder(parcel.getId(), userOrder.getId());
-            }
+            List<Integer> parcelIds = parcels.stream().map(parcel -> parcel.getId()).collect(Collectors.toList());
+            parcelService.deleteParcelFromUserOrder(parcelIds, userOrder.getId());
         }
 
         userOrder.setStatusId(OrderStatus.CLOSED);

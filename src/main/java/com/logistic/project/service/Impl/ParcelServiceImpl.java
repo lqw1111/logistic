@@ -59,21 +59,24 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException {
-        Optional<Parcel> parcelOptional = parcelRepository.findParcelById(parcelId);
-        if (!parcelOptional.isPresent())
+    public List<ParcelDTO> deleteParcelFromUserOrder(List<Integer> parcelId, Integer parcelUserOrderId) throws LogisticException {
+        List<Parcel> parcels = parcelRepository.findByIds(parcelId);
+        if (parcels == null || parcels.size() == 0)
             throw new LogisticException("Parcel Doesn't Exist");
-        Parcel parcel = parcelOptional.get();
-        if (parcel.getUserOrderId() != parcelUserOrderId)
-            throw new LogisticException("User Order Id Doesn't Match");
-        //-1 不属于任何包裹
-        parcel.setUserOrderId(-1);
+
+        for (Parcel parcel : parcels) {
+            if (parcel.getUserOrderId() != parcelUserOrderId)
+                throw new LogisticException("User Order Id Doesn't Match");
+            //-1 不属于任何包裹
+            parcel.setUserOrderId(-1);
+        }
 
         //update user time
-        userInfoRepository.updateUserLastActiveTime(parcel.getUserId());
+        userInfoRepository.updateUserLastActiveTime(parcels.get(0).getUserId());
 
-        Parcel res = parcelRepository.saveAndFlush(parcel);
-        return ParcelMapper.INSTANCE.toDTO(res);
+        List<Parcel> dbParcels = parcelRepository.saveAll(parcels);
+        List<ParcelDTO> res = dbParcels.stream().map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+        return res;
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface ParcelService {
 
     void deleteParcel(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
 
-    ParcelDTO deleteParcelFromUserOrder(Integer parcelId, Integer parcelUserOrderId) throws LogisticException;
+    List<ParcelDTO> deleteParcelFromUserOrder(List<Integer> parcelId, Integer parcelUserOrderId) throws LogisticException;
 
     List<ParcelDTO> findAllParcelByUserOrderId(Integer userOrderId, String username) throws LogisticException;
 

@@ -27,9 +27,9 @@ public class ParcelController extends BaseController {
         parcelService.deleteParcel(parcelId, parcelUserOrderId);
     }
 
-    @RequestMapping(value = "/moveout/parcel/{parcelId}/userorder/{parcelUserOrderId}", method = RequestMethod.PUT)
-    public ParcelDTO moveOutParcelFromUserOrder(@PathVariable Integer parcelId, @PathVariable Integer parcelUserOrderId) throws LogisticException {
-        return parcelService.deleteParcelFromUserOrder(parcelId, parcelUserOrderId);
+    @RequestMapping(value = "/moveout/parcel/{parcelIds}/userorder/{parcelUserOrderId}", method = RequestMethod.PUT)
+    public List<ParcelDTO> moveOutParcelFromUserOrder(@PathVariable("parcelIds") List<Integer> parcelIds, @PathVariable("parcelUserOrderId") Integer parcelUserOrderId) throws LogisticException {
+        return parcelService.deleteParcelFromUserOrder(parcelIds, parcelUserOrderId);
     }
 
     //find by id

@@ -1,10 +1,8 @@
 package com.logistic.project.controller;
 
-import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.enumeration.Role;
 import com.logistic.project.exception.LogisticException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 

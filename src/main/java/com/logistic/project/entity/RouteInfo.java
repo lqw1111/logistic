@@ -13,6 +13,9 @@ public class RouteInfo {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     public RouteInfo() {
     }
 
@@ -30,5 +33,13 @@ public class RouteInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -2,6 +2,7 @@ package com.logistic.project.service.Impl;
 
 import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.PaymentRepository;
+import com.logistic.project.dao.repository.PromotionRepository;
 import com.logistic.project.dao.repository.UserInfoRepository;
 import com.logistic.project.dao.repository.UserOrderRepository;
 import com.logistic.project.dto.PaymentDTO;
@@ -11,6 +12,7 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.entity.UserOrder;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.PaymentMapper;
+import com.logistic.project.mapper.PromotionMapper;
 import com.logistic.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     private UserOrderService userOrderService;
+
+    @Autowired
+    private PromotionRepository promotionRepository;
 
     @Override
     public PaymentDTO createPayment(PaymentDTO paymentDTO) throws LogisticException {
@@ -125,7 +130,13 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentDTO> findAll() throws LogisticException {
         List<Payment> payments = paymentRepository.findAll();
-        return payments.stream().map(payment -> PaymentMapper.INSTANCE.toDTO(payment)).collect(Collectors.toList());
+        return payments.stream().map(payment -> {
+            PaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
+            if (payment.getPromotionCode() != null) {
+                paymentDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payment.getPromotionCode())));
+            }
+            return paymentDTO;
+        }).collect(Collectors.toList());
     }
 
 

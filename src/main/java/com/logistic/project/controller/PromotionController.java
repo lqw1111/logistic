@@ -21,16 +21,18 @@ public class PromotionController extends BaseController {
     }
 
     @PreAuthorize("hasAnyRole('admin')")
-    @RequestMapping(value = "/discount/user/{userId}/discount/{discount}", method = RequestMethod.POST)
+    @RequestMapping(value = {"/discount/user/{userId}/discount/{discount}", "/discount/user/{userId}/discount/{discount}/expire/{monthNum}"}, method = RequestMethod.POST)
     public Promotion createDiscountPromotion(@PathVariable("userId") Integer userId,
-                                     @PathVariable("discount") Integer discount) throws LogisticException {
-        return promotionService.createDiscountPromotion(userId, discount);
+                                     @PathVariable("discount") Integer discount,
+                                     @PathVariable(value = "monthNum", required = false) Integer monthNum) throws LogisticException {
+        return promotionService.createDiscountPromotion(userId, discount, monthNum);
     }
 
     @PreAuthorize("hasAnyRole('admin')")
-    @RequestMapping(value = "/price/user/{userId}/price/{price}", method = RequestMethod.POST)
+    @RequestMapping(value = {"/price/user/{userId}/price/{price}", "/price/user/{userId}/price/{price}/expire/{monthNum}"}, method = RequestMethod.POST)
     public Promotion createPricePromotion(@PathVariable("userId") Integer userId,
-                                          @PathVariable("price") Integer price) throws LogisticException {
-        return promotionService.createPricePromotion(userId, price);
+                                          @PathVariable("price") Integer price,
+                                          @PathVariable(value = "monthNum", required = false) Integer monthNum) throws LogisticException {
+        return promotionService.createPricePromotion(userId, price, monthNum);
     }
 }

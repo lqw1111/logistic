@@ -11,6 +11,9 @@ import com.logistic.project.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,27 +27,41 @@ public class PromotionServiceImpl implements PromotionService {
     private UserInfoRepository userInfoRepository;
 
     @Override
-    public Promotion createPricePromotion(Integer userId, Integer price) throws LogisticException {
+    public Promotion createPricePromotion(Integer userId, Integer price, Integer monthNum) throws LogisticException {
         Promotion promotion = new Promotion();
         promotion.setPromotionCode(UUID.randomUUID().toString());
         promotion.setUserId(userId);
         promotion.setPromotionTypeId(PromotionType.PRICE.getId());
         promotion.setPrice(price);
         promotion.setValidate(true);
+        if (monthNum != null) {
+            promotion.setExpireDate(getExpireDate(monthNum));
+        }
         Promotion res = promotionRepository.save(promotion);
         return res;
     }
 
     @Override
-    public Promotion createDiscountPromotion(Integer userId, Integer discount) throws LogisticException {
+    public Promotion createDiscountPromotion(Integer userId, Integer discount, Integer monthNum) throws LogisticException {
         Promotion promotion = new Promotion();
         promotion.setPromotionCode(UUID.randomUUID().toString());
         promotion.setUserId(userId);
         promotion.setPromotionTypeId(PromotionType.DISCOUNT.getId());
         promotion.setDiscount(discount);
         promotion.setValidate(true);
+        if (monthNum != null) {
+            promotion.setExpireDate(getExpireDate(monthNum));
+        }
         Promotion res = promotionRepository.save(promotion);
         return res;
+    }
+
+    private Timestamp getExpireDate(Integer monthNum) {
+        Date now = new Date();
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTime(now);
+        rightNow.add(Calendar.MONTH, monthNum);// 日期加3个月
+        return new Timestamp(rightNow.getTimeInMillis());
     }
 
     @Override

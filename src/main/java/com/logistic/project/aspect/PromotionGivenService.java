@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @Aspect
 @Component
 @Slf4j
@@ -41,11 +44,11 @@ public class PromotionGivenService {
             throw new LogisticException("User Doesn't Exist");
         }
         if (userInfo.getInvitedBy() != null) {
-            promotionService.createDiscountPromotion(userInfo.getUid(), 5);
-            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 5);
+            promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
+            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 5, 1);
         }
 
-        Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 5);
+        Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
         log.info("新用户注册 : " + userInfo.getUsername());
         log.info("新用户 : " + userInfo.getUsername() + "获得优惠券 " + promotion.getPromotionCode());
     }

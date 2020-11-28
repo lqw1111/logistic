@@ -1,5 +1,6 @@
 package com.logistic.project.controller;
 
+import com.logistic.project.dto.PriceProfileDTO;
 import com.logistic.project.entity.PriceProfile;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.PriceProfileService;
@@ -18,7 +19,7 @@ public class PriceProfileController {
     private PriceProfileService priceProfileService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<PriceProfile> findAll() throws LogisticException {
+    public List<PriceProfileDTO> findAll() throws LogisticException {
         return priceProfileService.findAll();
     }
 }

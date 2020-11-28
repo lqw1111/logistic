@@ -78,7 +78,11 @@ public class PaymentServiceImpl implements PaymentService {
         //TODO：发送邮件支付成功
         mailService.sendTextMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
 
-        return PaymentMapper.INSTANCE.toDTO(res);
+        PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
+        if (payDTO.getPromotionCode() != null) {
+            payDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payDTO.getPromotionCode())));
+        }
+        return payDTO;
     }
 
     @Override
@@ -89,7 +93,11 @@ public class PaymentServiceImpl implements PaymentService {
         }
         payment.setActualPaid(actualPaid);
         Payment res = paymentRepository.save(payment);
-        return PaymentMapper.INSTANCE.toDTO(res);
+        PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
+        if (payDTO.getPromotionCode() != null) {
+            payDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payDTO.getPromotionCode())));
+        }
+        return payDTO;
     }
 
     @Override
@@ -111,7 +119,11 @@ public class PaymentServiceImpl implements PaymentService {
         //验证支付之后自动更新包裹状态
         userOrderService.processingOrder(payment.getUserId(), payment.getOrderId());
 
-        return PaymentMapper.INSTANCE.toDTO(res);
+        PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
+        if (payDTO.getPromotionCode() != null) {
+            payDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payDTO.getPromotionCode())));
+        }
+        return payDTO;
     }
 
     @Override
@@ -124,7 +136,13 @@ public class PaymentServiceImpl implements PaymentService {
             throw new LogisticException("User Doesn't Exist");
         }
         List<Payment> payments = paymentRepository.findAllByUserId(userId);
-        return payments.stream().map(payment -> PaymentMapper.INSTANCE.toDTO(payment)).collect(Collectors.toList());
+        return payments.stream().map(payment -> {
+            PaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
+            if (payment.getPromotionCode() != null) {
+                paymentDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payment.getPromotionCode())));
+            }
+            return paymentDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override

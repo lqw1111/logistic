@@ -62,7 +62,7 @@ public class UserInfoController {
                        @RequestParam("username") String userName,
                        HttpServletResponse resp) throws Exception {
         userInfoService.activeAccount(userEmail, token, userName);
-        resp.sendRedirect("http://localhost:3000");
+        resp.sendRedirect("http://yishansudi.com");
     }
 
     @RequestMapping(value = "/isActive/{username}", method = RequestMethod.GET)

@@ -49,8 +49,8 @@ public class PromotionGivenService {
         }
 
         Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
-        log.info("新用户注册 : " + userInfo.getUsername());
-        log.info("新用户 : " + userInfo.getUsername() + "获得优惠券 " + promotion.getPromotionCode());
+        log.info("NEW USER REGISTER : " + userInfo.getUsername());
+        log.info("NEW USER : " + userInfo.getUsername() + " GET PROMOTION CODE " + promotion.getPromotionCode());
     }
 
 }

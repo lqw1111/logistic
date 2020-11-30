@@ -36,10 +36,10 @@ public class MailServiceImpl implements MailService {
 
         try {
             mailSender.send(message);
-            log.info("Text邮件已经发送。");
+            log.info("Text Mail Send Success");
         } catch (Exception e) {
-            log.error("发送Text邮件时发生异常！", e);
-            throw new LogisticException("发送Text邮件时发生异常！");
+            log.error("Error Sending TEXT Mail", e);
+            throw new LogisticException("Error Sending TEXT Mail");
         }
     }
 
@@ -55,10 +55,10 @@ public class MailServiceImpl implements MailService {
             helper.setText(content, true);
 
             mailSender.send(message);
-            log.info("html邮件发送成功");
+            log.info("html Mail Send Success");
         } catch (MessagingException e) {
-            log.error("发送html邮件时发生异常！", e);
-            throw new LogisticException("发送html邮件时发生异常！");
+            log.error("Error Sending HTML Mail", e);
+            throw new LogisticException("Error Sending HTML Mail");
         }
 
     }
@@ -80,10 +80,10 @@ public class MailServiceImpl implements MailService {
             //helper.addAttachment("test"+fileName, file);
 
             mailSender.send(message);
-            log.info("带附件的邮件已经发送。");
+            log.info("ATTACH Mail Send Success");
         } catch (MessagingException e) {
-            log.error("发送带附件的邮件时发生异常！");
-            throw new LogisticException("发送带附件的邮件时发生异常！");
+            log.error("Error Sending ATTACH Mail");
+            throw new LogisticException("Error Sending ATTACH Mail");
         }
 
     }
@@ -103,10 +103,10 @@ public class MailServiceImpl implements MailService {
             helper.addInline(rscId, res);
 
             mailSender.send(message);
-            log.info("嵌入静态资源的邮件已经发送。");
+            log.info("STATIC Mail Send Success");
         } catch (MessagingException e) {
-            log.error("发送嵌入静态资源的邮件时发生异常！");
-            throw new LogisticException("发送嵌入静态资源的邮件时发生异常！");
+            log.error("Error Sending STATIC Mail");
+            throw new LogisticException("Error Sending STATIC Mail");
         }
     }
 }

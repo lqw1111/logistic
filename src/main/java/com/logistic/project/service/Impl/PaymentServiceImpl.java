@@ -76,7 +76,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         //TODO：发送邮件支付成功
-        mailService.sendTextMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
+        mailService.sendHtmlMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
 
         PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
         if (payDTO.getPromotionCode() != null) {

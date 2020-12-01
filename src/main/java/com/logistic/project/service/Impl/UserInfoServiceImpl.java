@@ -67,7 +67,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
 
         String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
-        mailService.sendTextMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
+        mailService.sendHtmlMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
@@ -150,7 +150,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         String newPassword = getRandomString(8);
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userInfoRepository.save(user);
-        mailService.sendTextMail(userEmail, "忘记密码", mailTemplateService.constructContent(user, newPassword));
+        mailService.sendHtmlMail(userEmail, "忘记密码", mailTemplateService.constructContent(user, newPassword));
     }
 
     @Override

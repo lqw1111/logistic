@@ -90,6 +90,8 @@ public class UserOrderServiceImpl implements UserOrderService {
         updateUserOrder.setWeight(orderDTO.getWeight());
         updateUserOrder.setVolumn(orderDTO.getVolumn());
         updateUserOrder.setExpectDeliveryDate(orderDTO.getExpectDeliveryDate());
+        updateUserOrder.setDeliveryType(orderDTO.getDeliveryType());
+        updateUserOrder.setShippingMethod(orderDTO.getShippingMethod());
         updateUserOrder.setPaymentInfo(orderDTO.getPaymentInfo());
         updateUserOrder.setIssueMessage(orderDTO.getIssueMessage());
         //update user time

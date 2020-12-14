@@ -48,6 +48,10 @@ public class UserOrderDTO {
 
     private String expectDeliveryDate;
 
+    private Integer shippingMethod;
+
+    private Integer deliveryType;
+
     private Timestamp createAt;
 
     private Timestamp modifiedAt;
@@ -81,6 +85,8 @@ public class UserOrderDTO {
         this.weight = userOrderDTO.getWeight();
         this.volumn = userOrderDTO.getVolumn();
         this.expectDeliveryDate = userOrderDTO.getExpectDeliveryDate();
+        this.shippingMethod = userOrderDTO.getShippingMethod();
+        this.deliveryType = userOrderDTO.getDeliveryType();
         this.createAt = userOrderDTO.getCreateAt();
         this.modifiedAt = userOrderDTO.getModifiedAt();
         this.paymentInfo = userOrderDTO.getPaymentInfo();
@@ -246,6 +252,22 @@ public class UserOrderDTO {
 
     public void setExpectDeliveryDate(String expectDeliveryDate) {
         this.expectDeliveryDate = expectDeliveryDate;
+    }
+
+    public Integer getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setShippingMethod(Integer shippingMethod) {
+        this.shippingMethod = shippingMethod;
+    }
+
+    public Integer getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(Integer deliveryType) {
+        this.deliveryType = deliveryType;
     }
 
     public Timestamp getCreateAt() {

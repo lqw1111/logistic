@@ -75,6 +75,12 @@ public class UserOrder implements Serializable {
     @Column(name = "expect_delivery_date")
     private String expectDeliveryDate;
 
+    @Column(name = "shipping_method")
+    private Integer shippingMethod;
+
+    @Column(name = "delivery_type")
+    private Integer deliveryType;
+
     @Column(name = "create_at", insertable = false, updatable = false, nullable = false)
     @Generated(value = GenerationTime.INSERT)
     private Timestamp createAt;
@@ -250,6 +256,22 @@ public class UserOrder implements Serializable {
 
     public void setExpectDeliveryDate(String expectDeliveryDate) {
         this.expectDeliveryDate = expectDeliveryDate;
+    }
+
+    public Integer getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setShippingMethod(Integer shippingMethod) {
+        this.shippingMethod = shippingMethod;
+    }
+
+    public Integer getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(Integer deliveryType) {
+        this.deliveryType = deliveryType;
     }
 
     public Timestamp getCreateAt() {

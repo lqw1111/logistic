@@ -41,6 +41,8 @@ public class UserInfoDTO {
 
     public String invitedCode;
 
+    public String OrderCode;
+
     public Integer getUid() {
         return uid;
     }
@@ -167,5 +169,13 @@ public class UserInfoDTO {
 
     public void setInvitedCode(String invitedCode) {
         this.invitedCode = invitedCode;
+    }
+
+    public String getOrderCode() {
+        return OrderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        OrderCode = orderCode;
     }
 }

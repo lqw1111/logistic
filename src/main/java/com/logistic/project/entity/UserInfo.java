@@ -63,6 +63,9 @@ public class UserInfo {
     @Column(name = "invited_code")
     public String invitedCode;
 
+    @Transient
+    public String orderCode;
+
     public Integer getUid() {
         return uid;
     }
@@ -189,5 +192,13 @@ public class UserInfo {
 
     public void setInvitedCode(String invitedCode) {
         this.invitedCode = invitedCode;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 }

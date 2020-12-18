@@ -1,9 +1,7 @@
 package com.logistic.project.aspect;
 
-import com.logistic.project.dao.repository.UserInfoRepository;
-import com.logistic.project.dto.UserInfoDTO;
-import com.logistic.project.entity.Promotion;
-import com.logistic.project.entity.UserInfo;
+import com.logistic.project.dao.repository.*;
+import com.logistic.project.entity.*;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.PromotionService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Aspect
 @Component
@@ -26,6 +24,18 @@ public class PromotionGivenService {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
+
+    @Autowired
+    private InvitationActivityUserRepository invitationActivityUserRepository;
+
+    @Autowired
+    private InvitationActivityRepository invitationActivityRepository;
+
+    @Autowired
+    private UserOrderRepository userOrderRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Pointcut(value = "execution(public com.logistic.project.dto.UserInfoDTO com.logistic.project.controller.UserInfoController.register(com.logistic.project.entity.UserInfo))")
     public void registerPointCut(){};
@@ -51,6 +61,39 @@ public class PromotionGivenService {
         Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
         log.info("NEW USER REGISTER : " + userInfo.getUsername());
         log.info("NEW USER : " + userInfo.getUsername() + " GET PROMOTION CODE " + promotion.getPromotionCode());
+    }
+
+    @AfterReturning(value = "activePointCut()")
+    @Transactional(rollbackFor = Exception.class)
+    public void activityCheck(JoinPoint joinPoint) throws LogisticException {
+        Object[] args = joinPoint.getArgs();
+        String email = (String) args[0];
+        String userName = (String) args[2];
+        UserInfo registerUser = userInfoRepository.findByUsernameAndEmail(userName, email);
+        if (registerUser == null) {
+            log.warn("PromotionGivenService ==> activityCheck: User Doesn't Exist");
+            throw new LogisticException("User Doesn't Exist");
+        }
+        InvitationActivityUser invitationActivityUser = invitationActivityUserRepository.findByUserId(registerUser.getUid());
+        InvitationActivity invitationActivity = invitationActivityRepository.findByOrderCode(invitationActivityUser.getOrderCode());
+
+        UserOrder invitedUserOrder = userOrderRepository.findByUserIdAndOrderId(invitationActivity.getUserId(), invitationActivity.getOrderId());
+        if (invitedUserOrder == null) {
+            log.warn("PromotionGivenService ==> activityCheck: Invited User Order Not Exist");
+            throw new LogisticException("Invited User Order Not Exist");
+        }
+        List<Payment> invitedUserPayments = paymentRepository.findAllByUserIdAndOrderId(invitationActivity.getUserId(), invitationActivity.getOrderId());
+        if (invitedUserPayments == null || invitedUserPayments.size() == 0) {
+            log.warn("PromotionGivenService ==> activityCheck: Payment Not Exist");
+            throw new LogisticException("Payment Not Exist");
+        }
+        Payment invitedUserPayment = invitedUserPayments.get(0);
+
+        //payment价格降低
+        invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
+        paymentRepository.save(invitedUserPayment);
+
+        log.info("NEW USER : " + registerUser.getUsername() + " HELP " + invitedUserOrder.getId() + " DECREASE " + invitationActivity.getPerUserDiscountPrice());
     }
 
 }

@@ -1,10 +1,10 @@
 package com.logistic.project.service.Impl;
 
-import com.logistic.project.dao.repository.UserInfoRepository;
+import com.logistic.project.dao.repository.*;
 import com.logistic.project.dto.JsonResponse;
 import com.logistic.project.dto.ResetPasswordDTO;
 import com.logistic.project.dto.UserInfoDTO;
-import com.logistic.project.entity.UserInfo;
+import com.logistic.project.entity.*;
 import com.logistic.project.enumeration.Role;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.UserInfoMapper;
@@ -36,6 +36,20 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private MailTemplateService mailTemplateService;
 
+    @Autowired
+    private InvitationActivityRepository invitationActivityRepository;
+
+    @Autowired
+    private InvitationActivityUserRepository invitationActivityUserRepository;
+
+    @Autowired
+    private UserOrderRepository userOrderRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    private final static String ORDER_PROMOTION_START = "O:";
+
     @Override
     public UserInfo findByUsername(String username) {
         return userInfoRepository.findByUsername(username);
@@ -66,12 +80,50 @@ public class UserInfoServiceImpl implements UserInfoService {
             entity.setInvitedBy(user.getUid());
         }
 
+        if (userInfo.getOrderCode() != null) {
+            String orderCode = userInfo.getOrderCode();
+            InvitationActivity invitationActivity = invitationActivityRepository.findByOrderCode(orderCode);
+            if (invitationActivity == null) {
+                throw new LogisticException("Activity Not Exist");
+            }
+            UserInfo invitedUser = userInfoRepository.findById(invitationActivity.getUserId()).orElse(null);
+            if (invitedUser == null) {
+                throw new LogisticException("Invited User Not Exist");
+            }
+
+            //用户数加1， 用户email添加，保存
+            invitationActivity.setInvitedUserNum(invitationActivity.getInvitedUserNum() + 1);
+            if (invitationActivity.getInvitedUserEmail() == null || "".equals(invitationActivity.getInvitedUserEmail())) {
+                invitationActivity.setInvitedUserEmail(userInfo.getEmail());
+            } else {
+                invitationActivity.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() + ":" + userInfo.getEmail());
+            }
+
+            invitationActivityRepository.save(invitationActivity);
+
+            //payment价格降低
+//            invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
+//            paymentRepository.save(invitedUserPayment);
+
+            entity.setInvitedCode(invitedUser.getToken());
+            entity.setInvitedBy(invitedUser.getUid());
+        }
+
         String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
         mailService.sendHtmlMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
         UserInfo info = userInfoRepository.save(entity);
         UserInfoDTO res = UserInfoMapper.INSTANCE.toDTO(info);
         res.setPassword(null);
+
+        //记录是谁砍了这个order
+        if (userInfo.getOrderCode() != null) {
+            InvitationActivityUser invitationActivityUser = new InvitationActivityUser();
+            String orderCode = userInfo.getOrderCode();
+            invitationActivityUser.setUserId(info.getUid());
+            invitationActivityUser.setOrderCode(orderCode);
+            invitationActivityUserRepository.save(invitationActivityUser);
+        }
 
         return res;
     }

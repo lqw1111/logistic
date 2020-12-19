@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS invitation_activity;
 CREATE TABLE invitation_activity
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,6 +15,7 @@ CREATE TABLE invitation_activity
     deleted boolean DEFAULT '0' NOT NULL
 );
 
+DROP TABLE IF EXISTS invitation_activity_user;
 CREATE TABLE invitation_activity_user
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,

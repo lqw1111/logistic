@@ -113,12 +113,12 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.2.3</version>
                 <configuration>
-                    <!--<url>jdbc:mysql://rm-rj9mg44h8b8mvd7em90130.mysql.rds.aliyuncs.com/logistic?serverTimezone=UTC</url>-->
-                    <!--<user>logistic_admin</user>-->
-                    <!--<password>logistic_123</password>-->
-                    <url>jdbc:mysql://localhost:3306/logistic?serverTimezone=UTC</url>
-                    <user>root</user>
-                    <password>3773032</password>
+                    <url>jdbc:mysql://rm-rj9mg44h8b8mvd7em90130.mysql.rds.aliyuncs.com/logistic?serverTimezone=UTC</url>
+                    <user>logistic_admin</user>
+                    <password>logistic_123</password>
+                    <!--<url>jdbc:mysql://localhost:3306/logistic?serverTimezone=UTC</url>-->
+                    <!--<user>root</user>-->
+                    <!--<password>3773032</password>-->
                 </configuration>
                 <dependencies>
                     <dependency>

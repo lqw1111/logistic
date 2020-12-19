@@ -50,10 +50,6 @@ public class InvitationActivity {
     @Column(name = "deleted")
     private boolean deleted;
 
-    @Column(name = "deleted_at", insertable = false, updatable = false, nullable = false)
-    @Generated(value = GenerationTime.ALWAYS)
-    private Date deletedAt;
-
     public Integer getId() {
         return id;
     }
@@ -150,12 +146,5 @@ public class InvitationActivity {
         this.deleted = deleted;
     }
 
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
 
 }

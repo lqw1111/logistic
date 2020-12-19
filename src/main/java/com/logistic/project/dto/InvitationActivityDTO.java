@@ -16,7 +16,6 @@ public class InvitationActivityDTO {
     private Date createAt;
     private Date modified;
     private boolean deleted;
-    private Date deletedAt;
 
     public Integer getId() {
         return id;
@@ -112,13 +111,5 @@ public class InvitationActivityDTO {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }

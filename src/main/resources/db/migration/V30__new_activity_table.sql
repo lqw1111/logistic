@@ -11,8 +11,7 @@ CREATE TABLE invitation_activity
     invited_user_email blob,
     create_at timestamp DEFAULT current_timestamp,
     modified timestamp DEFAULT current_timestamp,
-    deleted boolean DEFAULT '0' NOT NULL,
-    deleted_at timestamp
+    deleted boolean DEFAULT '0' NOT NULL
 );
 
 CREATE TABLE invitation_activity_user

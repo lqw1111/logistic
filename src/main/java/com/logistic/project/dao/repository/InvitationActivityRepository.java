@@ -18,7 +18,7 @@ public interface InvitationActivityRepository extends JpaRepository<InvitationAc
 
     @Transactional
     @Modifying
-    @Query("UPDATE InvitationActivity activity SET activity.deleted = 1, activity.deletedAt = current_timestamp WHERE activity.id = :id")
+    @Query("UPDATE InvitationActivity activity SET activity.deleted = 1 WHERE activity.id = :id")
     void deleteById(@Param("id") Integer id);
 
     @Query("SELECT activity FROM InvitationActivity activity WHERE activity.orderId = :orderId and activity.deleted = 0")

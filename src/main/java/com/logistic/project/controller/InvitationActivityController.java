@@ -14,22 +14,32 @@ public class InvitationActivityController {
     @Autowired
     private InvitationActivityService invitationActivityService;
 
-    @RequestMapping(name = "", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<InvitationActivity> findAll() {
         return invitationActivityService.findAll();
     }
 
-    @RequestMapping(name = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public List<InvitationActivity> findByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
+        return invitationActivityService.findByUserId(userId);
+    }
+
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    public InvitationActivity findByOrderId(@PathVariable("orderId") Integer orderId) throws LogisticException {
+        return invitationActivityService.findByOrderId(orderId);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public InvitationActivity createActivity(@RequestBody InvitationActivity invitationActivity) throws LogisticException {
         return invitationActivityService.createActivity(invitationActivity);
     }
 
-    @RequestMapping(name = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "", method = RequestMethod.PUT)
     public InvitationActivity updateActivity(@RequestBody InvitationActivity invitationActivity) throws LogisticException {
         return invitationActivityService.updateActivity(invitationActivity);
     }
 
-    @RequestMapping(name = "/id/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.DELETE)
     public void deleteActivity(@PathVariable("id") Integer id) {
         invitationActivityService.deleteActivityById(id);
     }

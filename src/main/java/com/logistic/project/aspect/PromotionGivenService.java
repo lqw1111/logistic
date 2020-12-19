@@ -90,9 +90,12 @@ public class PromotionGivenService {
         Payment invitedUserPayment = invitedUserPayments.get(0);
 
         //payment价格降低
-        invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
-        paymentRepository.save(invitedUserPayment);
-
+        if (invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())).compareTo(invitationActivity.getTotalDiscountPrice()) <= 0) {
+            invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
+            paymentRepository.save(invitedUserPayment);
+        } else {
+            log.warn("Order: " + invitedUserOrder.getId() + " Payment:" + invitedUserPayment.getId() + " Already Get to The Limit");
+        }
         log.info("NEW USER : " + registerUser.getUsername() + " HELP " + invitedUserOrder.getId() + " DECREASE " + invitationActivity.getPerUserDiscountPrice());
     }
 

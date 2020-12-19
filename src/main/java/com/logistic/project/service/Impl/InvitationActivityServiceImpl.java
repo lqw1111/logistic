@@ -38,9 +38,15 @@ public class InvitationActivityServiceImpl implements InvitationActivityService 
             throw new LogisticException("Order Doesn't Exist");
         }
 
+        InvitationActivity activity = invitationActivityRepository.findByOrderId(userOrder.getId());
+        if(activity != null) {
+            throw new LogisticException("Already Have Activity");
+        }
+
         invitationActivity.setStartTime(new Date());
         invitationActivity.setOrderCode("O:" + UUID.randomUUID().toString());
         invitationActivity.setInvitedUserNum(0);
+        invitationActivity.setInvitedUserEmail("");
 
         return invitationActivityRepository.save(invitationActivity);
     }
@@ -67,5 +73,15 @@ public class InvitationActivityServiceImpl implements InvitationActivityService 
         dbActive.setInvitedUserNum(invitationActivity.getInvitedUserNum() == null ? dbActive.getInvitedUserNum() : invitationActivity.getInvitedUserNum());
         dbActive.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() == null ? dbActive.getInvitedUserEmail() : invitationActivity.getInvitedUserEmail());
         return invitationActivityRepository.save(dbActive);
+    }
+
+    @Override
+    public InvitationActivity findByOrderId(Integer orderId) {
+        return invitationActivityRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    public List<InvitationActivity> findByUserId(Integer userId) {
+        return invitationActivityRepository.findByUserId(userId);
     }
 }

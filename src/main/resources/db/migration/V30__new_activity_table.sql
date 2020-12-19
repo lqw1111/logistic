@@ -12,7 +12,7 @@ CREATE TABLE invitation_activity
     create_at timestamp DEFAULT current_timestamp,
     modified timestamp DEFAULT current_timestamp,
     deleted boolean DEFAULT '0' NOT NULL,
-    deleted_at timestamp DEFAULT NULL
+    deleted_at timestamp
 );
 
 CREATE TABLE invitation_activity_user

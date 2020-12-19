@@ -13,4 +13,8 @@ public interface InvitationActivityService {
     void deleteActivityById(Integer id);
 
     InvitationActivity updateActivity(InvitationActivity invitationActivity) throws LogisticException;
+
+    InvitationActivity findByOrderId(Integer orderId);
+
+    List<InvitationActivity> findByUserId(Integer userId);
 }

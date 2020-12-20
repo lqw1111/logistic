@@ -1320,3 +1320,12 @@ GET /api/parcel/statistics/user/{userId}
     "finish": 0
 }
 ```
+
+
+查询shipping method的api:     
+
+/api/shippingmethod
+
+查询delivery type的api ： 
+
+/api/deliverytype

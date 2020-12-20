@@ -7,6 +7,7 @@ import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,12 +58,12 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/active", method = RequestMethod.GET)
-    public void active(@RequestParam("email") String userEmail,
-                       @RequestParam("token") String token,
-                       @RequestParam("username") String userName,
-                       HttpServletResponse resp) throws Exception {
-        userInfoService.activeAccount(userEmail, token, userName);
-        resp.sendRedirect("http://yishansudi.com");
+    public ResponseEntity<Object> active(@RequestParam("email") String userEmail,
+                                         @RequestParam("token") String token,
+                                         @RequestParam("username") String userName,
+                                         HttpServletResponse resp) throws Exception {
+        return userInfoService.activeAccount(userEmail, token, userName);
+//        resp.sendRedirect("http://yishansudi.com");
     }
 
     @RequestMapping(value = "/isActive/{username}", method = RequestMethod.GET)

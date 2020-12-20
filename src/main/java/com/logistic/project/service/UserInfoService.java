@@ -5,8 +5,10 @@ import com.logistic.project.dto.ResetPasswordDTO;
 import com.logistic.project.dto.UserInfoDTO;
 import com.logistic.project.entity.UserInfo;
 import com.logistic.project.exception.LogisticException;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserInfoService {
@@ -26,7 +28,7 @@ public interface UserInfoService {
 
     JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException;
 
-    void activeAccount(String userEmail, String token, String userName) throws LogisticException;
+    ResponseEntity<Object> activeAccount(String userEmail, String token, String userName) throws LogisticException;
 
     void isActive(String username) throws LogisticException;
 }

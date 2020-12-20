@@ -11,11 +11,16 @@ import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
 import com.logistic.project.service.MailTemplateService;
 import com.logistic.project.service.UserInfoService;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -109,7 +114,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             entity.setInvitedBy(invitedUser.getUid());
         }
 
-        String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
+        String activeUrl = mainPage + "/email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
         mailService.sendHtmlMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
         UserInfo info = userInfoRepository.save(entity);
@@ -224,7 +229,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void activeAccount(String userEmail, String token, String userName) throws LogisticException{
+    public ResponseEntity<Object> activeAccount(String userEmail, String token, String userName) throws LogisticException{
         UserInfo userInfo = userInfoRepository.findByUsernameAndEmail(userName, userEmail);
         if (userInfo == null) {
             throw new LogisticException("User Doesn't Exist");
@@ -235,6 +240,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo.getToken().equals(token)) {
             userInfo.setActive(true);
             userInfoRepository.save(userInfo);
+            return ResponseEntity.ok().body("success");
         } else {
             throw new LogisticException("Active Fail");
         }

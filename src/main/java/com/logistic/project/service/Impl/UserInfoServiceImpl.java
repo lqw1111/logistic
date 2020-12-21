@@ -229,6 +229,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<Object> activeAccount(String userEmail, String token, String userName) throws LogisticException{
         UserInfo userInfo = userInfoRepository.findByUsernameAndEmail(userName, userEmail);
         if (userInfo == null) {
@@ -240,7 +241,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo.getToken().equals(token)) {
             userInfo.setActive(true);
             userInfoRepository.save(userInfo);
-            return ResponseEntity.ok().body("success");
+            return ResponseEntity.ok("Active Success");
         } else {
             throw new LogisticException("Active Fail");
         }

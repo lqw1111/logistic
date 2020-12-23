@@ -103,13 +103,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             } else {
                 invitationActivity.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() + ":" + userInfo.getEmail());
             }
-
             invitationActivityRepository.save(invitationActivity);
-
-            //payment价格降低
-//            invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
-//            paymentRepository.save(invitedUserPayment);
-
             entity.setInvitedCode(invitedUser.getToken());
             entity.setInvitedBy(invitedUser.getUid());
         }

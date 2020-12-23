@@ -54,11 +54,11 @@ public class PromotionGivenService {
             throw new LogisticException("User Doesn't Exist");
         }
         if (userInfo.getInvitedBy() != null) {
-            promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
-            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 5, 1);
+//            promotionService.createDiscountPromotion(userInfo.getUid(), 10, 1);
+            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 10, 1);
         }
 
-        Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 5, 1);
+        Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 10, 1);
         log.info("NEW USER REGISTER : " + userInfo.getUsername());
         log.info("NEW USER : " + userInfo.getUsername() + " GET PROMOTION CODE " + promotion.getPromotionCode());
     }
@@ -88,19 +88,13 @@ public class PromotionGivenService {
                 log.warn("PromotionGivenService ==> activityCheck: Invited User Order Not Exist");
                 throw new LogisticException("Decrease Price Fail");
             }
-            List<Payment> invitedUserPayments = paymentRepository.findAllByUserIdAndOrderId(invitationActivity.getUserId(), invitationActivity.getOrderId());
-            if (invitedUserPayments == null || invitedUserPayments.size() == 0) {
-                log.warn("PromotionGivenService ==> activityCheck: Payment Not Exist");
-                throw new LogisticException("Decrease Price Fail");
-            }
-            Payment invitedUserPayment = invitedUserPayments.get(0);
 
             //payment价格降低
             if (invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())).compareTo(invitationActivity.getTotalDiscountPrice()) <= 0) {
-                invitedUserPayment.setPaid(invitedUserPayment.getPaid().subtract(invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum()))));
-                paymentRepository.save(invitedUserPayment);
+                invitedUserOrder.setPrice(invitedUserOrder.getPrice().subtract(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())));
+                userOrderRepository.save(invitedUserOrder);
             } else {
-                log.warn("Order: " + invitedUserOrder.getId() + " Payment:" + invitedUserPayment.getId() + " Already Get to The Limit");
+                log.warn("Order: " + invitedUserOrder.getId() + " Already Get to The Limit");
             }
             log.info("NEW USER : " + registerUser.getUsername() + " HELP " + invitedUserOrder.getId() + " DECREASE " + invitationActivity.getPerUserDiscountPrice());
         }

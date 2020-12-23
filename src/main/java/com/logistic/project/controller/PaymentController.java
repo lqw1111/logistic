@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/payment")
@@ -24,9 +25,20 @@ public class PaymentController extends BaseController {
         return paymentService.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('admin')")
+    @RequestMapping(value = "/activity", method = RequestMethod.GET)
+    public List<Map<String, Object>> findAllWithActivity() throws LogisticException {
+        return paymentService.findAllWithActivity();
+    }
+
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public List<PaymentDTO> findPaymentByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
         return paymentService.findPaymentByUserId(userId, getPrincipal());
+    }
+
+    @RequestMapping(value = "/user/{userId}/activity", method = RequestMethod.GET)
+    public List<Map<String,Object>> findPaymentByUserIdWithActivity(@PathVariable("userId") Integer userId) throws LogisticException {
+        return paymentService.findPaymentByUserIdWithActivity(userId, getPrincipal());
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

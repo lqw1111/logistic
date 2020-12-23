@@ -1,15 +1,9 @@
 package com.logistic.project.service.Impl;
 
 import com.logistic.project.controller.BaseController;
-import com.logistic.project.dao.repository.PaymentRepository;
-import com.logistic.project.dao.repository.PromotionRepository;
-import com.logistic.project.dao.repository.UserInfoRepository;
-import com.logistic.project.dao.repository.UserOrderRepository;
+import com.logistic.project.dao.repository.*;
 import com.logistic.project.dto.PaymentDTO;
-import com.logistic.project.entity.OrderStatus;
-import com.logistic.project.entity.Payment;
-import com.logistic.project.entity.UserInfo;
-import com.logistic.project.entity.UserOrder;
+import com.logistic.project.entity.*;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.PaymentMapper;
 import com.logistic.project.mapper.PromotionMapper;
@@ -19,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +44,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     private PromotionRepository promotionRepository;
+
+    @Autowired
+    private InvitationActivityRepository invitationActivityRepository;
 
     @Override
     public PaymentDTO createPayment(PaymentDTO paymentDTO) throws LogisticException {
@@ -154,6 +153,47 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payment.getPromotionCode())));
             }
             return paymentDTO;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Object>> findPaymentByUserIdWithActivity(Integer userId, String username) throws LogisticException {
+        if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
+            throw new LogisticException("User can not access other user's info");
+        }
+
+        if (!userInfoRepository.findById(userId).isPresent()) {
+            throw new LogisticException("User Doesn't Exist");
+        }
+        List<Payment> payments = paymentRepository.findAllByUserId(userId);
+        return payments.stream().map(payment -> {
+            PaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
+            if (payment.getPromotionCode() != null) {
+                paymentDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payment.getPromotionCode())));
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("payment", paymentDTO);
+            Integer orderId = paymentDTO.getOrderId();
+            InvitationActivity invitationActivity = invitationActivityRepository.findByOrderId(orderId);
+            map.put("activity", invitationActivity);
+            return map;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllWithActivity() throws LogisticException {
+        List<Payment> payments = paymentRepository.findAll();
+        return payments.stream().map(payment -> {
+            PaymentDTO paymentDTO = PaymentMapper.INSTANCE.toDTO(payment);
+            if (payment.getPromotionCode() != null) {
+                paymentDTO.setPromotion(PromotionMapper.INSTANCE.toDTO(promotionRepository.findByPromotionCode(payment.getPromotionCode())));
+            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("payment", paymentDTO);
+            Integer orderId = paymentDTO.getOrderId();
+            InvitationActivity invitationActivity = invitationActivityRepository.findByOrderId(orderId);
+            map.put("activity", invitationActivity);
+            return map;
         }).collect(Collectors.toList());
     }
 

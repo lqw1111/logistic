@@ -5,6 +5,7 @@ import com.logistic.project.entity.Payment;
 import com.logistic.project.exception.LogisticException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface PaymentService {
 
@@ -17,4 +18,8 @@ public interface PaymentService {
     List<PaymentDTO> findPaymentByUserId(Integer userId, String username) throws LogisticException;
 
     List<PaymentDTO> findAll() throws LogisticException;
+
+    List<Map<String,Object>> findPaymentByUserIdWithActivity(Integer userId, String username) throws LogisticException;
+
+    List<Map<String, Object>> findAllWithActivity() throws LogisticException;
 }

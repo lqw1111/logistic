@@ -76,8 +76,12 @@ public class InvitationActivityServiceImpl implements InvitationActivityService 
     }
 
     @Override
-    public InvitationActivity findByOrderId(Integer orderId) {
-        return invitationActivityRepository.findByOrderId(orderId);
+    public Object findByOrderId(Integer orderId) {
+        InvitationActivity activity = invitationActivityRepository.findByOrderId(orderId);
+        if (activity == null) {
+            return "{}";
+        }
+        return activity;
     }
 
     @Override

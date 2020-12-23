@@ -14,7 +14,7 @@ public interface InvitationActivityService {
 
     InvitationActivity updateActivity(InvitationActivity invitationActivity) throws LogisticException;
 
-    InvitationActivity findByOrderId(Integer orderId);
+    Object findByOrderId(Integer orderId);
 
     List<InvitationActivity> findByUserId(Integer userId);
 }

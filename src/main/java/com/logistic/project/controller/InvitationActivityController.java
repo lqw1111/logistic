@@ -24,8 +24,14 @@ public class InvitationActivityController {
         return invitationActivityService.findByUserId(userId);
     }
 
+    /**
+     * if not exist will return `{}`
+     * @param orderId
+     * @return
+     * @throws LogisticException
+     */
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
-    public InvitationActivity findByOrderId(@PathVariable("orderId") Integer orderId) throws LogisticException {
+    public Object findByOrderId(@PathVariable("orderId") Integer orderId) throws LogisticException {
         return invitationActivityService.findByOrderId(orderId);
     }
 

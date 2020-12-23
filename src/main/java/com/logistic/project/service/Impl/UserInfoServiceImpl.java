@@ -11,16 +11,12 @@ import com.logistic.project.mapper.UserInfoMapper;
 import com.logistic.project.service.MailService;
 import com.logistic.project.service.MailTemplateService;
 import com.logistic.project.service.UserInfoService;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;

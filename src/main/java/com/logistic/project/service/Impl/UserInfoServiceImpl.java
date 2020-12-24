@@ -17,9 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -231,7 +230,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo.getToken().equals(token)) {
             userInfo.setActive(true);
             userInfoRepository.save(userInfo);
-            return ResponseEntity.ok("Active Success");
+            Map<String, String> map = new HashMap<>();
+            map.put("code", "200");
+            map.put("message", "Active Success");
+            return ResponseEntity.ok(map);
         } else {
             throw new LogisticException("Active Fail");
         }

@@ -1,0 +1,1 @@
+DROP INDEX user_username_uindex ON user;

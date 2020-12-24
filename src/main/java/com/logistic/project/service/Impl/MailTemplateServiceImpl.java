@@ -106,7 +106,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "              </tr>\n" +
                 "              <tr>\n" +
                 "                <td width=\"500\" style = \"padding-left:20px;padding-right:20px;\">\n" +
-                "\n" +
+                "                   <a href=\"" + activeUrl + "\">" + activeUrl + "</a>\n" +
                 "                </td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +

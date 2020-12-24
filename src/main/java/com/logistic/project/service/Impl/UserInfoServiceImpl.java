@@ -230,8 +230,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo.getToken().equals(token)) {
             userInfo.setActive(true);
             userInfoRepository.save(userInfo);
-            Map<String, String> map = new HashMap<>();
-            map.put("code", "200");
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", 200);
             map.put("message", "Active Success");
             return ResponseEntity.ok(map);
         } else {

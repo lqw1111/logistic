@@ -103,7 +103,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             entity.setInvitedBy(invitedUser.getUid());
         }
 
-        String activeUrl = mainPage + "/email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
+        String activeUrl = mainPage + "?email=" + userInfo.getEmail() + "&token=" + token + "&username=" + userInfo.getUsername();
         mailService.sendHtmlMail(userInfo.getEmail(),"激活邮箱", mailTemplateService.contructActiveEmail(entity, activeUrl));
 
         UserInfo info = userInfoRepository.save(entity);

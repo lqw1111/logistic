@@ -16,7 +16,7 @@ public interface UserOrderService {
 
     UserOrderDTO updateIssueMessage(IssueMessageDTO issueMessageDTO) throws LogisticException;
 
-    List<UserOrderDTO> findAllByUserId(Integer userId, String username) throws LogisticException;
+    List<UserOrderWithParcelDTO> findAllByUserId(Integer userId, String username) throws LogisticException;
 
     void deleteOrderById(Integer OrderId) throws LogisticException;
 
@@ -33,13 +33,13 @@ public interface UserOrderService {
     //TODO: 返回一个大的object 包括UserOrder和Parcel
     List<UserOrderWithParcelDTO> findUserOrderWithParcel(Integer userId, String username) throws LogisticException;
 
-    UserOrderDTO findById(Integer orderId, String username) throws LogisticException;
+    UserOrderWithParcelDTO findById(Integer orderId, String username) throws LogisticException;
 
     UserOrderDTO submitOrder(Integer userId, Integer userOrderId, String username) throws LogisticException;
 
-    List<UserOrderDTO> findAll() throws LogisticException;
+    List<UserOrderWithParcelDTO> findAll() throws LogisticException;
 
-    List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException;
+    List<UserOrderWithParcelDTO> findAllByStatusId(Integer statusId) throws LogisticException;
 
     Map<String,Integer> statisticsData(Integer userId) throws LogisticException;
 }

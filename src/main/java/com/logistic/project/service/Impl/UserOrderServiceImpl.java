@@ -102,12 +102,18 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public List<UserOrderDTO> findAllByUserId(Integer userId, String username) throws LogisticException {
+    public List<UserOrderWithParcelDTO> findAllByUserId(Integer userId, String username) throws LogisticException {
         if (!BaseController.validAccess(userInfoRepository.findById(userId).orElse(null), username, userInfoRepository.findByUsername(username))){
             throw new LogisticException("User can not access other user's info");
         }
-        List<UserOrder> userOrders = userOrderRepository.findByUserId(userId);
-        List<UserOrderDTO> res = userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+        List<UserOrderDTO> userOrders = userOrderRepository.findByUserId(userId).stream()
+                .map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+        List<UserOrderWithParcelDTO> res = userOrders.stream().map(userOrderDTO -> {
+            List<ParcelDTO> parcels = parcelRepository.findParcelsByUserOrderId(userOrderDTO.getId()).stream()
+                    .map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+            UserOrderWithParcelDTO userOrderWithParcelDTO = new UserOrderWithParcelDTO(userOrderDTO, parcels);
+            return userOrderWithParcelDTO;
+        }).collect(Collectors.toList());
         return res;
     }
 
@@ -262,7 +268,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    public UserOrderDTO findById(Integer orderId, String username) throws LogisticException{
+    public UserOrderWithParcelDTO findById(Integer orderId, String username) throws LogisticException{
         Optional<UserOrder> userOrderOptional = userOrderRepository.findUserOrderById(orderId);
         if (!userOrderOptional.isPresent()) {
             throw new LogisticException("Order Doesn't Exist");
@@ -272,20 +278,37 @@ public class UserOrderServiceImpl implements UserOrderService {
         if (!BaseController.validAccess(userInfoRepository.findById(userOrder.getUserId()).orElse(null), username, userInfoRepository.findByUsername(username))){
             throw new LogisticException("User can not access other user's info");
         }
-        UserOrderDTO res = UserOrderMapper.INSTANCE.toDTO(userOrder);
+        UserOrderDTO userOrderDTO = UserOrderMapper.INSTANCE.toDTO(userOrder);
+        List<ParcelDTO> parcels = parcelRepository.findParcelsByUserOrderId(userOrderDTO.getId()).stream()
+                .map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+        UserOrderWithParcelDTO userOrderWithParcelDTO = new UserOrderWithParcelDTO(userOrderDTO, parcels);
+        return userOrderWithParcelDTO;
+    }
+
+    @Override
+    public List<UserOrderWithParcelDTO> findAll() throws LogisticException {
+        List<UserOrderDTO> userOrders = userOrderRepository.findAllByDeletedIsFalseOrderByModifiedAt().stream()
+                .map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+        List<UserOrderWithParcelDTO> res = userOrders.stream().map(userOrderDTO -> {
+            List<ParcelDTO> parcels = parcelRepository.findParcelsByUserOrderId(userOrderDTO.getId()).stream()
+                    .map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+            UserOrderWithParcelDTO userOrderWithParcelDTO = new UserOrderWithParcelDTO(userOrderDTO, parcels);
+            return userOrderWithParcelDTO;
+        }).collect(Collectors.toList());
         return res;
     }
 
     @Override
-    public List<UserOrderDTO> findAll() throws LogisticException {
-        List<UserOrder> userOrders = userOrderRepository.findAllByDeletedIsFalseOrderByModifiedAt();
-        return userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<UserOrderDTO> findAllByStatusId(Integer statusId) throws LogisticException {
-        List<UserOrder> userOrders = userOrderRepository.findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(statusId);
-        return userOrders.stream().map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+    public List<UserOrderWithParcelDTO> findAllByStatusId(Integer statusId) throws LogisticException {
+        List<UserOrderDTO> userOrders = userOrderRepository.findAllByStatusIdAndDeletedIsFalseOrderByModifiedAt(statusId).stream()
+                .map(userOrder -> UserOrderMapper.INSTANCE.toDTO(userOrder)).collect(Collectors.toList());
+        List<UserOrderWithParcelDTO> res = userOrders.stream().map(userOrderDTO -> {
+            List<ParcelDTO> parcels = parcelRepository.findParcelsByUserOrderId(userOrderDTO.getId()).stream()
+                    .map(parcel -> ParcelMapper.INSTANCE.toDTO(parcel)).collect(Collectors.toList());
+            UserOrderWithParcelDTO userOrderWithParcelDTO = new UserOrderWithParcelDTO(userOrderDTO, parcels);
+            return userOrderWithParcelDTO;
+        }).collect(Collectors.toList());
+        return res;
     }
 
     @Override

@@ -25,13 +25,13 @@ public class UserOrderController extends BaseController {
     }
 
     @RequestMapping(value = "/findAll/{userId}", method = RequestMethod.GET)
-    public List<UserOrderDTO> findByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
+    public List<UserOrderWithParcelDTO> findByUserId(@PathVariable("userId") Integer userId) throws LogisticException {
         return userOrderService.findAllByUserId(userId, getPrincipal());
     }
 
     //find by id
     @RequestMapping(value = "/find/{orderId}", method = RequestMethod.GET)
-    public UserOrderDTO findById(@PathVariable("orderId") Integer orderId) throws LogisticException {
+    public UserOrderWithParcelDTO findById(@PathVariable("orderId") Integer orderId) throws LogisticException {
         return userOrderService.findById(orderId, getPrincipal());
     }
 
@@ -97,14 +97,14 @@ public class UserOrderController extends BaseController {
     //find all
     @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<UserOrderDTO> findAll() throws LogisticException {
+    public List<UserOrderWithParcelDTO> findAll() throws LogisticException {
         return userOrderService.findAll();
     }
 
     //find all status
     @PreAuthorize("hasAnyRole('admin')")
     @RequestMapping(value = "/status/{statusId}", method = RequestMethod.GET)
-    public List<UserOrderDTO> findAllByStatus(@PathVariable("statusId") Integer statusId) throws LogisticException {
+    public List<UserOrderWithParcelDTO> findAllByStatus(@PathVariable("statusId") Integer statusId) throws LogisticException {
         return userOrderService.findAllByStatusId(statusId);
     }
 

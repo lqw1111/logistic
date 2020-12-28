@@ -92,13 +92,13 @@ public class UserInfoServiceImpl implements UserInfoService {
             }
 
             //用户数加1， 用户email添加，保存
-            invitationActivity.setInvitedUserNum(invitationActivity.getInvitedUserNum() + 1);
-            if (invitationActivity.getInvitedUserEmail() == null || "".equals(invitationActivity.getInvitedUserEmail())) {
-                invitationActivity.setInvitedUserEmail(userInfo.getEmail());
-            } else {
-                invitationActivity.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() + ":" + userInfo.getEmail());
-            }
-            invitationActivityRepository.save(invitationActivity);
+//            invitationActivity.setInvitedUserNum(invitationActivity.getInvitedUserNum() + 1);
+//            if (invitationActivity.getInvitedUserEmail() == null || "".equals(invitationActivity.getInvitedUserEmail())) {
+//                invitationActivity.setInvitedUserEmail(userInfo.getEmail());
+//            } else {
+//                invitationActivity.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() + ":" + userInfo.getEmail());
+//            }
+//            invitationActivityRepository.save(invitationActivity);
             entity.setInvitedCode(invitedUser.getToken());
             entity.setInvitedBy(invitedUser.getUid());
         }

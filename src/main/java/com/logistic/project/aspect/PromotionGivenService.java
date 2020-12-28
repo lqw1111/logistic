@@ -90,6 +90,15 @@ public class PromotionGivenService {
                 throw new LogisticException("Decrease Price Fail");
             }
 
+            //修改砍价活动信息
+            invitationActivity.setInvitedUserNum(invitationActivity.getInvitedUserNum() + 1);
+            if (invitationActivity.getInvitedUserEmail() == null || "".equals(invitationActivity.getInvitedUserEmail())) {
+                invitationActivity.setInvitedUserEmail(registerUser.getEmail());
+            } else {
+                invitationActivity.setInvitedUserEmail(invitationActivity.getInvitedUserEmail() + ":" + registerUser.getEmail());
+            }
+            invitationActivityRepository.save(invitationActivity);
+
             //order价格降低
             if (invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())).compareTo(invitationActivity.getTotalDiscountPrice()) <= 0) {
                 invitedUserOrder.setPrice(invitedUserOrder.getPrice().subtract(invitationActivity.getPerUserDiscountPrice()));

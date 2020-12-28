@@ -74,8 +74,6 @@ public class PaymentServiceImpl implements PaymentService {
             promotionService.invalidatePromotion(payment.getPromotionCode(), userInfo.getUid());
         }
 
-        //TODO：发送邮件支付成功
-        mailService.sendHtmlMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
 
         PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
         if (payDTO.getPromotionCode() != null) {
@@ -115,8 +113,16 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setValidate(true);
         Payment res = paymentRepository.save(payment);
 
+        UserInfo userInfo = userInfoRepository.findById(payment.getUserId()).orElse(null);
+        if (userInfo == null) {
+            throw new LogisticException("User Doesn't Exist");
+        }
+
         //验证支付之后自动更新包裹状态
         userOrderService.processingOrder(payment.getUserId(), payment.getOrderId());
+
+        //TODO：发送邮件支付成功
+        mailService.sendHtmlMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
 
         PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
         if (payDTO.getPromotionCode() != null) {

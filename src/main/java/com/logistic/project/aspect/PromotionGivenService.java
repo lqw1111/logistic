@@ -53,9 +53,10 @@ public class PromotionGivenService {
         if (userInfo == null) {
             throw new LogisticException("User Doesn't Exist");
         }
+        //邀请人同样收到10%的优惠券
         if (userInfo.getInvitedBy() != null) {
 //            promotionService.createDiscountPromotion(userInfo.getUid(), 10, 1);
-            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 10, 1);
+//            promotionService.createDiscountPromotion(userInfo.getInvitedBy(), 10, 1);
         }
 
         Promotion promotion = promotionService.createDiscountPromotion(userInfo.getUid(), 10, 1);

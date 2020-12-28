@@ -215,7 +215,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         UserOrder userOrder = userOrderRepository.findByUserIdAndOrderId(userId, userOrderId);
         if (userOrder == null)
             throw new LogisticException("UserOrder Doesn't Exist");
-        if (!userOrder.getStatusId().equals(OrderStatus.PROCESSING))
+        if (!userOrder.getStatusId().equals(OrderStatus.PROCESSING) && !userOrder.getStatusId().equals(OrderStatus.ISSUE))
             throw new LogisticException("Order Status Exception");
         userOrder.setStatusId(OrderStatus.FINISH);
 

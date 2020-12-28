@@ -53,8 +53,8 @@ public class UserInfoController {
     }
 
     @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
-    public void forgetPassword(@RequestParam("userEmail") String userEmail) throws LogisticException {
-        userInfoService.forgetPassword(userEmail);
+    public Object forgetPassword(@RequestParam("userEmail") String userEmail) throws LogisticException {
+        return userInfoService.forgetPassword(userEmail);
     }
 
     @RequestMapping(value = "/active", method = RequestMethod.GET)

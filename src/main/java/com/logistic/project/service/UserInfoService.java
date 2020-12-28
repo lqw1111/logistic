@@ -24,7 +24,7 @@ public interface UserInfoService {
 
     List<UserInfoDTO> findAllByLastActive() throws LogisticException;
 
-    void forgetPassword(String userEmail) throws LogisticException;
+    Object forgetPassword(String userEmail) throws LogisticException;
 
     JsonResponse resetPassword(ResetPasswordDTO resetPasswordDTO) throws LogisticException;
 

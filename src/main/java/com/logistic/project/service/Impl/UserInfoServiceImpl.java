@@ -188,7 +188,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void forgetPassword(String userEmail) throws LogisticException {
+    public Object forgetPassword(String userEmail) throws LogisticException {
         UserInfo user = userInfoRepository.findByEmailAndDeletedIsFalse(userEmail);
         if (user == null) {
             throw new LogisticException("User Doesn't Exist");
@@ -197,6 +197,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userInfoRepository.save(user);
         mailService.sendHtmlMail(userEmail, "忘记密码", mailTemplateService.constructContent(user, newPassword));
+        return new JsonResponse().succ().message("Send Email");
     }
 
     @Override

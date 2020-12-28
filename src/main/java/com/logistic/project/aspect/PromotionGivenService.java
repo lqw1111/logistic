@@ -89,9 +89,9 @@ public class PromotionGivenService {
                 throw new LogisticException("Decrease Price Fail");
             }
 
-            //payment价格降低
+            //order价格降低
             if (invitationActivity.getPerUserDiscountPrice().multiply(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())).compareTo(invitationActivity.getTotalDiscountPrice()) <= 0) {
-                invitedUserOrder.setPrice(invitedUserOrder.getPrice().subtract(BigDecimal.valueOf(invitationActivity.getInvitedUserNum())));
+                invitedUserOrder.setPrice(invitedUserOrder.getPrice().subtract(invitationActivity.getPerUserDiscountPrice()));
                 userOrderRepository.save(invitedUserOrder);
             } else {
                 log.warn("Order: " + invitedUserOrder.getId() + " Already Get to The Limit");

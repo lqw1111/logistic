@@ -27,4 +27,4 @@ CREATE TABLE price_profile
 INSERT INTO logistic.price_profile (id, country_id, first_weight_price, continue_weight_price, minimum_weight, route_id, weight_range_low, weight_range_high) VALUES (1, 45, 60.00, 50.00, 1, 1, 0.001, 30.000);
 INSERT INTO logistic.price_profile (id, country_id, first_weight_price, continue_weight_price, minimum_weight, route_id, weight_range_low, weight_range_high) VALUES (2, 45, 75.00, 65.00, 1, 2, 0.001, 30.000);
 INSERT INTO logistic.price_profile (id, country_id, first_weight_price, continue_weight_price, minimum_weight, route_id, weight_range_low, weight_range_high) VALUES (3, 45, 30.00, 20.00, 1, 3, 0.001, 30.000);
-INSERT INTO logistic.price_profile (id, country_id, first_weight_price, continue_weight_price, minimum_weight, route_id, weight_range_low, weight_range_high) VALUES (4, 45, 300.00, 150.00, 1, 4, 0.001, 30.000);
+INSERT INTO logistic.price_profile (id, country_id, first_weight_price, continue_weight_price, minimum_weight, route_id, weight_range_low, weight_range_high) VALUES (4, 45, 320.00, 110.00, 1, 4, 0.001, 30.000);

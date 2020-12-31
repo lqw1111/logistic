@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 public class PriceCalculateServiceImpl implements PriceCalculateService {
 
-    private static final Integer HuananE = 5;
+    private static final Integer HuananE = -1;
 
     @Autowired
     private RouteInfoRepository routeInfoRepository;

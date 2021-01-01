@@ -19,5 +19,5 @@ CREATE TABLE promotion_type
     name varchar(10) NOT NULL
 );
 
-INSERT INTO logistic.promotion_type (name) VALUES ('discount');
-INSERT INTO logistic.promotion_type (name) VALUES ('price');
+INSERT INTO promotion_type (id,name) VALUES (1,'discount');
+INSERT INTO promotion_type (id,name) VALUES (2,'price');

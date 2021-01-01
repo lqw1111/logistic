@@ -6,13 +6,13 @@ CREATE TABLE delivery_type
     id int NOT NULL,
     name varchar(20) NOT NULL
 );
-INSERT INTO logistic.delivery_type (id, name) VALUES (1, '自取');
-INSERT INTO logistic.delivery_type (id, name) VALUES (2, '配送');
+INSERT INTO delivery_type (id, name) VALUES (1, '自取');
+INSERT INTO delivery_type (id, name) VALUES (2, '配送');
 
 CREATE TABLE shipping_method
 (
     id int NOT NULL,
     name varchar(20) NOT NULL
 );
-INSERT INTO logistic.shipping_method (id, name) VALUES (1, '空运');
-INSERT INTO logistic.shipping_method (id, name) VALUES (2, '海运');
+INSERT INTO shipping_method (id, name) VALUES (1, '空运');
+INSERT INTO shipping_method (id, name) VALUES (2, '海运');

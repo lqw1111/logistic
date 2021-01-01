@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS payment;
 CREATE TABLE payment
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,11 +15,12 @@ CREATE TABLE payment
     paid_at timestamp DEFAULT current_timestamp NOT NULL
 );
 
+DROP TABLE IF EXISTS payment_type;
 CREATE TABLE payment_type
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name varchar(20) NOT NULL
 );
 
-INSERT INTO logistic.payment_type (id, name) VALUES (1, 'wechat');
-INSERT INTO logistic.payment_type (id, name) VALUES (2, 'alipay');
+INSERT INTO payment_type (name) VALUES ('wechat');
+INSERT INTO payment_type (name) VALUES ('alipay');

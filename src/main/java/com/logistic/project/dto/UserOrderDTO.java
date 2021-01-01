@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@JsonIgnoreProperties(value = {"deleted", "orginPrice"})
+@JsonIgnoreProperties(value = {"deleted", "originPrice"})
 public class UserOrderDTO {
 
     private Integer id;

@@ -39,6 +39,18 @@
                 <password>logistic_123</password>
             </properties>
         </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <java.version>1.8</java.version>
+                <mysql.url>jdbc:mysql://rm-rj9mg44h8b8mvd7em90130.mysql.rds.aliyuncs.com/logistic_prod?serverTimezone=UTC</mysql.url>
+                <user>logistic_admin</user>
+                <password>logistic_123</password>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencies>

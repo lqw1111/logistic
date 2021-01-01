@@ -1,0 +1,1 @@
+ALTER TABLE user_order ADD origin_price decimal(10,2) NULL AFTER price;

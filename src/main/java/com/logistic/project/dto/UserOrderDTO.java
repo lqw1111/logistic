@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@JsonIgnoreProperties(value = {"deleted"})
+@JsonIgnoreProperties(value = {"deleted", "orginPrice"})
 public class UserOrderDTO {
 
     private Integer id;
@@ -15,6 +15,8 @@ public class UserOrderDTO {
     private Integer statusId;
 
     private BigDecimal price;
+
+    private BigDecimal originPrice;
 
     private String description;
 
@@ -69,6 +71,7 @@ public class UserOrderDTO {
         this.userId = userOrderDTO.getUserId();
         this.statusId = userOrderDTO.getStatusId();
         this.price = userOrderDTO.getPrice();
+        this.originPrice = userOrderDTO.getOriginPrice();
         this.description = userOrderDTO.getDescription();
         this.receiverName = userOrderDTO.getReceiverName();
         this.receiverPhone = userOrderDTO.getReceiverPhone();
@@ -124,6 +127,14 @@ public class UserOrderDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getOriginPrice() {
+        return originPrice;
+    }
+
+    public void setOriginPrice(BigDecimal originPrice) {
+        this.originPrice = originPrice;
     }
 
     public String getDescription() {

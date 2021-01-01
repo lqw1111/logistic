@@ -74,6 +74,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         updateUserOrder.setStatusId(orderDTO.getStatusId());
         updateUserOrder.setPrice(orderDTO.getPrice());
+        updateUserOrder.setOrginPrice(orderDTO.getPrice());
         updateUserOrder.setDescription(orderDTO.getDescription());
         updateUserOrder.setReceiverName(orderDTO.getReceiverName());
         updateUserOrder.setReceiverAddress(orderDTO.getReceiverAddress());

@@ -27,6 +27,9 @@ public class UserOrder implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "origin_price")
+    private BigDecimal orginPrice;
+
     @Column(name = "description")
     private String description;
 
@@ -128,6 +131,14 @@ public class UserOrder implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getOrginPrice() {
+        return orginPrice;
+    }
+
+    public void setOrginPrice(BigDecimal orginPrice) {
+        this.orginPrice = orginPrice;
     }
 
     public String getDescription() {

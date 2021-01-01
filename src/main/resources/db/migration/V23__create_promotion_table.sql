@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS promotion;
 CREATE TABLE promotion
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -11,11 +12,12 @@ CREATE TABLE promotion
     create_at timestamp DEFAULT current_timestamp NOT NULL
 );
 
+DROP TABLE IF EXISTS promotion_type;
 CREATE TABLE promotion_type
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name varchar(10) NOT NULL
 );
 
-INSERT INTO logistic.promotion_type (id, name) VALUES (1, 'discount');
-INSERT INTO logistic.promotion_type (id, name) VALUES (2, 'price');
+INSERT INTO logistic.promotion_type (name) VALUES ('discount');
+INSERT INTO logistic.promotion_type (name) VALUES ('price');

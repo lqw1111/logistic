@@ -2,6 +2,7 @@ package com.logistic.project.service.Impl;
 
 import com.logistic.project.entity.Payment;
 import com.logistic.project.entity.UserInfo;
+import com.logistic.project.enumeration.PaymentType;
 import com.logistic.project.service.MailTemplateService;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public String contructActiveEmail(UserInfo userInfo, String activeUrl) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
-//                .append("\n")
-//                .append("请点击链接激活账户").append(" ").append("\n")
-//                .append(activeUrl).append("\n").append("\n")
-//                .append("谢谢您的支持!").append("\n")
-//                .append("一闪团队");
         String activeHtml = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/0.5999/xhtml\">\n" +
                 "<head>\n" +
@@ -144,13 +138,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public String constructContent(UserInfo userInfo, String newPassword) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
-//                .append("\n")
-//                .append("您").append(" ").append(userInfo.getUsername()).append(" 忘记了密码.").append("\n")
-//                .append("密码重置为 ").append(newPassword).append("\n").append("\n")
-//                .append("谢谢您的支持!").append("\n")
-//                .append("一闪团队");
         String resetPasswordHtml = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/0.5999/xhtml\">\n" +
                 "<head>\n" +
@@ -298,17 +285,8 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public String paymentSuccessEmail(UserInfo userInfo, Payment payment) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("您好").append(" ").append(userInfo.getUsername()).append(":").append("\n")
-//                .append("\n")
-//                .append("您的订单：").append(payment.getOrderId()).append("(Order ID)").append(" 已经支付.").append("\n")
-//                .append("订单价格为： ").append(payment.getPrice()).append("\n")
-//                .append("优惠券： ").append(payment.getPromotionCode() == null ? "N/A" : payment.getPromotionCode()).append("\n")
-//                .append("您支付金额为： ").append(payment.getPaid()).append("\n")
-//                .append("请您发送支付截图给客服微信，方便核实金额数目.").append("\n")
-//                .append("客户核实相应金额后会与您联系,有任何问题请即使与客服联系").append("\n").append("\n")
-//                .append("谢谢您的支持!").append("\n")
-//                .append("一闪团队");
+        String promotion = payment.getPromotionCode() == null ? "N/A" : payment.getPromotionCode();
+        String paymentType = getPaymentType(payment.getPaymentTypeId());
         String paymentHTML = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/0.5999/xhtml\">\n" +
                 "<head>\n" +
@@ -395,7 +373,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "                  font-size: 15px; font-family: Arial, Helvetica, sans-serif;\n" +
                 "                  color:#424141;\n" +
                 "                  margin-top: 0.5em; margin-bottom: 0.5em; margin-left: 0; margin-right: 0;\">\n" +
-                "                    优惠券：" + payment.getPromotionCode() == null ? "N/A" : payment.getPromotionCode() + "\n" +
+                "                    优惠券：" + promotion + "\n" +
                 "                  </p>\n" +
                 "                </td>\n" +
                 "              </tr>\n" +
@@ -428,7 +406,18 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "                  font-size: 15px; font-family: Arial, Helvetica, sans-serif;\n" +
                 "                  color:#424141;\n" +
                 "                  margin-top: 0.5em; margin-bottom: 0.5em; margin-left: 0; margin-right: 0;\">\n" +
-                "                  请您及时发送支付截图通过微信发送给客服，以便一闪确认您支付的金额已经收到;核实后您的订单就会立即从仓库发出，如有任何问题请与客服联系\n" +
+                "                    支付方式为 ：" + paymentType + "\n" +
+                "                  </p>\n" +
+                "                </td>\n" +
+                "              </tr>\n" +
+                "              <tr>\n" +
+                "                <td width=\"500\" style = \"padding-left:20px;padding-right:20px;\">\n" +
+                "                  <p\n" +
+                "                  style=\"\n" +
+                "                  font-size: 15px; font-family: Arial, Helvetica, sans-serif;\n" +
+                "                  color:#424141;\n" +
+                "                  margin-top: 0.5em; margin-bottom: 0.5em; margin-left: 0; margin-right: 0;\">\n" +
+                "                  已经确认您的支付，您的包裹即将出发，如果有任何问题，请及时和客服联系\n" +
                 "                  </p>\n" +
                 "                </td>\n" +
                 "              </tr>\n" +
@@ -464,6 +453,19 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "</html>\n" +
                 "\n";
         return paymentHTML;
+    }
+
+    private String getPaymentType(Integer paymentTypeId) {
+        if (paymentTypeId == null) return "N/A";
+        if (PaymentType.WECHAT.getId().equals(paymentTypeId)) {
+            return PaymentType.WECHAT.getName();
+        } else if (PaymentType.ALIPAY.getId().equals(paymentTypeId)) {
+            return PaymentType.ALIPAY.getName();
+        } else if (PaymentType.INTERACT_ETRANSFER.getId().equals(paymentTypeId)) {
+            return PaymentType.INTERACT_ETRANSFER.getName();
+        } else {
+            return "N/A";
+        }
     }
 
 

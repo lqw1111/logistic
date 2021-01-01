@@ -284,7 +284,10 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     }
 
     @Override
-    public String paymentSuccessEmail(UserInfo userInfo, Payment payment) {
+    public String paymentSuccessEmail(UserInfo userInfo, Payment payment, String orderId) {
+        if (orderId == null) {
+            orderId = payment.getOrderId() + "";
+        }
         String promotion = payment.getPromotionCode() == null ? "N/A" : payment.getPromotionCode();
         String paymentType = getPaymentType(payment.getPaymentTypeId());
         String paymentHTML = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
@@ -351,7 +354,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "                  font-size: 15px; font-family: Arial, Helvetica, sans-serif;\n" +
                 "                  color:#424141;\n" +
                 "                  margin-top: 0.5em; margin-bottom: 0.5em; margin-left: 0; margin-right: 0;\">\n" +
-                "                    您的订单（" + payment.getOrderId() + "）已经支付\n" +
+                "                    您的订单（" + orderId + "）已经支付\n" +
                 "                  </p>\n" +
                 "                </td>\n" +
                 "              </tr>\n" +
@@ -384,7 +387,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
                 "                  font-size: 15px; font-family: Arial, Helvetica, sans-serif;\n" +
                 "                  color:#424141;\n" +
                 "                  margin-top: 0.5em; margin-bottom: 0.5em; margin-left: 0; margin-right: 0;\">\n" +
-                "                  价格为 ：¥ " + payment.getPaid() + "\n" +
+                "                  实际价格为 ：¥ " + payment.getPaid() + "\n" +
                 "                  </p>\n" +
                 "              </td>\n" +
                 "              </tr>\n" +

@@ -47,10 +47,11 @@ public class UserOrderServiceImpl implements UserOrderService {
     public UserOrderDTO createOrder(UserOrderDTO orderDTO) throws LogisticException {
         UserOrder userOrder = UserOrderMapper.INSTANCE.entity(orderDTO);
 
+        String orderId = companyName + UUID.randomUUID().toString();
         userOrder.setStatusId(OrderStatus.NEW);
+        userOrder.setOrderId(orderId);
 
         UserOrder order = userOrderRepository.save(userOrder);
-        order.setOrderId(companyName + UUID.randomUUID().toString());
 
         //update user time
         userInfoRepository.updateUserLastActiveTime(userOrder.getUserId());

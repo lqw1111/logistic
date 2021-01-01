@@ -3,6 +3,7 @@ package com.logistic.project.service.Impl;
 import com.logistic.project.controller.BaseController;
 import com.logistic.project.dao.repository.*;
 import com.logistic.project.dto.PaymentDTO;
+import com.logistic.project.dto.UserOrderDTO;
 import com.logistic.project.entity.*;
 import com.logistic.project.exception.LogisticException;
 import com.logistic.project.mapper.PaymentMapper;
@@ -119,10 +120,10 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         //验证支付之后自动更新包裹状态
-        userOrderService.processingOrder(payment.getUserId(), payment.getOrderId());
+        UserOrderDTO userOrderDTO = userOrderService.processingOrder(payment.getUserId(), payment.getOrderId());
 
         //TODO：发送邮件支付成功
-        mailService.sendHtmlMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res));
+        mailService.sendHtmlMail(userInfo.getEmail(), "支付成功", mailTemplateService.paymentSuccessEmail(userInfo, res, userOrderDTO.getOrderId()));
 
         PaymentDTO payDTO = PaymentMapper.INSTANCE.toDTO(res);
         if (payDTO.getPromotionCode() != null) {

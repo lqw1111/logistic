@@ -9,5 +9,5 @@ public interface MailTemplateService {
 
     String constructContent(UserInfo userInfo, String newPassword);
 
-    String paymentSuccessEmail(UserInfo userInfo, Payment payment);
+    String paymentSuccessEmail(UserInfo userInfo, Payment payment, String orderId);
 }

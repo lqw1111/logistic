@@ -5,19 +5,14 @@ MySQL 8<br>
 SpringBoot<br>
 
 ### Setup
-[mysql安装]https://www.cnblogs.com/yinzhengjie/p/10125609.html<br>
-[mysql下载地址]https://dev.mysql.com/downloads/mysql/<br>
+[mysql]https://www.cnblogs.com/yinzhengjie/p/10125609.html<br>
+[mysql]https://dev.mysql.com/downloads/mysql/<br>
 
-mysql配置<br>(可以自己定义自己的用户名密码，只要表一样就可以了，因为我使用的自动migration，所以不用管，直接run指令就行)<br>
-连接url：jdbc:mysql://localhost:3306/logistic?serverTimezone=UTC<br>
-username: root<br>
-password: 3773032<br>
+1、clone project<br>
+2、input -> mvn flyway:migrate<br>
+3、mvn spring-boot:run 
 
-1、clone 项目<br>
-2、进入之后,输入 mvn flyway:migrate<br>
-3、mvn spring-boot:run 启动项目
-
-### 所有状态
+### All Status
 User Order状态:
 ```text
  NEW = 1;

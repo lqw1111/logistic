@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
@@ -33,4 +34,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     @Query("SELECT user FROM UserInfo user WHERE user.token = :token AND user.deleted = 0 AND user.active = 1")
     UserInfo findByToken(@Param("token") String token);
+
+    @Query("SELECT user FROM UserInfo user")
+    Stream<UserInfo> findAllByCustomQueryAndStream();
 }

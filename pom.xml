@@ -24,7 +24,7 @@
                 <java.version>1.8</java.version>
                 <mysql.url>jdbc:mysql://localhost:3306/logistic?serverTimezone=UTC</mysql.url>
                 <user>root</user>
-                <password>3773032</password>
+                <password>{{}}</password>
             </properties>
         </profile>
         <profile>
